@@ -1,0 +1,25 @@
+{
+  "sdkVersion": 1,
+  "packageVersion": "1.1.0",
+  "manifest": {
+    "type": "echo-workshop-item",
+    "schemaVersions": [1],
+    "contentKinds": [
+      "theme",
+      "lyrics-style",
+      "visualizer-preset",
+      "dsp-preset",
+      "audio-plugin-profile",
+      "plugin-package"
+    ]
+  },
+  "plugin": {
+    "apiVersions": [1, 2],
+    "currentApiVersion": 2,
+    "declarationFile": "echo-workshop-plugin.d.ts"
+  },
+  "audioPluginAdapter": {
+    "api": "echo.audio-plugin-adapter",
+    "protocolVersions": [1]
+  }
+}

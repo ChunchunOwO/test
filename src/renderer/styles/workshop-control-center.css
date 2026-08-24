@@ -1,0 +1,162 @@
+.workshop-control-center {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding-block: 14px 28px;
+}
+
+.workshop-control-center > article {
+  min-inline-size: 0;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 92%, transparent);
+}
+
+.workshop-control-center > article:nth-last-child(1),
+.workshop-control-center > article:nth-last-child(2) {
+  grid-column: 1 / -1;
+}
+
+.workshop-control-center article > header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-block-end: 14px;
+}
+
+.workshop-control-center h2,
+.workshop-control-center p {
+  margin: 0;
+}
+
+.workshop-control-center h2 {
+  font-size: 15px;
+}
+
+.workshop-control-center header p,
+.workshop-control-center small,
+.workshop-control-center__empty {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-control-center__notice {
+  grid-column: 1 / -1;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 28%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 10%, transparent);
+}
+
+.workshop-control-center__order {
+  margin-block-end: 10px !important;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--echo-muted, #9ca3b8);
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 8%, transparent);
+  font-size: 12px;
+}
+
+.workshop-control-center__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.workshop-control-center input,
+.workshop-control-center select,
+.workshop-control-center button {
+  min-block-size: 36px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 16%, transparent);
+  border-radius: 9px;
+  color: inherit;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 86%, transparent);
+  font: inherit;
+}
+
+.workshop-control-center input,
+.workshop-control-center select {
+  min-inline-size: 0;
+  padding: 0 10px;
+}
+
+.workshop-control-center button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 11px;
+}
+
+.workshop-control-center button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--echo-accent, #6678ff) 52%, transparent);
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 14%, transparent);
+}
+
+.workshop-control-center__rows,
+.workshop-control-center__rules,
+.workshop-control-center__diagnostics {
+  display: grid;
+  gap: 7px;
+  max-block-size: 300px;
+  overflow: auto;
+}
+
+.workshop-control-center__rows > div,
+.workshop-control-center__rules > div,
+.workshop-control-center__diagnostics > div {
+  display: grid;
+  grid-template-columns: minmax(100px, .8fr) minmax(160px, 1.5fr) auto;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 62%, transparent);
+}
+
+.workshop-control-center__rows em,
+.workshop-control-center__diagnostics em {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.workshop-control-center__rows em[data-state='missing'],
+.workshop-control-center__rows em[data-state='version-mismatch'],
+.workshop-control-center__rows em[data-state='error'],
+.workshop-control-center__diagnostics [data-level='error'] {
+  color: #ff9d9d;
+}
+
+.workshop-control-center__rules > div {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.workshop-control-center__rules span {
+  display: grid;
+  gap: 2px;
+}
+
+.workshop-control-center__rules button:last-child {
+  inline-size: 36px;
+  padding: 0;
+}
+
+.workshop-control-center__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block-end: 10px;
+}
+
+.workshop-control-center__diagnostics > div {
+  grid-template-columns: 76px 130px minmax(0, 1fr) 72px;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .workshop-control-center { grid-template-columns: 1fr; }
+  .workshop-control-center > article { grid-column: 1; }
+  .workshop-control-center__form { grid-template-columns: 1fr; }
+}

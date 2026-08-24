@@ -1,0 +1,66 @@
+/*
+ * Runtime frontend reductions for lightweight mode (data-low-spec-mode).
+ * Motion duration is handled in motion.css; this file targets newer polish
+ * layers that still composite, blur, decode, or animate after that global clamp.
+ */
+
+.app-shell[data-low-spec-mode='true'] *,
+.app-shell[data-low-spec-mode='true'] *::before,
+.app-shell[data-low-spec-mode='true'] *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+  will-change: auto !important;
+}
+
+.app-shell[data-low-spec-mode='true'] .cover-sheen,
+.app-shell[data-low-spec-mode='true'] .home-skeleton-block::after,
+.app-shell[data-low-spec-mode='true'] .settings-page .settings-nav-item::after,
+.app-shell[data-low-spec-mode='true'] .playlist-detail-hero-art,
+.app-shell[data-low-spec-mode='true'] .lyrics-backdrop-atmosphere,
+.app-shell[data-low-spec-mode='true'] .lyrics-backdrop-previous-cover,
+.app-shell[data-low-spec-mode='true'] .lyrics-cinema-stage-particles,
+.app-shell[data-low-spec-mode='true'] .lyrics-cover-stage-color-field,
+.app-shell[data-low-spec-mode='true'] .lyrics-kinetic-poster-chrome,
+.app-shell[data-low-spec-mode='true'] .eq-spectrum-overlay,
+.app-shell[data-low-spec-mode='true'] .theme-preset-card::after {
+  display: none !important;
+}
+
+.app-shell[data-low-spec-mode='true'] .album-card,
+.app-shell[data-low-spec-mode='true'] .artist-card,
+.app-shell[data-low-spec-mode='true'] .artist-album-card,
+.app-shell[data-low-spec-mode='true'] .playlist-card,
+.app-shell[data-low-spec-mode='true'] .home-now-card,
+.app-shell[data-low-spec-mode='true'] .home-shelf-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
+}
+
+.app-shell[data-low-spec-mode='true'] .album-card:hover .album-cover,
+.app-shell[data-low-spec-mode='true'] .album-card:focus-visible .album-cover,
+.app-shell[data-low-spec-mode='true'] .album-card:hover .album-cover img,
+.app-shell[data-low-spec-mode='true'] .album-card:focus-visible .album-cover img,
+.app-shell[data-low-spec-mode='true'] .artist-card:hover,
+.app-shell[data-low-spec-mode='true'] .artist-card:focus-visible,
+.app-shell[data-low-spec-mode='true'] .playlist-card:hover,
+.app-shell[data-low-spec-mode='true'] .playlist-card:focus-visible,
+.app-shell[data-low-spec-mode='true'] .settings-page .settings-nav-item:hover,
+.app-shell[data-low-spec-mode='true'] .settings-page .settings-nav-item:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.app-shell[data-low-spec-mode='true'] .player-marquee[data-overflow='true'] .player-marquee-inner,
+.app-shell[data-low-spec-mode='true'] .now-playing-marquee[data-overflow='true'] > span,
+.app-shell[data-low-spec-mode='true'] .mini-player-title-marquee.is-overflowing .mini-player-title-marquee-track {
+  animation: none !important;
+  transform: none !important;
+}
+
+.app-shell[data-low-spec-mode='true'] .playlists-page {
+  --playlist-cover-shadow: none;
+  --playlist-text-glow: none;
+}

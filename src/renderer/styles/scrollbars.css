@@ -1,0 +1,251 @@
+:root {
+  --echo-scrollbar-size: 10px;
+  --echo-scrollbar-min-thumb: 48px;
+  --echo-scrollbar-track: transparent;
+  --echo-scrollbar-thumb: var(--theme-scrollbar-thumb);
+  --echo-scrollbar-thumb-hover: var(--theme-scrollbar-thumb-hover);
+  --echo-scrollbar-thumb-active: var(--theme-scrollbar-thumb-hover);
+  --echo-scrollbar-thumb-shadow: color-mix(in srgb, var(--theme-page-text) 16%, transparent);
+}
+
+html[data-theme="dark"] {
+  --echo-scrollbar-thumb: var(--theme-scrollbar-thumb);
+  --echo-scrollbar-thumb-hover: var(--theme-scrollbar-thumb-hover);
+  --echo-scrollbar-thumb-active: var(--theme-scrollbar-thumb-hover);
+  --echo-scrollbar-thumb-shadow: color-mix(in srgb, var(--theme-page-text) 10%, transparent);
+}
+
+* {
+  scrollbar-color: var(--echo-scrollbar-thumb) var(--echo-scrollbar-track);
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: var(--echo-scrollbar-size);
+  height: var(--echo-scrollbar-size);
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track-piece {
+  border-radius: 999px;
+  background: var(--echo-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  min-width: var(--echo-scrollbar-min-thumb);
+  min-height: var(--echo-scrollbar-min-thumb);
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--echo-scrollbar-thumb);
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 1px var(--echo-scrollbar-thumb-shadow);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+  background: var(--echo-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  border-width: 2px;
+  background: var(--echo-scrollbar-thumb-active);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+:is(
+  .page-surface,
+  .track-list,
+  .sort-menu,
+  .media-wall-scroll-shell,
+  .mv-settings-candidates,
+  .mini-player-queue-panel,
+  .signal-path-popover.signal-path-popover--roon
+) {
+  scrollbar-color: var(--echo-scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+:is(
+  .page-surface,
+  .track-list,
+  .sort-menu,
+  .media-wall-scroll-shell,
+  .mv-settings-candidates,
+  .mini-player-queue-panel,
+  .signal-path-popover.signal-path-popover--roon
+)::-webkit-scrollbar {
+  width: var(--echo-scrollbar-size);
+  height: var(--echo-scrollbar-size);
+}
+
+:is(
+  .page-surface,
+  .track-list,
+  .sort-menu,
+  .media-wall-scroll-shell,
+  .mv-settings-candidates,
+  .mini-player-queue-panel,
+  .signal-path-popover.signal-path-popover--roon
+)::-webkit-scrollbar-track {
+  margin: 8px 0;
+  border-radius: 999px;
+  background: transparent;
+}
+
+:is(
+  .page-surface,
+  .track-list,
+  .sort-menu,
+  .media-wall-scroll-shell,
+  .mv-settings-candidates,
+  .mini-player-queue-panel,
+  .signal-path-popover.signal-path-popover--roon
+)::-webkit-scrollbar-thumb {
+  min-height: var(--echo-scrollbar-min-thumb);
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--echo-scrollbar-thumb);
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 1px var(--echo-scrollbar-thumb-shadow);
+}
+
+:is(
+  .page-surface,
+  .track-list,
+  .sort-menu,
+  .media-wall-scroll-shell,
+  .mv-settings-candidates,
+  .mini-player-queue-panel,
+  .signal-path-popover.signal-path-popover--roon
+)::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+  background: var(--echo-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+:is(
+  .page-surface,
+  .track-list,
+  .sort-menu,
+  .media-wall-scroll-shell,
+  .mv-settings-candidates,
+  .mini-player-queue-panel,
+  .signal-path-popover.signal-path-popover--roon
+)::-webkit-scrollbar-thumb:active {
+  border-width: 2px;
+  background: var(--echo-scrollbar-thumb-active);
+  background-clip: padding-box;
+}
+
+.signal-path-popover.signal-path-popover--roon {
+  scrollbar-color: transparent transparent;
+  scrollbar-width: none;
+}
+
+.signal-path-popover.signal-path-popover--roon::-webkit-scrollbar,
+.signal-path-popover.signal-path-popover--roon::-webkit-scrollbar-track,
+.signal-path-popover.signal-path-popover--roon::-webkit-scrollbar-track-piece,
+.signal-path-popover.signal-path-popover--roon::-webkit-scrollbar-thumb,
+.signal-path-popover.signal-path-popover--roon::-webkit-scrollbar-button,
+.signal-path-popover.signal-path-popover--roon::-webkit-scrollbar-corner {
+  display: none;
+  width: 0;
+  height: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.mv-settings-drawer .audio-drawer-scroll {
+  scrollbar-color: var(--echo-scrollbar-thumb) transparent;
+}
+
+.mv-settings-drawer .audio-drawer-scroll::-webkit-scrollbar {
+  display: block;
+  width: var(--echo-scrollbar-size);
+}
+
+.mv-settings-drawer .audio-drawer-scroll::-webkit-scrollbar-track {
+  margin: 18px 0;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.mv-settings-drawer .audio-drawer-scroll::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--echo-scrollbar-thumb);
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 1px var(--echo-scrollbar-thumb-shadow);
+}
+
+.mv-settings-drawer .audio-drawer-scroll::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+  background: var(--echo-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+.page-surface:has(.songs-page) {
+  overflow: hidden;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: none;
+}
+
+.page-surface:has(.songs-page)::-webkit-scrollbar,
+.page-surface:has(.songs-page)::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.page-surface:has(.home-page) {
+  scrollbar-color: transparent transparent;
+  scrollbar-width: none;
+}
+
+.page-surface:has(.home-page)::-webkit-scrollbar,
+.page-surface:has(.home-page)::-webkit-scrollbar-track,
+.page-surface:has(.home-page)::-webkit-scrollbar-track-piece,
+.page-surface:has(.home-page)::-webkit-scrollbar-thumb,
+.page-surface:has(.home-page)::-webkit-scrollbar-button,
+.page-surface:has(.home-page)::-webkit-scrollbar-corner {
+  display: none;
+  width: 0;
+  height: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* DSP pages keep scrolling, but nested editor tracks are intentionally hidden. */
+.page-surface:has(.dsp-page),
+.dsp-page,
+.dsp-page * {
+  -ms-overflow-style: none !important;
+  scrollbar-color: transparent transparent !important;
+  scrollbar-width: none !important;
+}
+
+.page-surface:has(.dsp-page)::-webkit-scrollbar,
+.dsp-page::-webkit-scrollbar,
+.dsp-page *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}

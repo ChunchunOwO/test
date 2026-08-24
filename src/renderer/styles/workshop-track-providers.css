@@ -1,0 +1,117 @@
+.workshop-track-providers {
+  display: grid;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 20%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 82%, transparent);
+}
+
+.workshop-track-providers > header,
+.workshop-track-providers > header > div,
+.workshop-track-providers__actions,
+.workshop-track-providers__actions button,
+.workshop-track-providers__list article,
+.workshop-track-providers__list article > button {
+  display: flex;
+  align-items: center;
+}
+
+.workshop-track-providers > header {
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.workshop-track-providers > header > div,
+.workshop-track-providers__actions,
+.workshop-track-providers__actions button {
+  gap: 6px;
+}
+
+.workshop-track-providers > header small,
+.workshop-track-providers > p,
+.workshop-track-providers__list small,
+.workshop-track-providers__list em {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 11px;
+}
+
+.workshop-track-providers__actions button,
+.workshop-track-providers__list article > button {
+  justify-content: center;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 15%, transparent);
+  border-radius: 8px;
+  color: inherit;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 82%, transparent);
+}
+
+.workshop-track-providers__list {
+  display: grid;
+  gap: 7px;
+}
+
+.workshop-track-providers__list article {
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 70%, transparent);
+}
+
+.workshop-track-providers__list article > span {
+  display: grid;
+  min-inline-size: 0;
+  gap: 2px;
+}
+
+.workshop-track-providers__list strong,
+.workshop-track-providers__list small,
+.workshop-track-providers__list em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workshop-track-providers__list em {
+  font-style: normal;
+}
+
+.workshop-track-providers__covers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.workshop-track-providers__covers button {
+  display: grid;
+  gap: 5px;
+  padding: 6px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 15%, transparent);
+  border-radius: 9px;
+  color: inherit;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 75%, transparent);
+}
+
+.workshop-track-providers__cover-icon {
+  display: grid;
+  inline-size: 100%;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 6px;
+  color: var(--echo-accent, #6678ff);
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 12%, transparent);
+}
+
+.workshop-track-providers__covers strong,
+.workshop-track-providers__covers small {
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workshop-track-providers__covers small {
+  color: var(--echo-muted, #9ca3b8);
+}

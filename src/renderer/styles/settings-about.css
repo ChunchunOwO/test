@@ -1,0 +1,419 @@
+/*
+ * About / Advanced Custom sit on the same board as General:
+ * grouped cards, directional row hover, tray controls, theme tokens.
+ */
+
+.settings-page #settings-sec-about > .section-title,
+.settings-page #settings-sec-advancedCustom > .section-title {
+  display: none;
+}
+
+.settings-page #settings-sec-about > .settings-subsection-title,
+.settings-page #settings-sec-advancedCustom > .settings-subsection-title {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 10px 10px 0 0;
+}
+
+.settings-page #settings-sec-about > .settings-subsection-title:not(:first-of-type),
+.settings-page #settings-sec-advancedCustom > .settings-subsection-title:not(:first-of-type) {
+  margin-top: 20px;
+}
+
+.settings-page #settings-sec-about > .section-title + .settings-subsection-title,
+.settings-page #settings-sec-advancedCustom > .section-title + .settings-subsection-title {
+  margin-top: 0;
+}
+
+.settings-page #settings-sec-about > .settings-subsection-title,
+.settings-page #settings-sec-advancedCustom > .settings-subsection-title {
+  flex-wrap: wrap;
+  row-gap: 4px;
+  scroll-margin-top: 8px;
+}
+
+.settings-page #settings-sec-about > .settings-subsection-title small,
+.settings-page #settings-sec-advancedCustom > .settings-subsection-title small {
+  flex: 1 1 220px;
+  line-height: 1.4;
+  opacity: 0.86;
+}
+
+.settings-page #settings-sec-about > .setting-row,
+.settings-page #settings-sec-advancedCustom > .setting-row {
+  border-right-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-left-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--theme-list-row-border) 42%, transparent);
+  scroll-margin-top: 58px;
+  transition:
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.settings-page #settings-sec-about > .setting-row:hover:not([data-search-highlight='true']),
+.settings-page #settings-sec-advancedCustom > .setting-row:hover:not([data-search-highlight='true']) {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-list-row-bg-hover) 88%, transparent),
+      color-mix(in srgb, var(--theme-list-row-bg-hover) 26%, transparent) 86%
+    ),
+    color-mix(in srgb, var(--theme-panel-bg) 64%, transparent);
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--theme-accent-text) 72%, transparent);
+}
+
+.settings-page #settings-sec-about > .setting-row:focus-within:not(:hover, [data-search-highlight='true']),
+.settings-page #settings-sec-advancedCustom > .setting-row:focus-within:not(:hover, [data-search-highlight='true']) {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-accent-bg) 54%, transparent),
+      transparent 82%
+    ),
+    color-mix(in srgb, var(--theme-panel-bg) 64%, transparent);
+  box-shadow: inset 2px 0 0 var(--theme-accent-text);
+}
+
+.settings-page #settings-sec-about > .setting-row:has(+ .settings-subsection-title),
+.settings-page #settings-sec-about > :last-child,
+.settings-page #settings-sec-advancedCustom > .setting-row:has(+ .settings-subsection-title),
+.settings-page #settings-sec-advancedCustom > :last-child {
+  border-bottom-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-radius: 0 0 10px 10px;
+  box-shadow: var(--echo-polish-shadow-row);
+}
+
+.settings-page #settings-sec-about > .setting-row:has(+ .settings-subsection-title):hover:not([data-search-highlight='true']),
+.settings-page #settings-sec-about > :last-child:hover:not([data-search-highlight='true']),
+.settings-page #settings-sec-advancedCustom > .setting-row:has(+ .settings-subsection-title):hover:not([data-search-highlight='true']),
+.settings-page #settings-sec-advancedCustom > :last-child:hover:not([data-search-highlight='true']) {
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--theme-accent-text) 72%, transparent),
+    var(--echo-polish-shadow-row);
+}
+
+.settings-page #settings-sec-about .setting-info p,
+.settings-page #settings-sec-advancedCustom .setting-info p {
+  transition: opacity 140ms ease;
+}
+
+.settings-page #settings-sec-about > .setting-row:hover .setting-info p,
+.settings-page #settings-sec-advancedCustom > .setting-row:hover .setting-info p {
+  opacity: 1;
+}
+
+.settings-page #settings-sec-about > .setting-row[data-search-highlight='true'],
+.settings-page #settings-sec-advancedCustom > .setting-row[data-search-highlight='true'] {
+  animation: settings-general-highlight-ping 900ms ease-out 1;
+}
+
+.settings-page #settings-sec-about > .setting-row--compact-panel,
+.settings-page #settings-sec-about > .setting-row--package-export {
+  align-items: start;
+}
+
+.settings-page #settings-sec-about .settings-inline-toggle:has(.toggle-btn.active),
+.settings-page #settings-sec-advancedCustom .settings-inline-toggle:has(.toggle-btn.active) {
+  color: var(--theme-accent-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 58%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 62%, var(--theme-panel-bg-muted));
+}
+
+.settings-page #settings-sec-about .settings-action-button:focus-visible,
+.settings-page #settings-sec-advancedCustom .settings-action-button:focus-visible,
+.settings-page #settings-sec-about .list-filter-chip:focus-visible,
+.settings-page #settings-sec-advancedCustom .toggle-btn:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+@media (min-width: 761px) {
+  .settings-page #settings-sec-about > .settings-subsection-title,
+  .settings-page #settings-sec-advancedCustom > .settings-subsection-title {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--theme-panel-bg-strong) 94%, transparent),
+        color-mix(in srgb, var(--theme-panel-bg) 90%, transparent)
+      );
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* ---------- Version identity ---------- */
+
+.settings-page #settings-sec-about .settings-about-identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 58%, transparent);
+}
+
+.settings-page #settings-sec-about .settings-about-identity-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 55%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 82%, transparent);
+}
+
+.settings-page #settings-sec-about .settings-about-identity-copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+  text-align: left;
+}
+
+.settings-page #settings-sec-about .settings-about-identity-copy strong {
+  color: var(--theme-heading-text);
+  font-size: 14px;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
+.settings-page #settings-sec-about .settings-about-identity-copy span {
+  color: var(--theme-muted-text);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* ---------- Community tray (same instrument as General language chips) ---------- */
+
+.settings-page #settings-row-about-community > .settings-chip-row {
+  width: 100%;
+  max-width: none;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 62%, transparent);
+}
+
+.settings-page #settings-row-about-community .settings-action-button {
+  min-height: 30px;
+  padding: 0 11px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.settings-page #settings-row-about-community .settings-action-button:hover:not(:disabled) {
+  color: var(--theme-heading-text);
+  border-color: transparent;
+  background: color-mix(in srgb, var(--theme-button-bg-hover) 88%, transparent);
+  box-shadow: none;
+}
+
+.settings-page #settings-row-about-community .settings-action-button:not(:disabled):active {
+  transform: none;
+}
+
+/* ---------- Export / package clusters ---------- */
+
+.settings-page #settings-sec-about .settings-about-control,
+.settings-page #settings-sec-about .settings-package-export-panel {
+  display: grid;
+  width: 100%;
+  max-width: none;
+  gap: 8px;
+  justify-self: stretch;
+}
+
+.settings-page #settings-sec-about .settings-about-control .settings-chip-row,
+.settings-page #settings-sec-about .settings-package-export-panel .settings-chip-row {
+  max-width: none;
+  justify-content: flex-start;
+}
+
+.settings-page #settings-sec-about .settings-about-control .settings-inline-note,
+.settings-page #settings-sec-about .settings-package-export-panel .settings-inline-note,
+.settings-page #settings-sec-about .settings-cache-panel--diagnostics > .settings-inline-note {
+  margin: 0;
+  max-width: 54ch;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--theme-muted-text);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* ---------- Backup cluster ---------- */
+
+.settings-page #settings-sec-about .settings-data-backup-panel {
+  width: 100%;
+  max-width: none;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 58%, transparent);
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-primary {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 12px;
+  align-items: center;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-frequency {
+  justify-content: flex-start;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 55%, transparent);
+}
+
+.settings-page #settings-sec-about .settings-data-backup-frequency .list-filter-chip {
+  min-height: 28px;
+  padding: 0 11px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-frequency .list-filter-chip:hover:not(:disabled, .active) {
+  background: color-mix(in srgb, var(--theme-button-bg-hover) 88%, transparent);
+  transform: none;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-frequency .list-filter-chip:not(:disabled):active {
+  transform: none;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-meta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-meta span {
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 70%, transparent);
+}
+
+.settings-page #settings-sec-about .settings-data-backup-meta em,
+.settings-page #settings-sec-about .settings-data-backup-meta strong {
+  color: var(--theme-muted-text);
+}
+
+.settings-page #settings-sec-about .settings-data-backup-meta strong {
+  color: var(--theme-heading-text);
+  font-weight: 650;
+}
+
+.settings-page #settings-sec-about .settings-data-backup-progress {
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 70%, transparent);
+}
+
+.settings-page #settings-sec-about .settings-data-backup-actions {
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+/* ---------- Steam / safe mode / diagnostics ---------- */
+
+.settings-page #settings-sec-about .settings-cache-panel--diagnostics {
+  width: 100%;
+  max-width: none;
+  gap: 10px;
+}
+
+.settings-page #settings-sec-about .settings-status-grid {
+  width: 100%;
+  max-width: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.settings-page #settings-sec-about .settings-status-grid span {
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 70%, transparent);
+}
+
+.settings-page #settings-sec-about .settings-status-grid em {
+  color: var(--theme-muted-text);
+  font-weight: 620;
+}
+
+.settings-page #settings-sec-about .settings-status-grid strong {
+  color: var(--theme-heading-text);
+  font-weight: 650;
+}
+
+.settings-page #settings-sec-about .settings-cache-panel--diagnostics > .settings-chip-row,
+.settings-page #settings-sec-about .diagnostics-assistant-actions {
+  max-width: none;
+  justify-content: flex-start;
+}
+
+.settings-page #settings-sec-about .diagnostics-assistant-panel {
+  width: 100%;
+}
+
+.settings-page #settings-sec-about .diagnostics-assistant-icon {
+  color: var(--theme-accent-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 42%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 72%, transparent);
+}
+
+.settings-page #settings-sec-about .diagnostics-assistant-summary,
+.settings-page #settings-sec-about .diagnostics-assistant-findings article,
+.settings-page #settings-sec-about .diagnostics-assistant-pipeline article,
+.settings-page #settings-sec-about .diagnostics-assistant-recommendations,
+.settings-page #settings-sec-about .diagnostics-assistant-devices {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 70%, transparent);
+}
+
+@media (max-width: 760px) {
+  .settings-page #settings-sec-about > .setting-row--compact-panel,
+  .settings-page #settings-sec-about > .setting-row--package-export {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .settings-page #settings-sec-about .settings-data-backup-primary,
+  .settings-page #settings-sec-about .settings-data-backup-meta,
+  .settings-page #settings-sec-about .settings-status-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+html[data-theme='dark'] .settings-page #settings-sec-about > .settings-subsection-title,
+html[data-theme='dark'] .settings-page #settings-sec-advancedCustom > .settings-subsection-title,
+html[data-theme='dark'] .settings-page #settings-sec-about > .setting-row,
+html[data-theme='dark'] .settings-page #settings-sec-advancedCustom > .setting-row {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+}
+
+html[data-theme='dark'] .settings-page #settings-sec-about .settings-about-identity,
+html[data-theme='dark'] .settings-page #settings-row-about-community > .settings-chip-row,
+html[data-theme='dark'] .settings-page #settings-sec-about .settings-data-backup-panel,
+html[data-theme='dark'] .settings-page #settings-sec-about .settings-data-backup-frequency {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 36%, transparent);
+}

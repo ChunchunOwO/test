@@ -1,0 +1,187 @@
+.workshop-theme-background-overlay,
+.workshop-theme-skin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.workshop-theme-background-overlay {
+  background-image: var(--workshop-theme-background-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: calc(var(--workshop-theme-scrim, 42) / 100);
+}
+
+.workshop-theme-skin-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 160px rgb(0 0 0 / calc(var(--workshop-theme-vignette, 0) / 140));
+}
+
+.workshop-theme-skin-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: calc(var(--workshop-theme-grain, 0) / 100);
+  background-image:
+    repeating-radial-gradient(circle at 12% 18%, rgb(255 255 255 / 0.18) 0 1px, transparent 1px 3px),
+    repeating-radial-gradient(circle at 78% 64%, rgb(0 0 0 / 0.16) 0 1px, transparent 1px 4px);
+  mix-blend-mode: overlay;
+}
+
+html[data-workshop-theme-background="true"] .app-shell {
+  background-image:
+    radial-gradient(ellipse at 18% -8%, rgb(255 255 255 / calc(var(--workshop-theme-glow, 0) / 280)), transparent 42%),
+    var(--workshop-theme-background-image, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-background="true"] .page-surface {
+  background:
+    var(--workshop-theme-page-image, none),
+    color-mix(in srgb, var(--color-bg) 72%, transparent);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-skin="shell"] .page-surface {
+  background:
+    var(--workshop-theme-page-image, none),
+    color-mix(in srgb, var(--color-bg) 52%, transparent);
+}
+
+html[data-workshop-theme-titlebar="true"] .app-titlebar {
+  background-image: var(--workshop-theme-titlebar-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-sidebar-image="true"] .sidebar {
+  background-image: var(--workshop-theme-sidebar-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-player-image="true"] .player-bar {
+  background-image: var(--workshop-theme-player-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-titlebar="minimal"] .app-titlebar {
+  background: color-mix(in srgb, var(--color-bg) 42%, transparent);
+  box-shadow: none;
+}
+
+html[data-workshop-titlebar="immersive"] .app-titlebar {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: blur(18px);
+}
+
+html[data-workshop-density="compact"] .page-surface {
+  padding: 16px 28px 20px;
+}
+
+html[data-workshop-density="editorial"] .page-surface {
+  padding: 32px 56px 36px;
+}
+
+html[data-workshop-cards="flat"] {
+  --shadow-panel: none;
+  --shadow-soft: none;
+}
+
+html[data-workshop-cards="glass"] .page-surface > *,
+html[data-workshop-theme-skin="shell"] .sidebar,
+html[data-workshop-theme-skin="shell"] .player-bar {
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+html[data-workshop-cards="outline"] {
+  --theme-panel-bg: transparent;
+}
+
+html[data-workshop-display="editorial"] {
+  letter-spacing: 0.01em;
+}
+
+html[data-workshop-display="technical"] {
+  letter-spacing: -0.02em;
+}
+
+html[data-workshop-display="playful"] .app-titlebar,
+html[data-workshop-display="playful"] .brand-block {
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 981px) {
+  html[data-workshop-sidebar-width="narrow"] .app-shell {
+    --sidebar-width: 176px;
+  }
+
+  html[data-workshop-sidebar-width="wide"] .app-shell {
+    --sidebar-width: 280px;
+  }
+
+  html[data-workshop-sidebar="right"] .app-shell {
+    grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+  }
+
+  html[data-workshop-sidebar="right"] .sidebar {
+    grid-column: 2;
+    border-width: 0 0 0 1px;
+  }
+
+  html[data-workshop-sidebar="right"] .page-surface {
+    grid-column: 1;
+  }
+
+  html[data-workshop-player="compact"] .app-shell:not(.app-shell--lyrics) {
+    --player-height: 76px;
+  }
+
+  html[data-workshop-player="floating"] .app-shell:not(.app-shell--lyrics) {
+    --player-height: 0px;
+    grid-template-rows: var(--titlebar-height) minmax(0, 1fr);
+  }
+
+  html[data-workshop-player="floating"] .app-shell:not(.app-shell--lyrics) .page-surface {
+    padding-bottom: 96px;
+  }
+
+  html[data-workshop-player="floating"] .app-shell:not(.app-shell--lyrics) .player-bar {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 14px;
+    grid-row: auto;
+    grid-column: auto;
+    width: auto;
+    border-width: 1px;
+    border-radius: 18px;
+    z-index: 12;
+  }
+}
+
+html[data-workshop-theme-background="true"] .app-shell[data-low-spec-mode="true"] {
+  background-image: var(--workshop-theme-background-image, none);
+}
+
+html[data-workshop-theme-background="true"] .app-shell[data-low-spec-mode="true"] .page-surface,
+html[data-workshop-theme-skin="shell"] .app-shell[data-low-spec-mode="true"] .page-surface,
+html[data-workshop-theme-titlebar="true"] .app-shell[data-low-spec-mode="true"] .app-titlebar,
+html[data-workshop-theme-sidebar-image="true"] .app-shell[data-low-spec-mode="true"] .sidebar,
+html[data-workshop-theme-player-image="true"] .app-shell[data-low-spec-mode="true"] .player-bar {
+  background-image: none;
+}

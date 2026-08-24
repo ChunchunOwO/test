@@ -1,0 +1,120 @@
+.steam-community-settings {
+  display: grid;
+  gap: 9px;
+  padding: 11px 16px 15px;
+  border-top: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 46%, transparent);
+}
+
+.steam-community-card h3,
+.steam-community-card p { margin: 0; }
+
+.steam-community-settings__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.steam-community-card {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 28px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 7px 9px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--theme-list-row-bg) 76%, transparent);
+}
+
+.steam-community-card[data-search-highlight='true'] {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--theme-focus-ring) 54%, transparent);
+}
+
+.steam-community-card__icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  grid-row: 1;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--theme-accent-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 52%, transparent);
+}
+
+.steam-community-card__icon.is-leaderboard {
+  color: var(--theme-warning-text, #d4a017);
+  background: color-mix(in srgb, var(--theme-warning-text, #d4a017) 12%, transparent);
+}
+
+.steam-community-card__icon.is-cloud {
+  color: var(--theme-success-text);
+  background: color-mix(in srgb, var(--theme-success-text) 12%, transparent);
+}
+
+.steam-community-card__copy { min-width: 0; }
+.steam-community-card__copy h3 { overflow: hidden; color: var(--theme-heading-text); font-size: 11px; font-weight: 770; text-overflow: ellipsis; white-space: nowrap; }
+.steam-community-card__copy p { margin-top: 2px; color: var(--theme-subtle-text); font-size: 9px; line-height: 1.35; }
+
+.steam-community-card > .settings-status-text,
+.steam-community-card__action {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+}
+
+.steam-community-card > .settings-status-text { text-align: center; }
+
+.steam-community-card__action {
+  display: flex;
+  min-height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.steam-community-card .settings-status-text { overflow: hidden; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.steam-community-card .toggle-btn { flex: 0 0 auto; }
+
+.steam-community-card__sync {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 7px;
+  color: var(--theme-accent-text);
+  background: var(--theme-control-bg);
+  cursor: pointer;
+}
+
+.steam-community-card__sync:hover:not(:disabled) { background: var(--theme-control-bg-hover); }
+.steam-community-card__sync:focus-visible { outline: 2px solid var(--theme-focus-ring); outline-offset: 2px; }
+.steam-community-card__sync:disabled { cursor: default; opacity: .5; }
+
+.steam-community-settings__error {
+  margin: 0;
+  color: var(--theme-danger-text);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+@media (max-width: 980px) {
+  .steam-community-settings__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .steam-community-settings__grid { grid-template-columns: 1fr; }
+  .steam-community-card { grid-template-columns: 28px minmax(0, 1fr) auto; grid-template-rows: auto; }
+  .steam-community-card__icon { grid-row: auto; }
+  .steam-community-card > .settings-status-text,
+  .steam-community-card__action { grid-column: 3; justify-self: end; }
+}
+
+@media (max-width: 480px) {
+  .steam-community-card { grid-template-columns: 28px minmax(0, 1fr); grid-template-rows: auto auto; }
+  .steam-community-card > .settings-status-text,
+  .steam-community-card__action { grid-column: 1 / -1; justify-self: stretch; }
+}

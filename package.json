@@ -1,0 +1,504 @@
+{
+  "name": "echo-steam",
+  "version": "26.8.15",
+  "description": "ECHO desktop music player.",
+  "author": "Moekotori",
+  "license": "SEE LICENSE IN LICENSE",
+  "main": "out/main/index.js",
+  "type": "module",
+  "private": true,
+  "packageManager": "npm@10.9.8",
+  "engines": {
+    "node": ">=22.23.2 <23",
+    "npm": ">=10 <11"
+  },
+  "volta": {
+    "node": "22.23.2",
+    "npm": "10.9.8"
+  },
+  "scripts": {
+    "setup": "node scripts/setup-dev.mjs",
+    "setup:auto": "node scripts/device-development.mjs setup",
+    "doctor:auto": "node scripts/device-development.mjs doctor",
+    "dev:auto": "node scripts/device-development.mjs start",
+    "dev:auto:quick": "node scripts/device-development.mjs quick",
+    "dev:status": "node scripts/device-development.mjs status",
+    "dev:handoff": "node scripts/device-development.mjs handoff",
+    "dev:switch": "node scripts/device-development.mjs resume",
+    "dev": "node scripts/ensure-native-abi.mjs electron && node scripts/ensure-airplay-raop.mjs && node scripts/ensure-dev-audio-runtime.mjs && node scripts/ensure-audio-host.mjs && node scripts/ensure-taskbar-host.mjs && node scripts/build-taskbar-thumbnail-helper.mjs && node scripts/build-steam-leaderboards.mjs && electron-vite dev",
+    "dev:full": "node scripts/ensure-native-abi.mjs electron && node scripts/ensure-airplay-raop.mjs && node scripts/ensure-dev-audio-runtime.mjs && node scripts/ensure-audio-host.mjs && node scripts/build-smtc-host.mjs && node scripts/ensure-taskbar-host.mjs && node scripts/build-taskbar-thumbnail-helper.mjs && node scripts/build-steam-leaderboards.mjs && electron-vite dev",
+    "build:audio-host": "node scripts/build-audio-host.mjs",
+    "build:audio-host:release": "node scripts/build-audio-host.mjs --require-cuda",
+    "build:audio-component": "node scripts/build-audio-runtime-component.mjs",
+    "build:src-cuda-worker": "node scripts/build-src-cuda-worker.mjs",
+    "build:taskbar-host": "node scripts/build-taskbar-host.mjs",
+    "ensure:taskbar-host": "node scripts/ensure-taskbar-host.mjs",
+    "build:taskbar-thumbnail-helper": "node scripts/build-taskbar-thumbnail-helper.mjs",
+    "build:steam-leaderboards": "node scripts/build-steam-leaderboards.mjs",
+    "build:native-scanner": "node scripts/build-native-scanner.mjs",
+    "ensure:src-cuda-worker": "node scripts/ensure-src-cuda-worker.mjs",
+    "ensure:native-scanner": "node scripts/ensure-native-scanner.mjs",
+    "ensure:audio-host": "node scripts/ensure-audio-host.mjs",
+    "build:smtc-host": "node scripts/build-smtc-host.mjs",
+    "ensure:smtc-host": "node scripts/ensure-smtc-host.mjs",
+    "ensure:nsis-resources": "node scripts/ensure-nsis-resources.mjs",
+    "prepare:win-ffmpeg": "node scripts/prepare-win-ffmpeg.mjs",
+    "prepare:win-vc-runtime": "node scripts/prepare-win-vc-runtime.mjs",
+    "verify:ffmpeg": "node scripts/verify-ffmpeg-toolchain.mjs",
+    "verify:airplay-package": "node scripts/verify-airplay-package.mjs",
+    "verify:win-vc-runtime": "node scripts/verify-win-vc-runtime.mjs",
+    "verify:win-release-signatures": "node scripts/verify-win-release-signatures.mjs",
+    "pro:status": "node scripts/echo-private-overlay.mjs status",
+    "pro:pull": "node scripts/echo-private-overlay.mjs pull",
+    "pro:generate-plugin": "node scripts/echo-pro-generate-plugin.mjs",
+    "pro:decrypt-watermark": "node scripts/echo-pro-decrypt-watermark.mjs",
+    "test:audio-engine": "node scripts/test-audio-engine.mjs",
+    "sdm:quality-lab": "node scripts/run-sdm-quality-lab.mjs && tsx scripts/run-sdm-sound-profile-lab.ts",
+    "probe:matrix-dsd512": "tsx scripts/probe-matrix-dsd512.ts",
+    "smoke:audio-host": "node scripts/smoke-audio-host.mjs",
+    "smoke:audio-host:headless": "node scripts/smoke-audio-host-headless.mjs",
+    "smoke:pcm-bridge": "node scripts/smoke-pcm-bridge.mjs",
+    "presmoke:native-scanner": "node scripts/build-native-scanner.mjs",
+    "smoke:native-scanner": "node scripts/smoke-native-scanner.mjs",
+    "smoke:dsd-direct": "node scripts/smoke-dsd-direct.mjs",
+    "smoke:smtc-host": "node scripts/smoke-smtc-host.mjs",
+    "smoke:taskbar-thumbnail-helper": "electron scripts/smoke-taskbar-thumbnail-helper.cjs",
+    "ensure:native:electron": "node scripts/ensure-native-abi.mjs electron",
+    "ensure:native:node": "node scripts/ensure-native-abi.mjs node",
+    "ensure:airplay-raop": "node scripts/ensure-airplay-raop.mjs",
+    "build:airplay-raop": "node scripts/build-airplay-raop.mjs",
+    "rebuild:native": "node scripts/ensure-native-abi.mjs electron && node scripts/ensure-airplay-raop.mjs && node scripts/build-steam-leaderboards.mjs",
+    "rebuild:native:node": "npm rebuild better-sqlite3",
+    "sync:audio-host": "node scripts/sync-audio-host.mjs",
+    "sync:contributors": "node scripts/sync-github-contributors.mjs",
+    "build": "npm run typecheck && electron-vite build && npm run check:bundle-budget",
+    "build:quick": "node scripts/build-renderer-main.mjs && npm run check:bundle-budget",
+    "build:win": "npm run rebuild:native && npm run prepare:win-ffmpeg && npm run verify:ffmpeg && npm run ensure:audio-host && npm run ensure:smtc-host && npm run ensure:taskbar-host && npm run ensure:native-scanner && npm run build:taskbar-thumbnail-helper && npm run prepare:win-vc-runtime && npm run build && npm run ensure:nsis-resources && node scripts/build-win-base.mjs && npm run verify:win-vc-runtime && npm run verify:airplay-package && npm run check:steam-artifact",
+    "build:win:dir": "npm run rebuild:native && npm run prepare:win-ffmpeg && npm run verify:ffmpeg && npm run ensure:audio-host && npm run ensure:smtc-host && npm run ensure:taskbar-host && npm run ensure:native-scanner && npm run build:taskbar-thumbnail-helper && npm run prepare:win-vc-runtime && npm run build && node scripts/build-win-dir.mjs && npm run verify:win-vc-runtime && npm run verify:airplay-package && npm run check:steam-artifact",
+    "build:win:dir:quick": "npm run rebuild:native && npm run prepare:win-ffmpeg && npm run verify:ffmpeg && npm run ensure:audio-host && npm run ensure:smtc-host && npm run ensure:taskbar-host && npm run ensure:native-scanner && npm run build:taskbar-thumbnail-helper && npm run prepare:win-vc-runtime && npm run build:quick && node scripts/build-win-dir.mjs && npm run verify:win-vc-runtime && npm run verify:airplay-package && npm run check:steam-artifact",
+    "build:win:release": "npm run rebuild:native && npm run prepare:win-ffmpeg && npm run verify:ffmpeg && npm run build:audio-host:release && npm run build:smtc-host && npm run build:taskbar-host && npm run build:native-scanner && npm run build:taskbar-thumbnail-helper && npm run prepare:win-vc-runtime && npm run build && npm run ensure:nsis-resources && node scripts/build-win-release.mjs && npm run verify:win-vc-runtime && npm run verify:win-release-signatures && npm run verify:airplay-package && npm run check:steam-artifact",
+    "build:win:steam": "npm run rebuild:native && npm run prepare:win-ffmpeg && npm run verify:ffmpeg && npm run build:audio-host:release && npm run build:smtc-host && npm run build:taskbar-host && npm run build:native-scanner && npm run build:taskbar-thumbnail-helper && npm run prepare:win-vc-runtime && npm run build && node scripts/build-win-steam.mjs && npm run verify:win-vc-runtime && node scripts/verify-win-release-signatures.mjs --optional --unpacked-only && npm run verify:airplay-package && npm run check:steam-distribution && npm run check:steam-artifact",
+    "build:win:unsigned": "npm run rebuild:native && npm run prepare:win-ffmpeg && npm run verify:ffmpeg && npm run build:audio-host:release && npm run build:smtc-host && npm run build:taskbar-host && npm run build:native-scanner && npm run build:taskbar-thumbnail-helper && npm run prepare:win-vc-runtime && npm run build && npm run ensure:nsis-resources && node scripts/build-win-unsigned.mjs && npm run verify:win-vc-runtime && npm run build:audio-component && npm run verify:airplay-package && npm run check:steam-artifact",
+    "build:linux": "node scripts/build-linux.mjs",
+    "setup:mac": "node scripts/setup-macos.mjs",
+    "doctor:mac": "node scripts/doctor-macos.mjs",
+    "prepare:mac:native": "node scripts/prepare-macos-native.mjs",
+    "dev:mac": "node scripts/dev-macos.mjs",
+    "dev:mac:quick": "node scripts/dev-macos.mjs --quick",
+    "build:mac:foundation": "node scripts/build-macos-foundation.mjs",
+    "prepare:mac-icon": "node scripts/prepare-macos-icon.mjs",
+    "build:mac:dev-app": "node scripts/build-macos-dev-app.mjs",
+    "verify:mac:dev-app": "node scripts/verify-macos-dev-app.mjs",
+    "launch:mac:dev-app": "node scripts/launch-macos-dev-app.mjs",
+    "smoke:mac:native": "node scripts/smoke-macos-native.mjs",
+    "check:encoding": "node scripts/check-encoding.mjs",
+    "check:file-growth": "node scripts/check-oversized-file-growth.mjs",
+    "check:bundle-budget": "node scripts/check-bundle-budgets.mjs",
+    "check:steam-distribution": "node scripts/check-steam-distribution.mjs",
+    "check:steam-artifact": "node scripts/check-steam-artifact.mjs",
+    "check:third-party-notices": "node scripts/check-third-party-notices.mjs",
+    "steam:depot:prepare": "node scripts/steam/prepare-steam-depot.mjs",
+    "steam:depot:upload-private": "node scripts/steam/upload-steam-private-branch.mjs",
+    "steam:release:preflight": "node scripts/steam/create-release-preflight-report.mjs",
+    "workshop:author": "tsx scripts/workshop/authoring-cli.ts",
+    "workshop:sdk:check": "node scripts/workshop/check-sdk-package.mjs",
+    "workshop:sdk:pack": "node scripts/workshop/pack-sdk.mjs",
+    "check:theme-colors": "node scripts/check-theme-colors.mjs",
+    "lint": "npm run check:encoding && npm run check:theme-colors && eslint .",
+    "doctor": "node scripts/doctor.mjs",
+    "setup:mirror": "node scripts/setup-mirror.mjs",
+    "test": "vitest run",
+    "test:ci:core": "vitest run src/main/audio/AudioBackendContract.test.ts src/main/audio/BackendLifecycle.test.ts src/main/ipc/ipcRoundtrip.test.ts src/renderer/components/player/PlaybackCommandController.integration.test.tsx src/renderer/components/player/PlaybackQueueDrawer.test.tsx src/renderer/components/player/PlayerTransport.test.tsx",
+    "test:ci:functional": "node scripts/run-ci-functional-tests.mjs",
+    "test:kill": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/kill-vitest.ps1",
+    "posttest": "node scripts/ensure-native-abi.mjs electron",
+    "typecheck": "tsc --noEmit",
+    "prebenchmark:library": "node scripts/ensure-native-abi.mjs node",
+    "benchmark:library": "node scripts/benchmark-library.mjs",
+    "prebenchmark:file-scanner": "node scripts/build-native-scanner.mjs",
+    "benchmark:file-scanner": "node scripts/benchmark-file-scanner.mjs",
+    "prebenchmark:scan-stack": "node scripts/build-native-scanner.mjs",
+    "benchmark:scan-stack": "tsx scripts/benchmark-scan-stack.mjs",
+    "prebenchmark:metadata-reader": "node scripts/build-native-scanner.mjs",
+    "benchmark:metadata-reader": "node scripts/benchmark-native-metadata.mjs",
+    "benchmark:scan-concurrency": "node scripts/benchmark-scan-concurrency.mjs",
+    "postbenchmark:library": "node scripts/ensure-native-abi.mjs electron",
+    "repair:electron": "node scripts/install-electron.cjs",
+    "postinstall": "node scripts/ensure-native-abi.mjs electron"
+  },
+  "dependencies": {
+    "@clamber_l/crypto": "^0.1.12",
+    "@xmldom/xmldom": "^0.8.13",
+    "better-sqlite3": "^12.10.0",
+    "discord-rpc": "^4.0.1",
+    "fflate": "^0.8.3",
+    "iconv-lite": "^0.6.3",
+    "kuroshiro": "^1.2.0",
+    "kuroshiro-analyzer-kuromoji": "^1.1.0",
+    "mqtt": "^5.15.2",
+    "music-metadata": "^11.14.0",
+    "opencc-js": "^1.3.1",
+    "pinyin-pro": "^3.28.1",
+    "punycode": "^2.3.1",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.35.3",
+    "steamworks.js": "0.4.0",
+    "taglib-wasm": "^1.1.2"
+  },
+  "optionalDependencies": {
+    "@lox-audioserver/node-libraop": "0.3.3"
+  },
+  "overrides": {
+    "discord-rpc": {
+      "ws": "7.5.13"
+    },
+    "socks": {
+      "ip-address": "10.3.1"
+    }
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.2.0",
+    "@fontsource/outfit": "^5.2.8",
+    "@tanstack/react-virtual": "^3.13.24",
+    "@testing-library/react": "^16.3.2",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.13.1",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "electron": "^43.3.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "^29.1.1",
+    "lucide-react": "^0.468.0",
+    "motion": "^12.40.0",
+    "node-addon-api": "^8.9.0",
+    "playwright": "^1.60.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "shaka-player": "^5.2.4",
+    "tsx": "^4.20.6",
+    "typescript": "^5.3.3",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.6"
+  },
+  "build": {
+    "appId": "app.echo.steam",
+    "productName": "ECHO",
+    "executableName": "ECHO",
+    "npmRebuild": false,
+    "icon": "build-resources/icons/echo-app-icon.ico",
+    "directories": {
+      "output": "dist"
+    },
+    "extraResources": [
+      {
+        "from": "docs/workshop-sdk",
+        "to": "workshop-sdk",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "files": [
+      "out/main/**",
+      "out/preload/**",
+      "out/renderer/**",
+      "build-resources/icons/echo-app-icon.ico",
+      "build-resources/icons/echo-app-icon.png",
+      "THIRD_PARTY_NOTICES.md",
+      "licenses/fonts/**",
+      "package.json",
+      "!node_modules/@types/**",
+      "!node_modules/@lox-audioserver/node-libraop/build/**",
+      "!node_modules/@lox-audioserver/node-libraop/prebuilds/**",
+      "!node_modules/better-sqlite3/bin/**",
+      "!node_modules/better-sqlite3/build/deps/**",
+      "!node_modules/better-sqlite3/build/Release/obj/**",
+      "!node_modules/better-sqlite3/build/Release/*.exp",
+      "!node_modules/better-sqlite3/build/Release/*.iobj",
+      "!node_modules/better-sqlite3/build/Release/*.ipdb",
+      "!node_modules/better-sqlite3/build/Release/*.lib",
+      "!node_modules/better-sqlite3/build/Release/test_extension.node",
+      "!node_modules/better-sqlite3/build/*.sln",
+      "!node_modules/better-sqlite3/build/*.vcxproj*",
+      "!node_modules/better-sqlite3/deps/**",
+      "!node_modules/better-sqlite3/src/**",
+      "!node_modules/steamworks.js/dist/**"
+    ],
+    "asarUnpack": [
+      "node_modules/@clamber_l/crypto/dist/*",
+      "node_modules/better-sqlite3/build/Release/*.node",
+      "node_modules/kuromoji/dict/**/*",
+      "node_modules/sharp/**/*",
+      "node_modules/taglib-wasm/dist/*.wasm"
+    ],
+    "fileAssociations": [
+      {
+        "name": "Audio file",
+        "description": "Open local audio files with ECHO",
+        "ext": [
+          "mp3",
+          "flac",
+          "wav",
+          "wave",
+          "bwf",
+          "w64",
+          "m4a",
+          "m4p",
+          "aac",
+          "ogg",
+          "oga",
+          "opus",
+          "wma",
+          "alac",
+          "aiff",
+          "aif",
+          "aifc",
+          "au",
+          "snd",
+          "voc",
+          "ape",
+          "wv",
+          "tta",
+          "tak",
+          "caf",
+          "dsf",
+          "dff",
+          "mka",
+          "mkv",
+          "mp4",
+          "mov",
+          "webm",
+          "mp2",
+          "mp1",
+          "mpc",
+          "ofr",
+          "ofs",
+          "spx",
+          "amr",
+          "ac3",
+          "eac3",
+          "ec3",
+          "dd",
+          "ddp",
+          "thd",
+          "truehd",
+          "mlp",
+          "ac4",
+          "dts",
+          "cue"
+        ],
+        "role": "Viewer"
+      }
+    ],
+    "win": {
+      "icon": "build-resources/icons/echo-app-icon.ico",
+      "signExts": [
+        ".exe",
+        ".dll",
+        ".node"
+      ],
+      "extraResources": [
+        {
+          "from": "electron-app/build/echo-audio-host.exe",
+          "to": "tools/echo-audio-host.exe"
+        },
+        {
+          "from": "electron-app/build/echo-smtc-host.exe",
+          "to": "echo-smtc-host.exe"
+        },
+        {
+          "from": "electron-app/build/echo-native-scanner.exe",
+          "to": "echo-native-scanner.exe"
+        },
+        {
+          "from": "electron-app/build/echo-taskbar-host.exe",
+          "to": "echo-taskbar-host.exe"
+        },
+        {
+          "from": "electron-app/build/echo-taskbar-thumbnail-helper.node",
+          "to": "echo-taskbar-thumbnail-helper.node"
+        },
+        {
+          "from": "electron-app/build/echo-steam-leaderboards.node",
+          "to": "echo-steam-leaderboards.node"
+        },
+        {
+          "from": "src/main/connect/airplayRaopHelper.cjs",
+          "to": "airplayRaopHelper.cjs"
+        },
+        {
+          "from": "node_modules/steamworks.js/dist/win64/steamworksjs.win32-x64-msvc.node",
+          "to": "app.asar.unpacked/node_modules/steamworks.js/dist/win64/steamworksjs.win32-x64-msvc.node"
+        },
+        {
+          "from": "node_modules/steamworks.js/dist/win64/steam_api64.dll",
+          "to": "app.asar.unpacked/node_modules/steamworks.js/dist/win64/steam_api64.dll"
+        },
+        {
+          "from": "node_modules/@lox-audioserver/node-libraop/prebuilds/win32-x64",
+          "to": "app.asar.unpacked/node_modules/@lox-audioserver/node-libraop/prebuilds/win32-x64",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "electron-app/build/vc-runtime",
+          "to": ".",
+          "filter": [
+            "msvcp140.dll",
+            "vcruntime140.dll",
+            "vcruntime140_1.dll"
+          ]
+        },
+        {
+          "from": "electron-app/build/vc-runtime",
+          "to": "tools",
+          "filter": [
+            "msvcp140.dll",
+            "vcruntime140.dll",
+            "vcruntime140_1.dll"
+          ]
+        },
+        {
+          "from": "electron-app/build/vc-runtime",
+          "to": "app.asar.unpacked/node_modules/@lox-audioserver/node-libraop/prebuilds/win32-x64",
+          "filter": [
+            "msvcp140.dll",
+            "vcruntime140.dll",
+            "vcruntime140_1.dll"
+          ]
+        },
+        {
+          "from": "electron-app/build/vc-runtime",
+          "to": "app.asar.unpacked/node_modules/steamworks.js/dist/win64",
+          "filter": [
+            "msvcp140.dll",
+            "vcruntime140.dll",
+            "vcruntime140_1.dll"
+          ]
+        },
+        {
+          "from": "electron-app/tools",
+          "to": "tools",
+          "filter": [
+            "README.md",
+            "FFMPEG-LICENSE.txt",
+            "ffmpeg-manifest.json",
+            "ffmpeg.exe",
+            "*.dll"
+          ]
+        }
+      ],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "icon": "electron-app/build/macos/echo-app-icon.icns",
+      "category": "public.app-category.music",
+      "identity": null,
+      "hardenedRuntime": false,
+      "extraResources": [
+        {
+          "from": "electron-app/build/echo-audio-host",
+          "to": "echo-audio-host"
+        },
+        {
+          "from": "electron-app/build/echo-native-scanner",
+          "to": "echo-native-scanner"
+        },
+        {
+          "from": "node_modules/steamworks.js/dist/osx",
+          "to": "app.asar.unpacked/node_modules/steamworks.js/dist/osx",
+          "filter": [
+            "libsteam_api.dylib",
+            "steamworksjs.darwin-arm64.node",
+            "steamworksjs.darwin-x64.node"
+          ]
+        }
+      ],
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "icon": "build-resources/icons/echo-app-icon.png",
+      "extraResources": [
+        {
+          "from": "electron-app/build/echo-audio-host",
+          "to": "echo-audio-host"
+        },
+        {
+          "from": "electron-app/build/echo-native-scanner",
+          "to": "echo-native-scanner"
+        },
+        {
+          "from": "electron-app/tools-linux",
+          "to": "tools",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "AudioVideo"
+    },
+    "nsis": {
+      "artifactName": "ECHO-Setup-${version}.${ext}",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": false,
+      "shortcutName": "ECHO",
+      "runAfterFinish": true,
+      "installerIcon": "build-resources/icons/echo-app-icon.ico",
+      "uninstallerIcon": "build-resources/icons/echo-app-icon.ico"
+    },
+    "portable": {
+      "artifactName": "ECHO-Portable-${version}.${ext}"
+    }
+  },
+  "allowScripts": {
+    "better-sqlite3@12.10.0": true,
+    "electron-winstaller@5.4.0": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true,
+    "github:devsnek/node-register-scheme#e7cc9a63a1f512565da44cb57316d9fb10750e17": true,
+    "sharp@0.35.3": true
+  }
+}

@@ -1,0 +1,433 @@
+.workshop-authoring-studio {
+  display: grid;
+  gap: 14px;
+}
+
+.workshop-authoring-studio__header,
+.workshop-authoring-studio__actions,
+.workshop-authoring-projectbar,
+.workshop-authoring-projectbar > div,
+.workshop-authoring-projectbar > div:last-child {
+  display: flex;
+  align-items: center;
+}
+
+.workshop-authoring-studio__header {
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 24%, transparent);
+  border-radius: 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--echo-accent, #6678ff) 11%, transparent), transparent 56%);
+}
+
+.workshop-authoring-studio__actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.workshop-authoring-studio__header span {
+  color: var(--echo-accent, #8b9aff);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.workshop-authoring-studio__header h2,
+.workshop-authoring-studio__header p {
+  margin: 5px 0 0;
+}
+
+.workshop-authoring-studio__header p {
+  max-inline-size: 760px;
+  color: var(--echo-muted, #9ca3b8);
+  line-height: 1.55;
+}
+
+.workshop-authoring-create {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent);
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 72%, transparent);
+}
+
+.workshop-authoring-create label,
+.workshop-authoring-editors > label {
+  display: grid;
+  gap: 7px;
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-authoring-create input,
+.workshop-authoring-create select {
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding: 10px 11px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 16%, transparent);
+  border-radius: 9px;
+  color: var(--echo-text, #fff);
+  background: var(--echo-field, #0f1322);
+}
+
+.workshop-authoring-create > button {
+  grid-column: 1 / -1;
+  justify-self: end;
+}
+
+.workshop-authoring-projectbar {
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 86%, transparent);
+}
+
+.workshop-authoring-projectbar > div {
+  gap: 9px;
+}
+
+.workshop-authoring-projectbar span {
+  display: grid;
+  gap: 2px;
+}
+
+.workshop-authoring-projectbar small {
+  color: var(--echo-muted, #9ca3b8);
+}
+
+.workshop-authoring-projectbar > div:last-child {
+  gap: 6px;
+}
+
+.workshop-authoring-projectbar button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 13%, transparent);
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+}
+
+.workshop-authoring-dirty {
+  padding: 9px 12px;
+  border-inline-start: 3px solid #f5b942;
+  color: #f7d98c;
+  background: color-mix(in srgb, #f5b942 9%, transparent);
+  font-size: 12px;
+}
+
+.workshop-authoring-publication {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 24%, transparent);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 82%, transparent);
+}
+
+.workshop-authoring-publication > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workshop-authoring-publication > header span,
+.workshop-authoring-publication label {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 11px;
+}
+
+.workshop-authoring-publication > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.workshop-authoring-publication label {
+  display: grid;
+  gap: 5px;
+}
+
+.workshop-authoring-publication input,
+.workshop-authoring-publication select,
+.workshop-authoring-publication textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 9px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+  border-radius: 8px;
+  color: var(--echo-text, #fff);
+  background: var(--echo-field, #0f1322);
+}
+
+.workshop-authoring-publication__wide {
+  grid-column: 1 / -1;
+}
+
+.workshop-authoring-publication__rights {
+  display: flex !important;
+  grid-template-columns: auto 1fr;
+  align-items: flex-start;
+}
+
+.workshop-authoring-publication__rights input {
+  width: auto;
+  margin-top: 1px;
+}
+
+.workshop-authoring-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+  gap: 12px;
+}
+
+.workshop-authoring-workbench__panel {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 78%, transparent);
+}
+
+.workshop-authoring-workbench__panel:first-child {
+  grid-row: span 2;
+}
+
+.workshop-authoring-workbench__panel > header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-block-end: 12px;
+}
+
+.workshop-authoring-workbench__panel > header div {
+  display: grid;
+  gap: 2px;
+}
+
+.workshop-authoring-workbench__panel > header span,
+.workshop-authoring-workbench__panel > p,
+.workshop-authoring-workbench__empty,
+.workshop-authoring-quality small {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 11px;
+}
+
+.workshop-authoring-formgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.workshop-authoring-formgrid label {
+  display: grid;
+  gap: 5px;
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 11px;
+}
+
+.workshop-authoring-formgrid input,
+.workshop-authoring-formgrid select,
+.workshop-authoring-formgrid textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 9px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+  border-radius: 8px;
+  color: var(--echo-text, #fff);
+  background: var(--echo-field, #0f1322);
+  font: inherit;
+}
+
+.workshop-authoring-formgrid textarea {
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.workshop-authoring-formgrid__wide {
+  grid-column: 1 / -1;
+}
+
+.workshop-authoring-toggle {
+  display: flex !important;
+  grid-column: auto;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  align-self: end;
+  min-height: 34px;
+}
+
+.workshop-authoring-toggle input {
+  width: auto;
+}
+
+.workshop-authoring-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.workshop-authoring-scenarios button {
+  padding: 5px 7px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+  border-radius: 7px;
+  color: inherit;
+  background: transparent;
+  font-size: 11px;
+}
+
+.workshop-authoring-scenarios button[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--echo-accent, #6678ff) 58%, transparent);
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 13%, transparent);
+}
+
+.workshop-authoring-workbench__panel pre {
+  max-height: 190px;
+  overflow: auto;
+  margin: 8px 0 0;
+  padding: 9px;
+  white-space: pre-wrap;
+  border-radius: 8px;
+  color: #d9e5ff;
+  background: #0b1020;
+  font: 11px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.workshop-authoring-quality {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workshop-authoring-quality li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px;
+  align-items: start;
+}
+
+.workshop-authoring-quality li > span {
+  display: grid;
+  gap: 2px;
+}
+
+.workshop-authoring-quality li[data-severity="pass"] > svg {
+  color: #64d6a0;
+}
+
+.workshop-authoring-quality li[data-severity="warning"] > svg {
+  color: #f5b942;
+}
+
+.workshop-authoring-quality li[data-severity="blocker"] > svg,
+.workshop-authoring-workbench__error {
+  color: #ff7f86;
+}
+
+.workshop-authoring-editors {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 12px;
+}
+
+.workshop-authoring-editors textarea {
+  box-sizing: border-box;
+  min-block-size: 440px;
+  inline-size: 100%;
+  resize: vertical;
+  padding: 13px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+  border-radius: 12px;
+  color: #d9e5ff;
+  background: #0b1020;
+  font: 12px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
+  tab-size: 2;
+}
+
+.workshop-authoring-preview {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  max-block-size: 360px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 18%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 74%, transparent);
+}
+
+.workshop-authoring-preview header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 12px;
+  border-block-end: 1px solid color-mix(in srgb, var(--echo-border, #fff) 10%, transparent);
+}
+
+.workshop-authoring-preview pre,
+.workshop-authoring-preview p {
+  margin: 0;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.workshop-authoring-preview pre {
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.workshop-authoring-preview p,
+.workshop-authoring-preview footer {
+  color: var(--echo-muted, #9ca3b8);
+}
+
+.workshop-authoring-preview footer {
+  padding: 9px 12px;
+  border-block-start: 1px solid color-mix(in srgb, var(--echo-border, #fff) 10%, transparent);
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .workshop-authoring-create,
+  .workshop-authoring-editors,
+  .workshop-authoring-workbench,
+  .workshop-authoring-formgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .workshop-authoring-workbench__panel:first-child {
+    grid-row: auto;
+  }
+
+  .workshop-authoring-formgrid__wide {
+    grid-column: auto;
+  }
+
+  .workshop-authoring-preview {
+    grid-column: auto;
+  }
+
+  .workshop-authoring-studio__header,
+  .workshop-authoring-projectbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .workshop-authoring-studio__actions {
+    justify-content: flex-start;
+  }
+
+  .workshop-authoring-projectbar > div:last-child {
+    flex-wrap: wrap;
+  }
+}

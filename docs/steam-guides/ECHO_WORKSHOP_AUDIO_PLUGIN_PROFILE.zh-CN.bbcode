@@ -1,0 +1,151 @@
+[h1]ECHO 创意工坊 VST3 / VST3i 接入配置[/h1]
+
+这类 Workshop 项目分享的是“接入说明和便携预设”，不是 VST 插件本体。作者用 VST3 Class ID 描述订阅者自己安装的效果器或音源，并提供参数映射、0..1 归一化值、预设和建议路由。
+
+[h1]创建项目[/h1]
+
+[code]
+npm run workshop:author -- init misc/workshop/my-vst-profile ^
+  --kind audio-plugin-profile ^
+  --id echo.my-vst-profile ^
+  --title "My VST Profile" ^
+  --holder "Your Creator Name"
+[/code]
+
+编辑 content/audio-plugin-profile.json，添加你自己的 preview.jpg，然后执行：
+
+[code]
+npm run workshop:author -- prepare misc/workshop/my-vst-profile
+npm run workshop:author -- validate misc/workshop/my-vst-profile
+[/code]
+
+[h1]最小 Schema[/h1]
+
+[code]
+{
+  "type": "echo-workshop-audio-plugin-profile",
+  "schemaVersion": 1,
+  "id": "echo.my-vst-profile",
+  "title": "My VST Profile",
+  "format": "vst3",
+  "role": "effect",
+  "plugin": {
+    "classId": "0123456789abcdef0123456789abcdef",
+    "name": "Example Effect",
+    "vendor": "Example Vendor"
+  },
+  "adapter": {
+    "api": "echo.audio-plugin-adapter",
+    "minimumVersion": 1
+  },
+  "routing": { "placement": "post-dsp" },
+  "parameters": [
+    { "id": 7, "title": "Mix", "kind": "continuous", "defaultValue": 0.5 }
+  ],
+  "presets": [
+    { "id": "wide", "title": "Wide", "values": { "7": 0.8 } }
+  ]
+}
+[/code]
+
+[h1]字段规则[/h1]
+
+[list]
+[*]format 当前为 vst3。
+[*]role 可选 effect 或 instrument；instrument 用于 VST3i 音源描述。
+[*]classId 必须是 32 位十六进制，它才是匹配本机插件的依据。
+[*]placement 可选 pre-dsp 或 post-dsp，最终路由仍由 Audio Core 确认。
+[*]最多 256 个参数、64 个预设。参数 ID 必须唯一，参数值必须为 0..1。
+[*]choice 参数需要 2–128 个选项；预设只能引用已经声明的参数。
+[/list]
+
+[h1]效果器与音源的区别[/h1]
+
+[b]effect[/b] 用于处理已经存在的播放信号，例如均衡、混响、动态或空间效果。作者应选择 pre-dsp 或 post-dsp 的建议位置，并说明可能产生的延迟、电平变化和 bit-perfect 影响。
+
+[b]instrument[/b] 用于描述 VST3i 音源。接入配置只描述身份、参数和预设，不会从 Workshop frame 直接发送任意 MIDI、持有原生句柄或绕过 Audio Core 创建实例。只有兼容适配器明确支持的音源能力才能使用。
+
+[h1]参数设计[/h1]
+
+参数值统一使用 0..1，便于在不同系统间保存和分享。标题应使用用户能理解的名称，不要把厂商内部地址、内存偏移或自动生成的长字符串当作参数 ID。
+
+[code]
+"parameters": [
+  {
+    "id": 7,
+    "title": "Mix",
+    "kind": "continuous",
+    "defaultValue": 0.5
+  },
+  {
+    "id": 12,
+    "title": "Mode",
+    "kind": "choice",
+    "defaultValue": 0,
+    "choices": ["Clean", "Warm", "Wide"]
+  }
+]
+[/code]
+
+预设只应包含你原创或明确有权分享的数据。不要复制厂商安装包中的商业预设库、预览音频、界面截图或说明书。
+
+[h1]版本与兼容性[/h1]
+
+同名插件的不同版本可能使用不同 Class ID、参数 ID、选项顺序或归一化规则。更新项目时：
+
+[olist]
+[*]核对目标版本的真实 VST3 Class ID。
+[*]确认现有参数 ID 和预设在新版本上仍然对应相同含义。
+[*]提高配置版本并在改动说明中列出支持的插件版本。
+[*]如果新旧版本不兼容，发布独立配置，不要悄悄复用同一映射。
+[*]用真实本机插件和适配器完成加载、旁路、预设切换和退出 smoke。
+[/olist]
+
+Workshop 校验通过只能证明配置结构有效，不能证明第三方插件已经安装、获得许可、能够加载或实时处理稳定。
+
+[h1]订阅者需要什么[/h1]
+
+[olist]
+[*]从插件厂商正规渠道安装并激活具有匹配 Class ID 的 VST3/VST3i。
+[*]安装兼容的可选 echo.audio-plugin-adapter。
+[*]在 ECHO 创意工坊“已装”页点击“启用接入配置”。
+[*]查看 Audio Core 报告的实例、旁路、延迟和故障状态；“配置已启用”本身不代表声音已经经过插件。
+[/olist]
+
+[h1]禁止上传的内容[/h1]
+
+[list]
+[*].dll、.vst3 bundle、.clap、.so、.dylib、native addon 或可执行文件。
+[*]安装器、下载脚本、许可证、序列号、激活材料或破解补丁。
+[*]无权发布的厂商 Logo、界面截图、说明书、预设或其他素材。
+[/list]
+
+ECHO 会拒绝这些原生载荷，即使作者把它们写进文件清单。工坊配置只负责可移植映射；插件二进制、真实处理状态和故障隔离不属于 Workshop frame。
+
+[h1]常见问题[/h1]
+
+[b]配置已启用但没有声音变化[/b]
+
+检查 Class ID、插件角色、适配器版本和 Audio Core 实例状态。确认没有旁路，并查看是否因为不支持、崩溃隔离或路由约束而拒绝装配。
+
+[b]显示未满足本地依赖[/b]
+
+从厂商正规渠道安装匹配插件，并确认当前 ECHO 平台和架构能够加载它。不要从 Workshop 项目或陌生下载链接寻找二进制。
+
+[b]预设参数不正确[/b]
+
+插件版本可能改变了参数 ID 或归一化规则。停用配置并向作者反馈插件版本、Class ID、配置版本和错误现象；不要手改清单冒充兼容。
+
+[b]插件导致异常或延迟过高[/b]
+
+先旁路或停用接入配置。真实实例状态、延迟和故障隔离以 Audio Core 为准；Workshop UI 显示不能替代音频后端事实。
+
+[h1]作者发布前检查[/h1]
+
+[olist]
+[*]Class ID、名称、厂商和 effect / instrument 角色来自你真实验证的插件版本。
+[*]参数 ID 唯一，默认值和预设值全部在 0..1 范围内。
+[*]说明最低适配器版本、建议路由、已验证平台和插件版本。
+[*]不包含任何第三方二进制、安装器、激活材料或无权分享的素材。
+[*]运行 prepare 与 validate，并通过真实订阅、启用、加载、旁路、预设和停用验收。
+[/olist]

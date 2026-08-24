@@ -1,0 +1,28 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>body{font:14px system-ui;margin:16px;color:#e2e8f0;background:#0f172a}button{padding:8px 12px;color:inherit;background:#1e293b;border:1px solid #475569;border-radius:6px}pre{white-space:pre-wrap}</style>
+<h2>Hello ECHO</h2>
+<p>这是一个可导出为 .echomod 的最小面板模组。</p>
+<button id="refresh">读取播放状态</button>
+<pre id="output">等待操作...</pre>
+<script>
+  const pluginId = 'com.example.hello-mod';
+  const channel = 'echo:plugin-panel';
+  const pending = new Map();
+  const request = (action, payload) => new Promise((resolve, reject) => {
+    const requestId = `${Date.now()}-${Math.random()}`;
+    pending.set(requestId, { resolve, reject });
+    parent.postMessage({ channel, version: 2, type: 'request', requestId, pluginId, action, payload }, '*');
+  });
+  addEventListener('message', (event) => {
+    const message = event.data;
+    const result = pending.get(message?.requestId);
+    if (!result || message.pluginId !== pluginId) return;
+    pending.delete(message.requestId);
+    message.ok ? result.resolve(message.result) : result.reject(new Error(message.error));
+  });
+  const output = document.getElementById('output');
+  document.getElementById('refresh').onclick = async () => {
+    output.textContent = JSON.stringify(await request('host:playback:getStatus'), null, 2);
+  };
+</script>

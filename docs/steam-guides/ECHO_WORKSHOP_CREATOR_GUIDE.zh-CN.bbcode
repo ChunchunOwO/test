@@ -1,0 +1,193 @@
+[h1]ECHO 创意工坊创作者入门[/h1]
+
+ECHO 创意工坊不只可以更换颜色。创作者能够制作完整主题、歌词场景、音频可视化、DSP / EQ 预设、面向用户本机 VST3/VST3i 的接入配置，以及带 JavaScript 命令和工具面板的沙箱插件。
+
+本指南适用于 ECHO Steam 正式版，目标 AppID 为 5105090。示例使用项目自带的创作工具完成创建、校验与私有测试；订阅内容不会自动执行或自动改变用户设置。
+
+[h1]你可以创作什么[/h1]
+
+[list]
+[*][b]主题 Theme[/b]：修改明暗色系、侧栏、标题栏、播放器、卡片、动效和页面舞台；也可以携带完全自定义的 HTML / CSS / JavaScript UI。
+[*][b]歌词场景 Lyrics Scene[/b]：用声明式场景图组合歌词、翻译、封面、播放进度与频谱槽位。
+[*][b]可视化 Visualizer Preset[/b]：配置条形、波形或环形视觉，以及颜色、灵敏度、平滑和衰减。
+[*][b]DSP / EQ 预设[/b]：发布经过校验的 32 段均衡器参数。
+[*][b]音频插件接入配置[/b]：用 VST3 Class ID、参数映射和便携预设描述用户自己安装的效果器或音源；工坊包不携带插件二进制。
+[*][b]沙箱插件 Plugin Package[/b]：注册命令、工具面板、可搜索音源、歌词源与作者 Agent，按用户批准的能力读取曲库、操作收藏/本地播放列表、编排队列、导航页面、使用只读频谱并调用清单声明的远程服务。
+[/list]
+
+[h1]准备环境[/h1]
+
+需要 ECHO 源码工作区、项目锁定的 Node.js 22 与 npm 10。以下命令均在仓库根目录运行。
+
+[code]
+npm ci
+npm run workshop:author -- --help
+[/code]
+
+创作工具不会收集 Steam 密码、Steam Guard 验证码或 Cookie，也不会自行公开内容。
+
+[h1]五分钟创建第一个项目[/h1]
+
+下面创建一个主题项目：
+
+[code]
+npm run workshop:author -- init misc/workshop/aurora-theme ^
+  --kind theme ^
+  --id echo.aurora-theme ^
+  --title "Aurora Theme" ^
+  --holder "Your Creator Name"
+[/code]
+
+PowerShell 用户可以把行尾的 ^ 改为反引号，或者把命令写成一行。
+
+生成的项目包含：
+
+[code]
+aurora-theme/
+  echo.workshop.project.json
+  README.md
+  content/
+    echo.workshop.json
+    theme.json
+[/code]
+
+请在项目根目录添加 preview.jpg、preview.png 或 preview.gif。预览图需要是你拥有或明确获授权的素材，建议使用清晰的方形构图，文件不超过 1 MB。
+
+[h1]准备与校验[/h1]
+
+[code]
+npm run workshop:author -- prepare misc/workshop/aurora-theme
+npm run workshop:author -- validate misc/workshop/aurora-theme
+[/code]
+
+[b]prepare[/b] 会重新统计 content 目录中的文件，写入精确大小和 SHA-256，调用与 ECHO 启用阶段相同的生产解析器，并生成本地列表预览。
+
+[b]validate[/b] 用来确认外层清单、内容类型、路径、哈希、大小、许可证和兼容性仍然有效。
+
+每次修改内容文件后都要重新运行 prepare；不要手工伪造哈希。
+
+[h1]创建沙箱插件[/h1]
+
+[code]
+npm run workshop:author -- init misc/workshop/community-tools ^
+  --kind plugin-package ^
+  --id echo.community-tools ^
+  --title "Community Tools" ^
+  --holder "Your Creator Name"
+[/code]
+
+生成的 community.echo 包含后台脚本、一个声明命令、一个工具面板、作者 Agent、可搜索音源提供器、可选择的歌词源与直链音源示例。插件只会在用户确认精确权限清单后运行。
+
+[code]
+echo.commands.register(
+  'library-summary',
+  { title: '显示曲库摘要' },
+  async () => {
+    const summary = await echo.library.getSummary();
+    await echo.ui.notify(`曲库中有 ${summary.trackCount} 首歌曲`);
+  },
+);
+[/code]
+
+插件还能使用结构化专辑/艺人/流派查询、收藏、本地播放列表、播放队列、应用导航、Audio Core 只读频谱、宿主持有的可搜索音源界面、会话级确认的 HTTP(S) 直链音源、固定域名的受限 GET/POST、作者自写 Agent 与 64 KB 私有状态。音源提供器由作者实现 search / resolve，ECHO 负责结果校验、来源确认、队列与实际播放。Agent 的规则、算法和交互由作者实现，ECHO 不提供统一模型或 API Key。远程目录、Webhook 或 Agent 服务需同时申请 network:request，并在外层 networkHosts 中声明每个域名。完整方法请查看《ECHO 创意工坊沙箱插件 API》指南。
+
+插件也可以在 contributes.settings 中声明文本、数字、开关和选项设置。ECHO 会在宿主拥有的“插件设置”界面统一渲染、校验并按插件隔离保存；作者通过 echo.settings.get / set / onChanged 使用这些值。设置需要 fs:plugin 权限，最多 32 项。Workshop 不接受 secret 类型，不要让用户把 API Key、密码或 Cookie 填入普通文本设置。
+
+插件可以申请 lyrics:provide，并在 contributes.lyricsProviders 中声明歌词源。用户会在歌词设置中选择某个源并主动查询；处理函数只接收标题、艺人、专辑和时长等清理后元数据，返回有数量与体积上限的 LRC/文本候选。远程歌词目录可另行申请 network:request；即便如此也不会获得本地路径、音频内容或 Cookie。
+
+[h1]创建自定义歌词主题[/h1]
+
+[code]
+npm run workshop:author -- init misc/workshop/my-lyrics-scene ^
+  --kind lyrics-style ^
+  --id echo.my-lyrics-scene ^
+  --title "My Lyrics Scene" ^
+  --holder "Your Creator Name"
+[/code]
+
+编辑 content/lyrics-scene.json，用声明式 group、slot、decoration、image 节点组合封面、标题、艺人、歌词、翻译、进度、时间和频谱。启用后，用户可以直接在歌词设置的“创意工坊歌词主题”中选择，并可随时切回 ECHO 内置布局。场景不能注入 HTML、JavaScript、任意 CSS 或外部素材 URL。
+
+制作一起听插件时，在 .echo 权限中加入 playback:share，并在外层 echo.workshop.json 的 networkHosts 中列出上传服务和播放 CDN。getShareInfo、shareCurrentTrack、getShareTask、playUrl 已作为 Workshop API 提供。ECHO 负责读取当前本地歌曲、逐次征求用户确认并流式上传；插件只负责房间 UI、服务协议和同步逻辑，不会得到本地路径。
+
+[h1]创建 VST3 / VST3i 接入配置[/h1]
+
+[code]
+npm run workshop:author -- init misc/workshop/my-vst-profile ^
+  --kind audio-plugin-profile ^
+  --id echo.my-vst-profile ^
+  --title "My VST Profile" ^
+  --holder "Your Creator Name"
+[/code]
+
+编辑 content/audio-plugin-profile.json，填写订阅者本机插件的 32 位十六进制 VST3 Class ID、厂商、名称、effect 或 instrument 角色、参数 ID、0..1 归一化值和预设。配置启用后仍要等待匹配插件与兼容 Audio Core 适配器；“配置已启用”不代表音频已经经过插件。
+
+不要把 .dll、.vst3 bundle、安装器、许可证、破解补丁或下载脚本放入工坊项目。插件应由订阅者从厂商正规渠道自行安装。
+
+[h1]完全自定义主题 UI[/h1]
+
+主题可以在 theme.json 中声明 runtime.entry 与 runtime.capabilities，并把 HTML、CSS、JavaScript、JSON、WOFF/WOFF2 和栅格图片放在 content/ui/ 下。
+
+自定义 UI 可以替换可见界面结构，但仍通过宿主能力桥控制播放和队列。宿主始终保留不可遮盖的退出控制，并支持 Ctrl+Shift+F12 紧急退出。
+
+自定义 frame 不会得到 Node、文件系统、Steamworks、原始 IPC、任意网络、外部媒体或 Audio Core 对象。
+
+[h1]私有测试发布[/h1]
+
+先检查项目配置、标题、作者、许可证、预览图和内容权利，然后运行：
+
+[code]
+npm run workshop:author -- publish-private misc/workshop/aurora-theme ^
+  --confirm-rights owned-or-authorized
+[/code]
+
+此命令只创建或更新[b]私有[/b] Workshop 项目，并固定使用正式 AppID 5105090。它不会把项目改为公开。
+
+首次创建成功后，PublishedFileID 会写入 echo.workshop.project.json。请保留这个编号，否则下一次上传可能变成新的项目。
+
+[h1]真实订阅验收[/h1]
+
+[olist]
+[*]使用 Steam 客户端订阅私有测试项目。
+[*]等待下载完成，打开 ECHO 的“创意工坊 → 已安装”。
+[*]检查项目标题、版本、类型和权限。
+[*]点击“使用”或“确认权限并启用”。
+[*]主题需要检查切换与紧急退出；插件需要检查命令、面板、事件与权限拒绝。
+[*]更新项目后，再次确认哈希校验、版本切换和新增权限重新授权。
+[/olist]
+
+“上传成功”不等于“用户端可用”。只有真实 Steam 订阅、下载、导入、启用和使用流程通过后，才能认为这份内容完成验收。
+
+[h1]内容与许可要求[/h1]
+
+[list]
+[*]只能上传你原创、拥有或明确获授权的代码、图片、字体和其他素材。
+[*]许可证声明必须与实际内容一致，并保留需要的版权和 notice。
+[*]不要上传艺人照片、专辑封面、平台 Logo、游戏角色或来源不明的素材。
+[*]不要在项目中放入密码、Cookie、Token、Steam Guard、机器路径或个人日志。
+[*]音频插件接入配置只能发布原创映射和有权分享的预设；不能重新分发第三方插件二进制、激活信息或厂商素材。
+[*]公开发布前需要单独检查内容权利、隐私、删除、举报与滥用处理。
+[/list]
+
+[h1]常见错误[/h1]
+
+[b]哈希或文件清单不一致[/b]
+
+修改文件后重新运行 prepare，不要手改 echo.workshop.json 的 files 数组。
+
+[b]插件权限不受支持[/b]
+
+只能声明 ECHO Workshop API 文档列出的能力。旧版任意 network、任意文件、native addon 和主进程插件权限不会进入 Steam Workshop 沙箱；联网请使用 network:request 并声明固定域名。
+
+[b]插件更新后不能自动运行[/b]
+
+只要权限列表发生变化，ECHO 就会要求用户重新确认。这是正常行为。
+
+[b]订阅后没有改变界面[/b]
+
+订阅和下载不会自动启用内容。请在 ECHO 的“已安装”页面明确使用该项目。
+
+[h1]最后的创作建议[/h1]
+
+先用最少权限做出一个明确、好玩的想法，再逐步增加能力。一个优秀的 Workshop 项目应该让用户一眼理解它提供什么，并且在停用后能干净地回到 ECHO 原来的状态。
+
+欢迎用可搜索音源、歌词源、歌词主题、面板、队列工具、直链音源、作者 Agent 和音乐可视化做出我们还没想到的东西。

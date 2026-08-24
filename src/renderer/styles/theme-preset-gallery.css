@@ -1,0 +1,228 @@
+/*
+ * Theme preset gallery polish.
+ * Loads after settings-polish.css and only refines how the theme preset
+ * summary and cards look in settings. Themed skins (childrenDoodle / FINAL)
+ * keep their own higher-specificity overrides.
+ *
+ * Performance notes: no backdrop-filter, no idle pseudo-elements for the
+ * hover sheen (created on :hover only), and hover motion uses transform,
+ * so the ~40 cards cost nothing extra while idle.
+ */
+
+/* ---------- Grid rhythm ---------- */
+
+@media (min-width: 761px) {
+  .settings-page .settings-theme-preset-grid {
+    grid-template-columns: repeat(auto-fill, minmax(172px, 1fr));
+    gap: 14px;
+  }
+}
+
+/* ---------- Summary button ---------- */
+
+.settings-page .settings-theme-preset-summary {
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+}
+
+.settings-page .settings-theme-preset-summary-preview {
+  width: 56px;
+  height: 36px;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.4),
+    inset 0 -10px 14px -10px rgb(16 24 40 / 0.22),
+    0 4px 10px rgb(30 25 24 / 0.1);
+}
+
+/* ---------- Card preview: glass mock chip + hover sheen ---------- */
+
+.settings-page .settings-theme-preset-preview {
+  position: relative;
+  overflow: hidden;
+  min-height: 68px;
+  border-radius: 10px;
+  isolation: isolate;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.34),
+    inset 0 -14px 18px -14px rgb(16 24 40 / 0.26),
+    0 8px 18px rgb(30 25 24 / 0.1);
+}
+
+/* Miniature "now playing" chip drawn with layered backgrounds (album dot +
+   title bar + subtitle bar). Plain translucent paint, no backdrop-filter. */
+.settings-page .settings-theme-preset-preview::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  height: 24px;
+  border-radius: 7px;
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 0.92) 0 5px, transparent 5.5px) no-repeat 6px 50% / 12px 100%,
+    linear-gradient(rgb(255 255 255 / 0.85), rgb(255 255 255 / 0.85)) no-repeat 24px 7px / 48% 4px,
+    linear-gradient(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.5)) no-repeat 24px 14px / 30% 3px,
+    rgb(255 255 255 / 0.3);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.34),
+    0 3px 8px rgb(16 24 40 / 0.14);
+}
+
+/* Diagonal light sweep. The pseudo-element only exists while hovered and
+   plays a one-shot transform animation, ending fully off-preview. */
+html:not([data-theme-preset='childrenDoodle']):not([data-theme-preset='FINAL']) .settings-page .settings-theme-preset-card:hover:not(.locked) .settings-theme-preset-preview::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -40%;
+  bottom: -40%;
+  left: -70%;
+  width: 55%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.34), transparent); /* theme-color-allow: fixed white glass sheen over per-preset preview art */
+  pointer-events: none;
+  animation: theme-preset-sheen 620ms ease forwards;
+}
+
+@keyframes theme-preset-sheen {
+  from {
+    opacity: 0;
+    transform: skewX(-18deg);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 1;
+    transform: skewX(-18deg) translateX(340%);
+  }
+}
+
+/* ---------- Preview badge (check / random icon) ---------- */
+
+.settings-page .settings-theme-preset-preview svg {
+  position: relative;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  padding: 4px;
+  box-shadow:
+    0 0 0 2px rgb(255 255 255 / 0.55),
+    0 4px 10px rgb(16 24 40 / 0.24);
+}
+
+.settings-page .settings-theme-preset-card.active .settings-theme-preset-preview svg {
+  animation: theme-preset-check-pop 240ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.settings-page .settings-theme-preset-card[data-preset="random"] .settings-theme-preset-preview svg {
+  transition: transform 260ms cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.settings-page .settings-theme-preset-card[data-preset="random"]:hover:not(.locked) .settings-theme-preset-preview svg {
+  transform: rotate(180deg);
+}
+
+@keyframes theme-preset-check-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+
+  60% {
+    transform: scale(1.14);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---------- Swatches: overlapping stack that fans out on hover ----------
+   The overlap is static (margin), the fan-out animates transform only, so
+   hovering never triggers layout. */
+
+.settings-page .settings-theme-preset-swatches {
+  gap: 0;
+  min-height: 22px;
+}
+
+.settings-page .settings-theme-preset-swatches span {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(var(--preset-panel-rgb)); /* theme-color-allow: preset panel token */
+  margin-left: -8px;
+  box-shadow:
+    inset 0 0 0 1px rgb(16 24 40 / 0.1),
+    0 2px 6px rgb(30 25 24 / 0.14);
+  transition: transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.settings-page .settings-theme-preset-swatches span:first-child {
+  margin-left: 0;
+}
+
+html:not([data-theme-preset='childrenDoodle']):not([data-theme-preset='FINAL']) .settings-page .settings-theme-preset-card:is(:hover:not(.locked), .active) .settings-theme-preset-swatches span:nth-child(2) {
+  transform: translateX(10px);
+}
+
+html:not([data-theme-preset='childrenDoodle']):not([data-theme-preset='FINAL']) .settings-page .settings-theme-preset-card:is(:hover:not(.locked), .active) .settings-theme-preset-swatches span:nth-child(3) {
+  transform: translateX(20px);
+}
+
+html:not([data-theme-preset='childrenDoodle']):not([data-theme-preset='FINAL']) .settings-page .settings-theme-preset-card:is(:hover:not(.locked), .active) .settings-theme-preset-swatches span:nth-child(4) {
+  transform: translateX(30px);
+}
+
+html:not([data-theme-preset='childrenDoodle']):not([data-theme-preset='FINAL']) .settings-page .settings-theme-preset-card:is(:hover:not(.locked), .active) .settings-theme-preset-swatches span:nth-child(5) {
+  transform: translateX(40px);
+}
+
+html[data-theme='dark'] .settings-page .settings-theme-preset-swatches span {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.14),
+    0 2px 6px rgb(0 0 0 / 0.32);
+}
+
+/* ---------- Locked cards ---------- */
+
+.settings-page .settings-theme-preset-card.locked .settings-theme-preset-preview {
+  opacity: 0.65;
+}
+
+/* ---------- Themed skins keep their own flat previews ---------- */
+
+html[data-theme-preset='childrenDoodle'] .settings-page .settings-theme-preset-preview::before,
+html[data-theme-preset='FINAL'] .settings-page .settings-theme-preset-preview::before {
+  content: none;
+}
+
+html[data-theme-preset='childrenDoodle'] .settings-page .settings-theme-preset-swatches,
+html[data-theme-preset='FINAL'] .settings-page .settings-theme-preset-swatches {
+  gap: 6px;
+}
+
+html[data-theme-preset='childrenDoodle'] .settings-page .settings-theme-preset-swatches span,
+html[data-theme-preset='FINAL'] .settings-page .settings-theme-preset-swatches span {
+  margin-left: 0;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-page .settings-theme-preset-preview svg,
+  .settings-page .settings-theme-preset-swatches span {
+    transition: none;
+    animation: none;
+  }
+
+  html:not([data-theme-preset='childrenDoodle']):not([data-theme-preset='FINAL']) .settings-page .settings-theme-preset-card:hover:not(.locked) .settings-theme-preset-preview::after {
+    content: none;
+  }
+
+  .settings-page .settings-theme-preset-card[data-preset="random"]:hover:not(.locked) .settings-theme-preset-preview svg {
+    transform: none;
+  }
+}

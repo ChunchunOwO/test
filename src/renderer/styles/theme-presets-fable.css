@@ -1,0 +1,360 @@
+/*
+ * Fable aesthetic theme pack.
+ * Loads after theme-presets.css. Tokens follow the existing preset contract;
+ * washes, radius and blur are per-theme so the four skins do not share one
+ * material recipe.
+ */
+
+/* ------------------------------------------------------------------ light */
+
+html[data-theme="light"][data-theme-preset="nightGlass"] {
+  --preset-app-bg: #f3f5fb;
+  --preset-app-bg-2: #dce2f2;
+  --preset-app-bg-3: #e6e3f2;
+  --preset-panel-rgb: 251 252 255;
+  --preset-soft-rgb: 232 236 246;
+  --preset-border-rgb: 139 150 188;
+  --preset-shadow-rgb: 28 36 64;
+  --preset-text: #3a4258;
+  --preset-heading: #1c2238;
+  --preset-muted: #5e6780;
+  --preset-subtle: #848ca3;
+  --preset-accent: #5564c8;
+  --preset-accent-strong: #3b479e;
+  --preset-accent-rgb: 85 100 200;
+  --preset-secondary: #5d7d8c;
+  --preset-secondary-rgb: 93 125 140;
+  --preset-success-text: #2f6d5c;
+  --preset-on-accent: #ffffff;
+}
+
+html[data-theme="light"][data-theme-preset="boneIron"] {
+  --preset-app-bg: #f6f4f0;
+  --preset-app-bg-2: #e6e1d8;
+  --preset-app-bg-3: #e4e6e8;
+  --preset-panel-rgb: 251 250 247;
+  --preset-soft-rgb: 238 234 227;
+  --preset-border-rgb: 168 159 146;
+  --preset-shadow-rgb: 52 44 38;
+  --preset-text: #433e38;
+  --preset-heading: #2a2622;
+  --preset-muted: #6d6760;
+  --preset-subtle: #8f877e;
+  --preset-accent: #6b3a32;
+  --preset-accent-strong: #4a2621;
+  --preset-accent-rgb: 107 58 50;
+  --preset-secondary: #4f5e6a;
+  --preset-secondary-rgb: 79 94 106;
+  --preset-success-text: #3f7a5e;
+  --preset-on-accent: #ffffff;
+}
+
+html[data-theme="light"][data-theme-preset="harborLamp"] {
+  --preset-app-bg: #eef3f2;
+  --preset-app-bg-2: #d0e0de;
+  --preset-app-bg-3: #e4ddd4;
+  --preset-panel-rgb: 247 251 250;
+  --preset-soft-rgb: 226 236 235;
+  --preset-border-rgb: 122 154 156;
+  --preset-shadow-rgb: 32 56 58;
+  --preset-text: #33494b;
+  --preset-heading: #1a2e30;
+  --preset-muted: #5a7072;
+  --preset-subtle: #7d9193;
+  --preset-accent: #2d5f62;
+  --preset-accent-strong: #1c4245;
+  --preset-accent-rgb: 45 95 98;
+  --preset-secondary: #8b6a48;
+  --preset-secondary-rgb: 139 106 72;
+  --preset-success-text: #2c6e5a;
+  --preset-on-accent: #ffffff;
+}
+
+html[data-theme="light"][data-theme-preset="ashRose"] {
+  --preset-app-bg: #f5f2f3;
+  --preset-app-bg-2: #e6dfe1;
+  --preset-app-bg-3: #e2e4e0;
+  --preset-panel-rgb: 251 249 249;
+  --preset-soft-rgb: 238 232 233;
+  --preset-border-rgb: 176 154 160;
+  --preset-shadow-rgb: 56 40 44;
+  --preset-text: #4a4042;
+  --preset-heading: #2e2426;
+  --preset-muted: #72686a;
+  --preset-subtle: #908588;
+  --preset-accent: #8a5560;
+  --preset-accent-strong: #5e3840;
+  --preset-accent-rgb: 138 85 96;
+  --preset-secondary: #6b6e5c;
+  --preset-secondary-rgb: 107 110 92;
+  --preset-success-text: #4a7a62;
+  --preset-on-accent: #ffffff;
+}
+
+/* ------------------------------------------------------------------- dark */
+
+html[data-theme="dark"][data-theme-preset="nightGlass"] {
+  --preset-app-bg: #0e111c;
+  --preset-app-bg-2: #181e32;
+  --preset-app-bg-3: #161428;
+  --preset-panel-rgb: 28 34 54;
+  --preset-soft-rgb: 21 25 42;
+  --preset-border-rgb: 122 134 200;
+  --preset-shadow-rgb: 4 6 16;
+  --preset-text: #d8def4;
+  --preset-heading: #f4f6ff;
+  --preset-muted: #a8b2d0;
+  --preset-subtle: #8892b0;
+  --preset-accent: #8b98f0;
+  --preset-accent-strong: #c5ccff;
+  --preset-accent-rgb: 139 152 240;
+  --preset-secondary: #8eb4c4;
+  --preset-secondary-rgb: 142 180 196;
+  --preset-success-text: #9fd4c2;
+  --preset-on-accent: #12162a;
+}
+
+html[data-theme="dark"][data-theme-preset="boneIron"] {
+  --preset-app-bg: #141210;
+  --preset-app-bg-2: #1d1a17;
+  --preset-app-bg-3: #1a1c1e;
+  --preset-panel-rgb: 34 30 26;
+  --preset-soft-rgb: 26 23 20;
+  --preset-border-rgb: 160 120 104;
+  --preset-shadow-rgb: 0 0 0;
+  --preset-text: #e4dcd2;
+  --preset-heading: #f4efe8;
+  --preset-muted: #b8aea2;
+  --preset-subtle: #948a7e;
+  --preset-accent: #c9897a;
+  --preset-accent-strong: #edd0c6;
+  --preset-accent-rgb: 201 137 122;
+  --preset-secondary: #8aa0b0;
+  --preset-secondary-rgb: 138 160 176;
+  --preset-success-text: #a8d0b8;
+  --preset-on-accent: #2a1612;
+}
+
+html[data-theme="dark"][data-theme-preset="harborLamp"] {
+  --preset-app-bg: #0b1416;
+  --preset-app-bg-2: #122226;
+  --preset-app-bg-3: #1a1712;
+  --preset-panel-rgb: 22 36 40;
+  --preset-soft-rgb: 15 27 30;
+  --preset-border-rgb: 74 136 140;
+  --preset-shadow-rgb: 2 8 10;
+  --preset-text: #d2e4e5;
+  --preset-heading: #eef7f7;
+  --preset-muted: #9cb8ba;
+  --preset-subtle: #7a9698;
+  --preset-accent: #6aafb4;
+  --preset-accent-strong: #c5e8ea;
+  --preset-accent-rgb: 106 175 180;
+  --preset-secondary: #c4a06a;
+  --preset-secondary-rgb: 196 160 106;
+  --preset-success-text: #9edcc8;
+  --preset-on-accent: #082022;
+}
+
+html[data-theme="dark"][data-theme-preset="ashRose"] {
+  --preset-app-bg: #141112;
+  --preset-app-bg-2: #1f191b;
+  --preset-app-bg-3: #1a1b18;
+  --preset-panel-rgb: 36 28 30;
+  --preset-soft-rgb: 26 21 22;
+  --preset-border-rgb: 160 120 128;
+  --preset-shadow-rgb: 8 4 6;
+  --preset-text: #e6dcde;
+  --preset-heading: #f6f0f1;
+  --preset-muted: #b8acae;
+  --preset-subtle: #94888a;
+  --preset-accent: #c89aa4;
+  --preset-accent-strong: #edd4d8;
+  --preset-accent-rgb: 200 154 164;
+  --preset-secondary: #b4b69a;
+  --preset-secondary-rgb: 180 182 154;
+  --preset-success-text: #b4d8c4;
+  --preset-on-accent: #2a161a;
+}
+
+/* ---------------------------------------------------------- material: night glass
+ * Drawer language: dual radial wash, cooler shadow, slightly springy radius.
+ */
+html[data-theme-preset="nightGlass"] {
+  --theme-corner-radius: 13px;
+  --echo-polish-radius: 13px;
+  --theme-saturation: 96%;
+  --echo-polish-saturation: 96%;
+}
+
+html[data-theme="light"][data-theme-preset="nightGlass"] {
+  --theme-panel-blur: 16px;
+  --echo-polish-panel-blur: 16px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 12% -6%, rgb(var(--preset-accent-rgb) / 0.16), transparent 36%),
+    radial-gradient(ellipse at 90% -2%, rgb(var(--preset-secondary-rgb) / 0.12), transparent 34%),
+    linear-gradient(135deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 50%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.78), rgb(var(--preset-soft-rgb) / 0.82) 58%, rgb(var(--preset-panel-rgb) / 0.9));
+  --echo-polish-page-bg:
+    radial-gradient(ellipse at 17% -5%, rgb(var(--preset-accent-rgb) / 0.08), transparent 36%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.46), rgb(var(--preset-soft-rgb) / 0.76) 54%, rgb(var(--preset-panel-rgb) / 0.9));
+  --echo-polish-player-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.95), rgb(var(--preset-soft-rgb) / 0.92));
+}
+
+html[data-theme="dark"][data-theme-preset="nightGlass"] {
+  --theme-panel-blur: 18px;
+  --echo-polish-panel-blur: 18px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 12% -6%, rgb(var(--preset-accent-rgb) / 0.2), transparent 38%),
+    radial-gradient(ellipse at 92% 100%, rgb(var(--preset-secondary-rgb) / 0.12), transparent 42%),
+    linear-gradient(168deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 48%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    radial-gradient(ellipse at 0% 100%, rgb(var(--preset-secondary-rgb) / 0.08), transparent 52%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.92), rgb(var(--preset-soft-rgb) / 0.96) 58%, rgb(var(--preset-panel-rgb) / 0.98));
+  --echo-polish-page-bg:
+    radial-gradient(ellipse at 88% 0%, rgb(var(--preset-accent-rgb) / 0.12), transparent 38%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.82), rgb(var(--preset-soft-rgb) / 0.96) 56%, var(--preset-app-bg));
+  --echo-polish-player-bg:
+    radial-gradient(ellipse at 82% 0%, rgb(var(--preset-accent-rgb) / 0.1), transparent 44%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.96), rgb(var(--preset-soft-rgb) / 0.98));
+}
+
+/* ---------------------------------------------------------- material: bone & iron
+ * Gallery wall: cooler third stop, dry surfaces, tight radius, almost no bloom.
+ */
+html[data-theme-preset="boneIron"] {
+  --theme-corner-radius: 10px;
+  --echo-polish-radius: 10px;
+  --theme-panel-blur: 10px;
+  --echo-polish-panel-blur: 10px;
+  --theme-saturation: 92%;
+  --echo-polish-saturation: 92%;
+}
+
+html[data-theme="light"][data-theme-preset="boneIron"] {
+  --theme-page-bg:
+    radial-gradient(ellipse at 6% 0%, rgb(var(--preset-accent-rgb) / 0.07), transparent 32%),
+    linear-gradient(148deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 58%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.88), rgb(var(--preset-soft-rgb) / 0.9) 62%, rgb(var(--preset-panel-rgb) / 0.94));
+  --echo-polish-page-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.58), rgb(var(--preset-soft-rgb) / 0.78) 56%, rgb(var(--preset-panel-rgb) / 0.92));
+  --echo-polish-player-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.97), rgb(var(--preset-soft-rgb) / 0.94));
+}
+
+html[data-theme="dark"][data-theme-preset="boneIron"] {
+  --theme-panel-blur: 12px;
+  --echo-polish-panel-blur: 12px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 8% 0%, rgb(var(--preset-accent-rgb) / 0.08), transparent 34%),
+    linear-gradient(156deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 62%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.94), rgb(var(--preset-soft-rgb) / 0.97) 60%, rgb(var(--preset-panel-rgb) / 0.98));
+  --echo-polish-page-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.88), rgb(var(--preset-soft-rgb) / 0.97) 58%, var(--preset-app-bg));
+  --echo-polish-player-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.97), rgb(var(--preset-soft-rgb) / 0.98));
+}
+
+/* ---------------------------------------------------------- material: harbor lamp
+ * Mist + lantern: higher blur, lamp warmth sits low-right, water cool sits high-left.
+ */
+html[data-theme-preset="harborLamp"] {
+  --theme-corner-radius: 14px;
+  --echo-polish-radius: 14px;
+  --theme-saturation: 94%;
+  --echo-polish-saturation: 94%;
+}
+
+html[data-theme="light"][data-theme-preset="harborLamp"] {
+  --theme-panel-blur: 16px;
+  --echo-polish-panel-blur: 16px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 10% -4%, rgb(var(--preset-accent-rgb) / 0.18), transparent 40%),
+    radial-gradient(ellipse at 94% 108%, rgb(var(--preset-secondary-rgb) / 0.16), transparent 42%),
+    linear-gradient(132deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 52%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    radial-gradient(circle at 18% 92%, rgb(var(--preset-secondary-rgb) / 0.08), transparent 46%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.8), rgb(var(--preset-soft-rgb) / 0.84) 58%, rgb(var(--preset-panel-rgb) / 0.9));
+  --echo-polish-page-bg:
+    radial-gradient(ellipse at 90% 6%, rgb(var(--preset-secondary-rgb) / 0.12), transparent 40%),
+    radial-gradient(ellipse at 12% -6%, rgb(var(--preset-accent-rgb) / 0.1), transparent 38%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.5), rgb(var(--preset-soft-rgb) / 0.74) 56%, rgb(var(--preset-panel-rgb) / 0.9));
+  --echo-polish-player-bg:
+    radial-gradient(ellipse at 78% 0%, rgb(var(--preset-secondary-rgb) / 0.1), transparent 40%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.96), rgb(var(--preset-soft-rgb) / 0.94));
+}
+
+html[data-theme="dark"][data-theme-preset="harborLamp"] {
+  --theme-panel-blur: 18px;
+  --echo-polish-panel-blur: 18px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 8% -5%, rgb(var(--preset-accent-rgb) / 0.22), transparent 42%),
+    radial-gradient(ellipse at 96% 108%, rgb(var(--preset-secondary-rgb) / 0.16), transparent 44%),
+    linear-gradient(148deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 54%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    radial-gradient(circle at 16% 94%, rgb(var(--preset-secondary-rgb) / 0.1), transparent 48%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.93), rgb(var(--preset-soft-rgb) / 0.96) 58%, rgb(var(--preset-panel-rgb) / 0.98));
+  --echo-polish-page-bg:
+    radial-gradient(ellipse at 92% 8%, rgb(var(--preset-secondary-rgb) / 0.14), transparent 40%),
+    radial-gradient(ellipse at 10% -6%, rgb(var(--preset-accent-rgb) / 0.14), transparent 40%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.84), rgb(var(--preset-soft-rgb) / 0.97) 58%, var(--preset-app-bg));
+  --echo-polish-player-bg:
+    radial-gradient(ellipse at 80% 0%, rgb(var(--preset-secondary-rgb) / 0.12), transparent 42%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.96), rgb(var(--preset-soft-rgb) / 0.98));
+}
+
+/* ---------------------------------------------------------- material: ash rose
+ * Dried rose + olive ash. Saturation dropped; the third stop is moss, not pink.
+ */
+html[data-theme-preset="ashRose"] {
+  --theme-corner-radius: 14px;
+  --echo-polish-radius: 14px;
+  --theme-saturation: 90%;
+  --echo-polish-saturation: 90%;
+}
+
+html[data-theme="light"][data-theme-preset="ashRose"] {
+  --theme-panel-blur: 14px;
+  --echo-polish-panel-blur: 14px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 14% -4%, rgb(var(--preset-accent-rgb) / 0.1), transparent 36%),
+    radial-gradient(ellipse at 88% 8%, rgb(var(--preset-secondary-rgb) / 0.12), transparent 38%),
+    linear-gradient(140deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 54%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    radial-gradient(circle at 20% 90%, rgb(var(--preset-secondary-rgb) / 0.08), transparent 46%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.82), rgb(var(--preset-soft-rgb) / 0.86) 58%, rgb(var(--preset-panel-rgb) / 0.92));
+  --echo-polish-page-bg:
+    radial-gradient(ellipse at 86% 4%, rgb(var(--preset-secondary-rgb) / 0.1), transparent 38%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.5), rgb(var(--preset-soft-rgb) / 0.76) 56%, rgb(var(--preset-panel-rgb) / 0.9));
+  --echo-polish-player-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.96), rgb(var(--preset-soft-rgb) / 0.93));
+}
+
+html[data-theme="dark"][data-theme-preset="ashRose"] {
+  --theme-panel-blur: 16px;
+  --echo-polish-panel-blur: 16px;
+  --theme-page-bg:
+    radial-gradient(ellipse at 12% -5%, rgb(var(--preset-accent-rgb) / 0.14), transparent 38%),
+    radial-gradient(ellipse at 90% 10%, rgb(var(--preset-secondary-rgb) / 0.1), transparent 40%),
+    linear-gradient(152deg, var(--preset-app-bg) 0%, var(--preset-app-bg-2) 56%, var(--preset-app-bg-3) 100%);
+  --echo-polish-app-bg-layer: var(--theme-page-bg);
+  --echo-polish-sidebar-bg:
+    radial-gradient(circle at 18% 92%, rgb(var(--preset-secondary-rgb) / 0.08), transparent 46%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.93), rgb(var(--preset-soft-rgb) / 0.96) 58%, rgb(var(--preset-panel-rgb) / 0.98));
+  --echo-polish-page-bg:
+    radial-gradient(ellipse at 88% 4%, rgb(var(--preset-secondary-rgb) / 0.1), transparent 38%),
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.86), rgb(var(--preset-soft-rgb) / 0.97) 58%, var(--preset-app-bg));
+  --echo-polish-player-bg:
+    linear-gradient(180deg, rgb(var(--preset-panel-rgb) / 0.96), rgb(var(--preset-soft-rgb) / 0.98));
+}

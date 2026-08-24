@@ -1,0 +1,125 @@
+/* Genre wall reuses .artists-page / .artist-card so existing theme presets apply. */
+.genres-page .artist-card[data-unclassified='true'] .artist-copy strong {
+  font-style: italic;
+}
+
+.genre-detail-page[data-unclassified='true'] .album-detail-copy h1 {
+  font-style: italic;
+  font-weight: 560;
+}
+
+.genre-detail-page .album-detail-actions {
+  flex-wrap: wrap;
+}
+
+.genre-detail-page .album-icon-action:disabled {
+  cursor: default;
+  opacity: 0.56;
+}
+
+.album-detail-cover.genre-detail-mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  place-items: stretch;
+  padding: 0;
+  background: color-mix(in srgb, var(--theme-panel-border-strong) 88%, transparent);
+}
+
+.album-detail-cover.genre-detail-mosaic[data-tiles='2'] {
+  grid-template-rows: 1fr;
+}
+
+.album-detail-cover.genre-detail-mosaic img,
+.genre-detail-mosaic-empty {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+}
+
+.genre-detail-mosaic-empty {
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 92%, var(--theme-panel-border) 8%);
+}
+
+.genre-detail-albums {
+  padding: 18px var(--album-detail-track-content-x) 34px;
+}
+
+.genre-detail-page .album-wall {
+  padding: 4px 0 12px;
+}
+
+.genre-detail-page .album-wall > .album-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 232px;
+}
+
+.genre-detail-albums .album-card .album-cover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.genre-detail-albums .album-card .album-cover img {
+  transition: transform 280ms ease;
+}
+
+.genre-detail-albums .album-card:hover .album-cover,
+.genre-detail-albums .album-card:focus-visible .album-cover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 36px color-mix(in srgb, var(--theme-panel-border-strong) 42%, transparent);
+}
+
+.genre-detail-albums .album-card:hover .album-cover img,
+.genre-detail-albums .album-card:focus-visible .album-cover img {
+  transform: scale(1.04);
+}
+
+.genre-detail-albums .album-card-skeleton .album-cover,
+.genre-detail-albums .album-card-skeleton strong,
+.genre-detail-albums .album-card-skeleton span {
+  background: color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+}
+
+.genre-detail-albums .album-card-skeleton strong,
+.genre-detail-albums .album-card-skeleton span {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.genre-detail-albums .album-card-skeleton span {
+  width: 72%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .genre-detail-albums .album-card .album-cover,
+  .genre-detail-albums .album-card .album-cover img {
+    transition: none;
+  }
+
+  .genre-detail-albums .album-card:hover .album-cover,
+  .genre-detail-albums .album-card:focus-visible .album-cover,
+  .genre-detail-albums .album-card:hover .album-cover img,
+  .genre-detail-albums .album-card:focus-visible .album-cover img {
+    transform: none;
+  }
+}
+
+html[data-theme-preset='FINAL'] .genre-detail-page .album-wall > .album-card,
+html[data-theme-preset='FINAL'] .genre-detail-page .album-wall > .album-card:hover,
+html[data-theme-preset='FINAL'] .genre-detail-page .album-wall > .album-card:focus-visible {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+html[data-theme-preset='FINAL'] .genre-detail-page .album-wall .album-cover {
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 10px 22px rgb(var(--preset-shadow-rgb, 18 24 32) / 0.11);
+}

@@ -1,0 +1,76 @@
+/* The page style owns layout and its default backdrop. Once the user chooses a
+   background source explicitly, this layer owns only the source bitmap/color
+   while the page style keeps its original overlays and typography. */
+
+.lyrics-backdrop-source {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: none;
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source {
+  background: var(--theme-page-bg);
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop::after {
+  display: none !important;
+  background-image: none !important;
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source-media,
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source[data-source="cover"] > .lyrics-backdrop-cover {
+  position: absolute;
+  opacity: var(--lyrics-cover-opacity) !important;
+  filter:
+    blur(var(--lyrics-cover-blur))
+    brightness(var(--lyrics-cover-brightness))
+    saturate(1.02) !important;
+  transform: translateZ(0) scale(var(--lyrics-background-scale)) !important;
+  transform-origin: center;
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source-media {
+  inset: var(--lyrics-background-bleed);
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source[data-source="cover"] > .lyrics-backdrop-cover {
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source[data-source="coverColor"] .lyrics-backdrop-source-media {
+  background:
+    radial-gradient(circle at 18% 12%, rgb(var(--lyrics-cover-color-glow-rgb) / 0.62), transparent 36%),
+    radial-gradient(circle at 78% 18%, rgb(var(--lyrics-cover-color-rgb) / 0.52), transparent 44%),
+    radial-gradient(circle at 50% 96%, rgb(var(--lyrics-cover-color-deep-rgb) / 0.36), transparent 48%),
+    linear-gradient(
+      135deg,
+      rgb(var(--lyrics-cover-color-soft-rgb) / 0.92),
+      rgb(var(--lyrics-cover-color-rgb) / 0.42) 52%,
+      rgb(var(--lyrics-cover-color-deep-rgb) / 0.5)
+    );
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source[data-source="customWallpaper"] .lyrics-backdrop-source-media {
+  background-image: var(--lyrics-wallpaper);
+  background-position: center;
+  background-size: cover;
+}
+
+.lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source[data-source="theme"] ~ .lyrics-backdrop-atmosphere {
+  display: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source-media,
+  .lyrics-page[data-background-overridden="true"] .lyrics-backdrop-source[data-source="cover"] > .lyrics-backdrop-cover {
+    filter: brightness(var(--lyrics-cover-brightness)) !important;
+  }
+}

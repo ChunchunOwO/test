@@ -1,0 +1,231 @@
+.lastfm-integration-panel {
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 86%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 94%, transparent);
+  box-shadow: 0 8px 24px rgba(39, 59, 84, 0.035);
+}
+
+#settings-sec-integrations #settings-row-lastfm.lastfm-integration-panel {
+  order: 0;
+}
+
+.lastfm-integration-panel[data-search-highlight='true'] {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-focus-ring) 48%, transparent);
+}
+
+.lastfm-integration-panel__header {
+  display: grid;
+  min-height: 72px;
+  grid-template-columns: 40px minmax(0, 1fr) minmax(90px, auto) 42px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 68%, transparent);
+}
+
+.lastfm-integration-panel__icon,
+.lastfm-integration-panel__section-icon,
+.lastfm-integration-panel__feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-accent-text);
+  border: 1px solid color-mix(in srgb, var(--theme-accent-border) 48%, var(--theme-panel-border));
+  background: color-mix(in srgb, var(--theme-accent-bg) 50%, var(--theme-panel-bg));
+}
+
+.lastfm-integration-panel__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+.lastfm-integration-panel__title,
+.lastfm-integration-panel__connection > div:first-child > div,
+.lastfm-integration-panel__features > div > div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.lastfm-integration-panel h3,
+.lastfm-integration-panel h4,
+.lastfm-integration-panel p,
+.lastfm-integration-panel dl,
+.lastfm-integration-panel dd {
+  margin: 0;
+}
+
+.lastfm-integration-panel h3 {
+  color: var(--theme-heading-text);
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.lastfm-integration-panel h4 {
+  color: var(--theme-heading-text);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.lastfm-integration-panel p {
+  overflow: hidden;
+  color: var(--theme-subtle-text);
+  font-size: 11px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+}
+
+.lastfm-integration-panel__header > .settings-status-text {
+  max-width: 180px;
+  justify-self: end;
+}
+
+.lastfm-integration-panel__body {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.lastfm-integration-panel__connection {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 70%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-list-row-bg) 68%, transparent);
+}
+
+.lastfm-integration-panel__connection > div:first-child {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.lastfm-integration-panel__section-icon,
+.lastfm-integration-panel__feature-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.lastfm-integration-panel__actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.lastfm-integration-panel__actions .settings-action-button {
+  min-height: 34px;
+}
+
+.lastfm-integration-panel__primary {
+  color: var(--theme-on-accent, #fff) !important;
+  border-color: transparent !important;
+  background: var(--color-accent) !important;
+}
+
+.lastfm-integration-panel__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.lastfm-integration-panel__metrics > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 66%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 70%, transparent);
+}
+
+.lastfm-integration-panel__metrics dt {
+  color: var(--theme-subtle-text);
+  font-size: 10px;
+  font-weight: 690;
+}
+
+.lastfm-integration-panel__metrics dd {
+  overflow: hidden;
+  color: var(--theme-heading-text);
+  font-size: 11px;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lastfm-integration-panel__features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.lastfm-integration-panel__features > div {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 30px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 66%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-list-row-bg) 62%, transparent);
+}
+
+@media (max-width: 980px) {
+  .lastfm-integration-panel__header {
+    grid-template-columns: 40px minmax(0, 1fr) 42px;
+  }
+
+  .lastfm-integration-panel__header > .settings-status-text {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .lastfm-integration-panel__header > .toggle-btn {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .lastfm-integration-panel__connection {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .lastfm-integration-panel__actions {
+    justify-content: flex-start;
+  }
+
+  .lastfm-integration-panel__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .lastfm-integration-panel__features,
+  .lastfm-integration-panel__metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lastfm-integration-panel__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lastfm-integration-panel__actions .settings-action-button {
+    justify-content: center;
+  }
+}

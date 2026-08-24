@@ -1,0 +1,60 @@
+.home-signal-bars {
+  grid-template-columns: repeat(var(--home-signal-count, 48), minmax(2px, 1fr));
+}
+
+.home-signal-visualizer[data-style="bars"] .home-signal-bars i,
+.home-signal-visualizer:not([data-style]) .home-signal-bars i {
+  background: linear-gradient(
+    180deg,
+    var(--home-signal-color-0, var(--home-waveform-bg)) 0%,
+    var(--home-signal-color-1, var(--home-waveform-bg)) 100%
+  );
+}
+
+.home-signal-visualizer[data-style="wave"] .home-signal-bars {
+  align-items: center;
+}
+
+.home-signal-visualizer[data-style="wave"] .home-signal-bars i {
+  border-radius: 6px;
+  transform-origin: center;
+  background: linear-gradient(
+    180deg,
+    var(--home-signal-color-0, var(--home-waveform-bg)) 0%,
+    var(--home-signal-color-1, var(--home-waveform-bg)) 100%
+  );
+}
+
+.home-signal-visualizer[data-style="radial"] {
+  align-items: center;
+  justify-items: center;
+}
+
+.home-signal-visualizer[data-style="radial"] .home-signal-bars {
+  display: block;
+  position: relative;
+  width: 86px;
+  height: 86px;
+}
+
+.home-signal-visualizer[data-style="radial"] .home-signal-bars i {
+  position: absolute;
+  left: calc(50% - 1.5px);
+  bottom: 50%;
+  width: 3px;
+  height: 42%;
+  transform-origin: center bottom;
+  animation: none;
+  background: linear-gradient(
+    180deg,
+    var(--home-signal-color-0, var(--home-waveform-bg)) 0%,
+    var(--home-signal-color-1, var(--home-waveform-bg)) 100%
+  );
+  transform: rotate(calc((var(--home-signal-index, 0) * 360deg) / var(--home-signal-count, 48)))
+    scaleY(var(--home-signal-live-scale, 0.12))
+    translateZ(0);
+}
+
+.home-signal-visualizer[data-style="radial"][data-active="true"][data-meter-ready="true"] .home-signal-bars i {
+  animation: none;
+}

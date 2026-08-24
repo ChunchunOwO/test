@@ -1,0 +1,164 @@
+/*
+ * Search fields keep their page/theme geometry and surface colors. This layer
+ * only normalizes their typography, icons and compact actions.
+ */
+html .echo-search-surface.echo-search-surface {
+  box-sizing: border-box;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+html .echo-search-surface.echo-search-surface > svg {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  opacity: 0.68;
+  transition: opacity 150ms ease;
+}
+
+html .echo-search-surface.echo-search-surface:focus-within > svg {
+  opacity: 1;
+}
+
+html .echo-search-surface.echo-search-surface > kbd {
+  display: inline-flex;
+  min-width: 0;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 6px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+html .echo-search-surface.echo-search-surface > input {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 560;
+  line-height: 1.25;
+}
+
+html .echo-search-surface.echo-search-surface > input::placeholder,
+html .echo-search-input.echo-search-input::placeholder {
+  color: var(--theme-field-placeholder);
+  opacity: 1;
+}
+
+html :is(.echo-search-surface > input, .echo-search-input)::-webkit-search-cancel-button {
+  display: none;
+}
+
+html .echo-search-input.echo-search-input {
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 560;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+html .echo-search-surface > .echo-search-clear.echo-search-clear {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  padding: 0;
+  color: inherit;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+html .echo-search-surface > .echo-search-clear.echo-search-clear:hover,
+html .echo-search-surface > .echo-search-clear.echo-search-clear:focus-visible {
+  color: var(--theme-heading-text);
+  background: var(--theme-control-bg-hover);
+  outline: none;
+}
+
+html .echo-search-surface > .echo-search-clear.echo-search-clear > svg {
+  width: 14px;
+  height: 14px;
+}
+
+html .echo-search-tools {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+}
+
+html .echo-search-count {
+  padding: 0 6px 0 2px;
+  font-size: 10px;
+  font-weight: 640;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0.72;
+}
+
+html .echo-search-tools .echo-search-clear.echo-search-clear {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+  padding: 0;
+  color: inherit;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+html .echo-search-tools .echo-search-clear.echo-search-clear:hover,
+html .echo-search-tools .echo-search-clear.echo-search-clear:focus-visible {
+  color: var(--theme-heading-text);
+  background: var(--theme-control-bg-hover);
+  outline: none;
+}
+
+html .search-box.echo-search-surface,
+html .history-search.echo-search-surface,
+html .playlist-search.echo-search-surface {
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+}
+
+html .drawer-smart-search__tools {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+}
+
+html .drawer-smart-search__tools .drawer-smart-search__meta {
+  min-height: 0;
+  padding: 0 6px 0 2px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+html .drawer-smart-search__tools .drawer-smart-search__clear {
+  width: 24px;
+  height: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .echo-search-surface.echo-search-surface,
+  html .echo-search-surface.echo-search-surface > svg,
+  html .echo-search-surface > .echo-search-clear.echo-search-clear,
+  html .echo-search-input.echo-search-input {
+    transition: none;
+  }
+}

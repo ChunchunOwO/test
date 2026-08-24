@@ -1,0 +1,19 @@
+{
+  "name": "ffmpeg",
+  "version": "n8.1.2-34-g9b6c8969e0-20260804",
+  "source": "BtbN FFmpeg-Builds Windows x64 LGPL shared",
+  "sourceUrl": "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-08-04-21-26/ffmpeg-n8.1.2-34-g9b6c8969e0-win64-lgpl-shared-8.1.zip",
+  "projectUrl": "https://github.com/BtbN/FFmpeg-Builds",
+  "downloadPage": "https://ffmpeg.org/download.html",
+  "releaseDate": "2026-08-04T21:49:29Z",
+  "artifact": "electron-app/tools/ffmpeg.exe",
+  "sha256": "EE624189C1869D205EF1CB6E313F01DE7F574C20823C8FB104B7818936C3A498",
+  "archiveSha256": "738046660C294794AE4D4DE3C8353C7D2230486AEF6DFA11A72CE4BD73DBAF6F",
+  "developmentRoot": "ffmpeg-n8.1.2-34-g9b6c8969e0-win64-lgpl-shared-8.1",
+  "developmentCacheKey": "ffmpeg-n8.1-lgpl-shared-20260804",
+  "requiresSoxr": false,
+  "requiredFilters": ["aresample"],
+  "requiredDecoders": ["aac", "alac", "ape", "dsd_lsbf", "flac", "mp3", "opus", "vorbis", "wavpack", "wmalossless"],
+  "requiredEncoders": ["libmp3lame"],
+  "licenseFamily": "LGPL-3.0-or-later"
+}

@@ -1,0 +1,1891 @@
+/* Retained styles extracted from src/renderer/styles/app.css */
+
+.empty-state-actions .downloads-action-button {
+  min-height: 34px;
+}
+
+html[data-theme="dark"] .page-surface:has(.downloads-page) {
+  background:
+    radial-gradient(circle at 68% 12%, rgba(44, 118, 145, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(18, 23, 31, 0.94), rgba(10, 13, 18, 0.98)),
+    var(--color-bg);
+}
+
+html[data-theme="dark"] .downloads-panel,
+html[data-theme="dark"] .download-search-result,
+html[data-theme="dark"] .download-job-row,
+html[data-theme="dark"] .download-output-path,
+html[data-theme="dark"] .download-tool-pill,
+html[data-theme="dark"] .downloads-section-title > span,
+html[data-theme="dark"] .download-search-scope,
+html[data-theme="dark"] .downloads-url-box input,
+html[data-theme="dark"] .downloads-search-box,
+html[data-theme="dark"] .download-setting-field select,
+html[data-theme="dark"] .download-mirror-option,
+html[data-theme="dark"] .downloads-action-button,
+html[data-theme="dark"] .download-icon-button,
+html[data-theme="dark"] .download-search-thumb,
+html[data-theme="dark"] .download-job-icon,
+html[data-theme="dark"] .download-provider-chip {
+  color: var(--color-text);
+  border-color: var(--color-border);
+  background: rgba(24, 30, 39, 0.82);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="dark"] .downloads-panel {
+  background:
+    linear-gradient(180deg, rgba(25, 31, 40, 0.86), rgba(17, 22, 30, 0.86)),
+    rgba(17, 22, 30, 0.86);
+}
+
+html[data-theme="dark"] .downloads-queue-panel {
+  background:
+    linear-gradient(180deg, rgba(25, 31, 40, 0.86), rgba(13, 17, 23, 0.92)),
+    rgba(13, 17, 23, 0.92);
+}
+
+html[data-theme="dark"] .downloads-search-box input,
+html[data-theme="dark"] .downloads-url-box input,
+html[data-theme="dark"] .download-setting-field select {
+  color: var(--color-text);
+}
+
+html[data-theme="dark"] .downloads-search-box input::placeholder,
+html[data-theme="dark"] .downloads-url-box input::placeholder {
+  color: var(--color-subtle);
+}
+
+html[data-theme="dark"] .downloads-section-title,
+html[data-theme="dark"] .downloads-section-title > span,
+html[data-theme="dark"] .download-search-scope button,
+html[data-theme="dark"] .download-search-copy span,
+html[data-theme="dark"] .download-search-copy small,
+html[data-theme="dark"] .download-search-copy em,
+html[data-theme="dark"] .download-job-copy span,
+html[data-theme="dark"] .download-job-copy small,
+html[data-theme="dark"] .download-job-meta,
+html[data-theme="dark"] .download-setting-field span,
+html[data-theme="dark"] .download-mirror-option em,
+html[data-theme="dark"] .download-toggle-row span,
+html[data-theme="dark"] .download-output-path em,
+html[data-theme="dark"] .download-tool-pill em {
+  color: var(--color-muted);
+}
+
+html[data-theme="dark"] .downloads-section-title h2,
+html[data-theme="dark"] .download-search-copy strong,
+html[data-theme="dark"] .download-job-copy strong,
+html[data-theme="dark"] .download-mirror-option strong,
+html[data-theme="dark"] .download-output-path strong,
+html[data-theme="dark"] .download-tool-pill strong {
+  color: var(--echo-heading-text);
+}
+
+html[data-theme="dark"] .download-search-scope button:hover,
+html[data-theme="dark"] .download-search-scope button.active,
+html[data-theme="dark"] .download-mirror-option:hover,
+html[data-theme="dark"] .downloads-action-button:hover,
+html[data-theme="dark"] .download-icon-button:hover {
+  color: var(--echo-heading-text);
+  border-color: var(--color-border-strong);
+  background: rgba(39, 48, 61, 0.92);
+}
+
+html[data-theme="dark"] .download-search-scope button.active {
+  color: var(--theme-overlay-text);
+  background: var(--theme-accent-solid-bg);
+}
+
+html[data-theme="dark"] .download-mirror-option[aria-pressed="true"] {
+  color: #ffd8e7;
+  border-color: rgba(235, 112, 157, 0.64);
+  background: linear-gradient(180deg, rgba(88, 42, 61, 0.92), rgba(58, 31, 45, 0.9));
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .download-mirror-option[aria-pressed="true"] strong {
+  color: #ffd8e7;
+}
+
+html[data-theme="dark"] .download-tool-pill {
+  color: #ffb4a0;
+}
+
+html[data-theme="dark"] .download-tool-pill[data-ready="true"] {
+  color: #9ae7ee;
+}
+
+html[data-theme="dark"] .download-progress-track {
+  background: rgba(232, 238, 247, 0.12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.36);
+}
+
+html[data-theme="dark"] .download-progress-track span {
+  background: linear-gradient(90deg, var(--theme-legacy-accent-strong), #46c0a9);
+}
+
+html[data-theme="dark"] .downloads-page .empty-state {
+  color: var(--color-muted);
+  border-color: var(--color-border);
+  background: rgba(24, 30, 39, 0.78);
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="dark"] .downloads-page .empty-state h2,
+html[data-theme="dark"] .downloads-page .empty-state strong {
+  color: var(--echo-heading-text);
+}
+
+.downloads-page {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 18px;
+  color: var(--color-text);
+}
+
+.downloads-toast {
+  position: fixed;
+  z-index: 42;
+  top: 52px;
+  left: 18px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 24px;
+  align-items: start;
+  gap: 9px;
+  width: min(430px, calc(100vw - 36px));
+  min-height: 54px;
+  padding: 10px 12px;
+  color: var(--echo-heading-text);
+  border: 1px solid color-mix(in srgb, var(--theme-accent) 24%, #f0d7e1);
+  border-radius: 8px;
+  background: #fff8fb;
+  box-shadow: 0 18px 46px rgba(82, 43, 66, 0.2);
+  backdrop-filter: blur(18px) saturate(1.12);
+  pointer-events: auto;
+  transform-origin: 0 0;
+  animation: downloads-toast-enter 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .downloads-toast {
+    animation: none;
+  }
+}
+
+.downloads-toast > span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--theme-accent-text-strong);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-accent) 15%, var(--theme-panel-bg));
+}
+
+.downloads-toast > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.downloads-toast strong,
+.downloads-toast small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.downloads-toast strong {
+  font-size: 12px;
+  font-weight: 860;
+}
+
+.downloads-toast small {
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.downloads-toast-progress {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  margin-top: 2px;
+}
+
+.downloads-toast-progress > div:first-child {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--color-muted);
+  font-size: 10.5px;
+  font-weight: 760;
+}
+
+.downloads-toast-progress span,
+.downloads-toast-progress em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.downloads-toast-progress em {
+  flex: 0 0 auto;
+  color: var(--theme-accent-text-strong);
+  font-style: normal;
+}
+
+.downloads-toast-progress .download-progress-track {
+  height: 5px;
+}
+
+.downloads-toast-close {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0;
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.downloads-toast-close:hover {
+  color: var(--echo-heading-text);
+  border-color: var(--theme-button-border);
+  background: var(--theme-control-bg);
+}
+
+.downloads-toast[data-tone="error"] {
+  border-color: rgba(196, 79, 89, 0.26);
+  background: #fff6f7;
+}
+
+.downloads-toast[data-tone="error"] > span {
+  color: #c44f59;
+  background: rgba(196, 79, 89, 0.1);
+}
+
+.downloads-toast[data-tone="success"] {
+  border-color: rgba(47, 143, 132, 0.24);
+}
+
+.downloads-toast[data-tone="success"] > span {
+  color: #2f8f84;
+  background: rgba(47, 143, 132, 0.1);
+}
+
+html[data-theme="dark"] .downloads-toast {
+  border-color: color-mix(in srgb, var(--theme-accent) 28%, #3d2a34);
+  background: #241b22;
+}
+
+html[data-theme="dark"] .downloads-toast[data-tone="error"] {
+  background: #2a1c22;
+}
+
+.downloads-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.downloads-header-copy {
+  min-width: 0;
+}
+
+.downloads-header-actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.downloads-page--osu .downloads-header {
+  align-items: center;
+  padding: 16px 18px;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 10px;
+  background: var(--theme-panel-bg);
+  box-shadow: var(--shadow-panel);
+}
+
+.downloads-header h1 {
+  margin: 3px 0 0;
+  color: var(--echo-heading-text);
+  font-size: 32px;
+  font-weight: 860;
+  letter-spacing: 0;
+}
+
+.downloads-header p {
+  margin: 6px 0 0;
+  max-width: 640px;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 680;
+  line-height: 1.45;
+}
+
+.downloads-grid {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  grid-template-areas:
+    "url side"
+    "search side"
+    "queue side";
+  grid-template-rows: auto minmax(0, clamp(220px, 34vh, 390px)) minmax(180px, 1fr);
+  gap: 14px;
+}
+
+.downloads-page--osu .downloads-grid {
+  grid-template-columns: minmax(0, 1fr) clamp(430px, 31vw, 500px);
+  grid-template-areas:
+    "account side"
+    "url side"
+    "search side";
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.downloads-page--osu .downloads-search-panel {
+  min-height: clamp(360px, 56vh, 620px);
+}
+
+.downloads-panel {
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(35, 54, 78, 0.09);
+  border-radius: 8px;
+  background: var(--theme-panel-bg);
+  box-shadow: var(--shadow-panel);
+}
+
+.downloads-url-panel {
+  grid-area: url;
+}
+
+.downloads-queue-history-toggle {
+  min-height: 36px;
+  color: var(--theme-accent-text-strong);
+  border: 1px dashed var(--theme-panel-border-strong);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-accent-bg) 42%, transparent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.downloads-queue-history-toggle:hover,
+.downloads-queue-history-toggle:focus-visible {
+  border-color: var(--theme-accent-border);
+  background: var(--theme-accent-bg);
+}
+
+.downloads-search-panel {
+  grid-area: search;
+  min-height: 0;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.downloads-queue-panel {
+  grid-area: queue;
+  min-height: 0;
+  align-content: start;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.downloads-side {
+  display: grid;
+  grid-area: side;
+  align-content: start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.downloads-page--osu .downloads-side {
+  height: auto;
+  min-height: 0;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(560px, 64vh) auto;
+  align-content: stretch;
+}
+
+.downloads-page--osu .downloads-queue-panel {
+  grid-area: auto;
+  min-height: clamp(560px, 64vh, 740px);
+  padding: 17px;
+  border-color: color-mix(in srgb, var(--theme-accent) 18%, var(--theme-panel-border));
+}
+
+.downloads-queue-summary {
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: 740;
+  white-space: nowrap;
+}
+
+.downloads-queue-clear {
+  width: 34px;
+  padding: 0;
+  flex: 0 0 34px;
+}
+
+.downloads-section-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 9px;
+  color: #60758d;
+}
+
+.downloads-section-title h2 {
+  margin: 0;
+  color: var(--echo-heading-text);
+  font-size: 15px;
+  font-weight: 840;
+}
+
+.downloads-section-title > span {
+  min-height: 24px;
+  margin-left: auto;
+  padding: 4px 9px;
+  color: #6f8094;
+  border: 1px solid rgba(40, 62, 88, 0.09);
+  border-radius: 8px;
+  background: #eef3f8;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.download-search-scope {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  min-height: 30px;
+  margin-left: auto;
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid rgba(40, 62, 88, 0.09);
+  border-radius: 8px;
+  background: #eef3f8;
+}
+
+.download-search-scope button {
+  min-height: 22px;
+  padding: 0 9px;
+  color: #6f8094;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 820;
+  cursor: pointer;
+}
+
+.download-search-scope button:hover,
+.download-search-scope button.active {
+  color: #26384f;
+  background: var(--theme-panel-bg-strong);
+  box-shadow: 0 1px 2px rgba(35, 54, 78, 0.08);
+}
+
+.downloads-section-title--split {
+  justify-content: space-between;
+}
+
+.downloads-section-title--split > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.downloads-url-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.downloads-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.downloads-url-box input,
+.download-setting-field select {
+  min-width: 0;
+  min-height: 38px;
+  color: var(--color-text);
+  border: 1px solid var(--theme-panel-border-strong);
+  border-radius: 8px;
+  outline: 0;
+  background: var(--theme-panel-bg);
+  font: inherit;
+}
+
+.downloads-url-box input {
+  padding: 0 12px;
+}
+
+.downloads-search-box {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0 12px;
+  color: #6b7b90;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 8px;
+  background: var(--theme-panel-bg);
+}
+
+.downloads-search-box input {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-text);
+  font: inherit;
+  appearance: none;
+}
+
+.download-search-results {
+  display: grid;
+  align-content: start;
+  grid-auto-rows: max-content;
+  min-height: 0;
+  gap: 9px;
+  overflow: auto;
+  padding-right: 2px;
+  overscroll-behavior: contain;
+}
+
+.download-search-result {
+  display: grid;
+  align-self: start;
+  grid-template-columns: 74px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 86px;
+  padding: 10px;
+  border: 1px solid rgba(35, 54, 78, 0.08);
+  border-radius: 8px;
+  background: var(--theme-field-bg);
+}
+
+.downloads-page--osu .download-search-result {
+  grid-template-columns: 188px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  min-height: 126px;
+  padding: 14px 16px;
+}
+
+.download-search-thumb {
+  display: grid;
+  overflow: hidden;
+  width: 74px;
+  aspect-ratio: 16 / 9;
+  place-items: center;
+  color: var(--theme-accent-text-strong);
+  border: 1px solid rgba(39, 59, 82, 0.08);
+  border-radius: 7px;
+  background: #edf3f8;
+}
+
+.downloads-page--osu .download-search-thumb {
+  width: 188px;
+  border-radius: 9px;
+}
+
+.download-search-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.download-search-copy {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.downloads-page--osu .download-search-copy {
+  align-content: center;
+  gap: 7px;
+}
+
+.download-search-copy > div {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-search-copy strong,
+.download-search-copy span,
+.download-search-copy small,
+.download-search-copy em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.download-search-copy strong {
+  color: var(--echo-heading-text);
+  font-size: 13px;
+  font-weight: 830;
+}
+
+.downloads-page--osu .download-search-copy strong {
+  font-size: 16px;
+  line-height: 1.18;
+}
+
+.download-search-copy span,
+.download-search-copy small,
+.download-search-copy em {
+  color: var(--color-muted);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 720;
+  line-height: 1.22;
+}
+
+.downloads-page--osu .download-search-copy span,
+.downloads-page--osu .download-search-copy small,
+.downloads-page--osu .download-search-copy em {
+  font-size: 12px;
+}
+
+.downloads-page--osu .download-search-copy small {
+  color: color-mix(in srgb, var(--color-muted) 78%, transparent);
+}
+
+.downloads-page--osu .download-search-result .downloads-action-button {
+  white-space: nowrap;
+}
+
+.downloads-action-button,
+.download-icon-button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #40556f;
+  border: 1px solid var(--theme-panel-border-strong);
+  border-radius: 8px;
+  background: var(--theme-panel-bg);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.downloads-action-button {
+  padding: 0 12px;
+}
+
+.download-icon-button {
+  width: 34px;
+  padding: 0;
+}
+
+.downloads-action-button:disabled,
+.download-icon-button:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.download-job-list {
+  display: grid;
+  min-height: 0;
+  gap: 9px;
+  overflow: auto;
+  padding-right: 2px;
+  overscroll-behavior: contain;
+}
+
+.download-job-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(190px, 0.9fr) 34px;
+  align-items: center;
+  gap: 14px;
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid rgba(35, 54, 78, 0.08);
+  border-radius: 8px;
+  background: var(--theme-field-bg);
+}
+
+.download-job-row--compact {
+  grid-template-columns: minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 10px;
+  min-height: 132px;
+  padding: 13px;
+}
+
+.download-job-row--compact .download-job-main {
+  grid-column: 1;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.download-job-artwork {
+  display: grid;
+  overflow: hidden;
+  width: 64px;
+  aspect-ratio: 1;
+  place-items: center;
+  color: var(--theme-accent-text-strong);
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 7px;
+  background: var(--theme-panel-bg);
+}
+
+.download-job-artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.download-job-row--compact .download-job-copy {
+  gap: 4px;
+}
+
+.download-job-row--compact .download-job-copy strong {
+  font-size: 14px;
+  line-height: 1.22;
+}
+
+.download-job-row--compact .download-job-copy span {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.18;
+}
+
+.download-job-row--compact .download-job-source,
+.download-job-row--compact .download-job-path,
+.download-job-row--compact .download-job-error {
+  overflow: hidden;
+  font-size: 10.5px;
+  font-weight: 730;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.download-job-row--compact .download-job-source,
+.download-job-row--compact .download-job-path {
+  color: var(--color-muted);
+}
+
+.download-job-row--compact .download-job-error {
+  color: #9c3131;
+}
+
+.download-job-row--compact .download-job-progress {
+  grid-column: 1;
+  gap: 6px;
+}
+
+.download-job-row--compact .download-progress-track {
+  height: 7px;
+}
+
+.download-job-row--compact .download-job-meta {
+  font-size: 10px;
+}
+
+.download-job-row--compact .download-icon-button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 34px;
+  min-height: 34px;
+}
+
+.download-job-row[data-status="completed"] {
+  border-color: rgba(47, 111, 143, 0.2);
+}
+
+.download-job-row[data-status="failed"],
+.download-job-row[data-status="cancelled"] {
+  opacity: 0.72;
+}
+
+.download-job-main {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.download-job-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  color: var(--theme-accent-text-strong);
+  border: 1px solid rgba(39, 59, 82, 0.08);
+  border-radius: 8px;
+  background: #edf3f8;
+}
+
+.download-job-copy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.download-job-copy strong,
+.download-job-copy span,
+.download-job-copy small,
+.download-provider-chip,
+.download-job-meta span,
+.download-job-meta em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.download-job-copy strong {
+  color: var(--echo-heading-text);
+  font-size: 13px;
+  font-weight: 830;
+}
+
+.download-job-copy span {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 660;
+}
+
+.download-job-copy small {
+  color: #6d8197;
+  font-size: 11px;
+  font-weight: 760;
+}
+
+.download-provider-chip {
+  max-width: 90px;
+  padding: 5px 8px;
+  color: #536981;
+  border-radius: 7px;
+  background: #edf2f7;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.download-job-progress {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.download-progress-track {
+  overflow: hidden;
+  height: 7px;
+  border-radius: 999px;
+  background: #e3e9f0;
+}
+
+.download-progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--theme-accent-solid-bg), #2f8f84);
+  transition: width 180ms ease;
+}
+
+.download-progress-track[data-indeterminate="true"] span {
+  width: 38%;
+  animation: download-progress-indeterminate 1.15s ease-in-out infinite;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .download-progress-track[data-indeterminate="true"] span {
+    width: 100%;
+    animation: none;
+    opacity: 0.72;
+  }
+}
+
+.download-job-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 780;
+}
+
+.download-job-progress p,
+.downloads-note,
+.downloads-error {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 680;
+  line-height: 1.4;
+}
+
+.download-job-progress p,
+.downloads-error {
+  color: #c44f59;
+}
+
+.downloads-note {
+  color: var(--color-muted);
+}
+
+.download-setting-field,
+.download-toggle-row,
+.download-output-path {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.download-setting-field span,
+.download-toggle-row span,
+.download-output-path em {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 760;
+}
+
+.download-setting-field select {
+  width: 100%;
+  padding: 0 10px;
+}
+
+.download-mirror-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.download-mirror-option {
+  display: grid;
+  min-width: 0;
+  min-height: 52px;
+  gap: 3px;
+  padding: 9px 10px;
+  text-align: left;
+  color: #4f627a;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 88%, #fff 12%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  cursor: pointer;
+  font: inherit;
+}
+
+.download-mirror-option:first-child {
+  grid-column: 1 / -1;
+}
+
+.download-mirror-option strong,
+.download-mirror-option em {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.download-mirror-option strong {
+  color: var(--echo-heading-text);
+  font-size: 12px;
+  font-weight: 830;
+}
+
+.download-mirror-option em {
+  color: var(--color-muted);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 720;
+}
+
+.download-mirror-option:hover {
+  border-color: rgba(201, 76, 121, 0.36);
+  background: rgba(255, 246, 250, 0.82);
+}
+
+.download-mirror-option[aria-pressed="true"] {
+  color: #7f214a;
+  border-color: rgba(201, 76, 121, 0.48);
+  background: linear-gradient(180deg, rgba(255, 241, 248, 0.96), rgba(251, 226, 238, 0.9));
+  box-shadow:
+    0 8px 18px rgba(201, 76, 121, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.download-mirror-option[aria-pressed="true"] strong {
+  color: #7f214a;
+}
+
+.download-toggle-row {
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+}
+
+.download-toggle-row input {
+  margin: 0;
+}
+
+.download-output-path {
+  padding: 11px;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 8px;
+  background: rgba(244, 248, 251, 0.76);
+}
+
+.download-output-path strong {
+  overflow: hidden;
+  color: var(--echo-heading-text);
+  font-size: 12px;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.download-tools-list {
+  display: grid;
+  gap: 8px;
+}
+
+.download-tool-pill {
+  display: grid;
+  grid-template-columns: 18px 70px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 10px;
+  color: #a6535a;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 8px;
+  background: var(--theme-panel-bg);
+}
+
+.download-tool-pill[data-ready="true"] {
+  color: var(--theme-accent-text);
+}
+
+.download-tool-pill strong {
+  color: var(--echo-heading-text);
+  font-size: 12px;
+  font-weight: 820;
+}
+
+.download-tool-pill em {
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 680;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1500px) {
+  .downloads-page--osu .downloads-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(400px, 440px);
+    grid-template-areas:
+      "account side"
+      "url side"
+      "search side";
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .downloads-page--osu .downloads-side {
+    grid-template-rows: minmax(520px, 62vh) auto;
+  }
+
+  .downloads-page--osu .downloads-queue-panel {
+    min-height: clamp(520px, 62vh, 700px);
+  }
+}
+
+.downloads-page--osu .download-mirror-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.downloads-page--osu .download-mirror-option:first-child {
+  grid-column: auto;
+}
+
+.downloads-page--osu .download-mirror-option {
+  min-height: 48px;
+  padding: 8px;
+}
+
+.downloads-page--osu .downloads-settings-panel {
+  gap: 12px;
+}
+
+.downloads-settings-tool-status {
+  padding-top: 2px;
+  border-top: 1px solid var(--theme-panel-border);
+}
+
+.downloads-settings-tool-status .download-tool-pill {
+  border: 0;
+  background: transparent;
+}
+
+@media (max-width: 1180px) {
+
+  .downloads-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "url"
+      "search"
+      "side"
+      "queue";
+    grid-template-rows: auto minmax(0, clamp(220px, 34vh, 390px)) auto minmax(180px, 1fr);
+  }
+
+  .downloads-page--osu .downloads-grid {
+    grid-template-areas:
+      "account"
+      "url"
+      "search"
+      "side";
+    grid-template-rows: auto auto minmax(0, clamp(320px, 56vh, 560px)) auto;
+  }
+
+  .downloads-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .downloads-page--osu .downloads-side {
+    grid-template-columns: 1fr;
+  }
+
+  .download-job-row {
+    grid-template-columns: 1fr;
+  }
+
+  .downloads-page--osu .downloads-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .downloads-page--osu .downloads-header-actions,
+.downloads-page--osu .osu-downloads-overview {
+    justify-content: flex-start;
+  }
+
+  .downloads-page--osu .download-job-row--compact {
+    grid-template-columns: minmax(0, 1fr) 34px;
+  }
+
+  .download-search-result {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .download-search-result .downloads-action-button {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+
+  .download-icon-button {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 760px) {
+  .downloads-page--osu .downloads-header-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .downloads-page--osu .osu-downloads-overview {
+    flex-wrap: wrap;
+  }
+
+  .downloads-page--osu .download-mirror-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .downloads-page--osu .downloads-side {
+    grid-template-rows: minmax(440px, 60vh) auto;
+  }
+
+  .downloads-page--osu .downloads-queue-panel {
+    min-height: clamp(440px, 60vh, 560px);
+  }
+}
+
+@media (orientation: portrait) and (min-width: 761px) and (max-width: 1400px) {
+
+  .downloads-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "url"
+      "search"
+      "side"
+      "queue";
+    grid-template-rows: auto minmax(0, clamp(220px, 34vh, 390px)) auto minmax(180px, 1fr);
+  }
+
+  .downloads-page--osu .downloads-grid {
+    grid-template-areas:
+      "account"
+      "url"
+      "search"
+      "side";
+    grid-template-rows: auto auto minmax(0, clamp(320px, 56vh, 560px)) auto;
+  }
+
+  .downloads-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .downloads-page--osu .downloads-side {
+    grid-template-columns: 1fr;
+  }
+
+  .download-job-row {
+    grid-template-columns: 1fr;
+  }
+
+  .download-search-result {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .download-search-result .downloads-action-button,
+.download-icon-button {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .downloads-toast {
+    top: 48px;
+    left: 12px;
+    width: calc(100vw - 24px);
+  }
+
+  .downloads-header,
+.downloads-section-title {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .osu-account-selection-bar > .downloads-action-button {
+    align-self: flex-start;
+  }
+
+  .downloads-url-box,
+.downloads-search-form,
+.download-search-result,
+.download-job-row {
+    grid-template-columns: 1fr;
+  }
+
+  .downloads-side {
+    grid-template-columns: 1fr;
+  }
+
+  .downloads-page--osu .download-search-result {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    min-height: 0;
+  }
+
+  .downloads-page--osu .download-search-thumb {
+    width: min(100%, 220px);
+  }
+
+  .download-search-result .downloads-action-button,
+.download-icon-button {
+    justify-self: start;
+  }
+}
+
+.downloads-page--osu {
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+  overflow: auto;
+  container-type: inline-size;
+}
+
+.downloads-page--osu .downloads-header {
+  display: none;
+}
+
+.downloads-page--osu .downloads-grid {
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr) clamp(440px, 42%, 610px);
+  grid-template-areas:
+    "url side"
+    "account side";
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px 14px;
+}
+
+.downloads-page--osu .downloads-panel {
+  gap: 10px;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.downloads-page--osu .downloads-url-panel {
+  grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
+  align-items: center;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 86%, var(--theme-accent-bg) 14%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-muted) 80%, transparent);
+}
+
+.downloads-page--osu .downloads-url-panel .downloads-section-title {
+  min-width: 0;
+}
+
+.downloads-page--osu .downloads-url-panel .downloads-section-title h2 {
+  font-size: 13px;
+}
+
+.downloads-page--osu .downloads-url-box input {
+  min-height: 36px;
+}
+
+.downloads-page--osu .osu-account-library-panel {
+  min-height: 0;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  align-content: stretch;
+  overflow: hidden;
+  padding: 10px 2px 2px;
+}
+
+.downloads-page--osu .osu-account-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.downloads-page--osu .osu-account-switch-button {
+  color: var(--color-muted);
+  border-color: transparent;
+  background: transparent;
+}
+
+.downloads-page--osu .osu-account-profile {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.9fr) minmax(270px, 1.1fr);
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--theme-field-bg) 82%, var(--theme-accent-bg) 18%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-muted) 74%, transparent),
+    0 8px 22px color-mix(in srgb, var(--theme-panel-border-strong) 18%, transparent);
+}
+
+.downloads-page--osu .osu-account-identity {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.downloads-page--osu .osu-account-avatar {
+  width: 54px;
+  height: 54px;
+  flex-basis: 54px;
+  border-radius: 9px;
+}
+
+.downloads-page--osu .osu-account-login-prompt .osu-account-avatar {
+  width: 44px;
+  height: 44px;
+  flex-basis: 44px;
+  border-radius: 50%;
+}
+
+.downloads-page--osu .osu-account-profile-link {
+  grid-column: 2;
+  justify-self: start;
+  min-height: 24px;
+  padding: 0;
+}
+
+.downloads-page--osu .osu-account-collection-tabs {
+  grid-template-columns: repeat(4, minmax(0, 150px));
+  justify-content: start;
+  padding: 0;
+  border: 0;
+  gap: 4px;
+  border-radius: 0;
+  background: transparent;
+}
+
+.downloads-page--osu .osu-account-collection-tabs button {
+  min-height: 34px;
+  border-radius: 8px;
+}
+
+.downloads-page--osu .osu-account-collection-tabs button:hover,
+.downloads-page--osu .osu-account-collection-tabs button.active {
+  color: var(--theme-accent-text-strong);
+  box-shadow: none;
+  background: var(--theme-accent-bg);
+}
+
+.downloads-page--osu .osu-account-results {
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.downloads-page--osu .osu-account-collection-workspace,
+.downloads-page--osu .osu-account-search-workspace {
+  display: grid;
+  min-height: 0;
+  gap: 9px;
+  overflow: hidden;
+}
+
+.downloads-page--osu .osu-account-collection-workspace {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.downloads-page--osu .osu-account-search-workspace {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.downloads-page--osu .osu-account-search-workspace .download-search-results {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.downloads-page--osu .osu-account-beatmap-list {
+  min-height: 0;
+  max-height: none;
+  gap: 0;
+  padding: 4px 7px 6px 4px;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-field-bg) 78%, transparent);
+  scroll-padding-block: 6px;
+}
+
+.downloads-page--osu .osu-account-beatmap-row {
+  grid-template-columns: 26px 86px minmax(0, 1fr) auto;
+  min-height: 68px;
+  padding: 6px 9px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 56%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+.downloads-page--osu .osu-account-beatmap-row:last-child {
+  border-bottom: 0;
+}
+
+.downloads-page--osu .osu-account-beatmap-cover {
+  width: 86px;
+}
+
+.downloads-page--osu .downloads-side {
+  height: 100%;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
+  gap: 12px;
+}
+
+.downloads-page--osu .downloads-settings-panel {
+  order: -1;
+  display: grid;
+  grid-template-columns: minmax(130px, 0.95fr) minmax(150px, 1.25fr) auto;
+  align-items: end;
+  gap: 8px;
+  border-radius: 12px;
+  background: var(--theme-panel-bg-strong);
+  box-shadow: var(--shadow-panel);
+}
+
+.downloads-page--osu .downloads-settings-panel > .downloads-section-title {
+  grid-column: 1 / -1;
+}
+
+.downloads-page--osu .download-setting-field--mirror {
+  display: grid;
+  grid-column: 1;
+  gap: 4px;
+}
+
+.downloads-page--osu .download-setting-field--mirror select {
+  width: 100%;
+  min-height: 34px;
+  padding: 0 30px 0 9px;
+}
+
+.downloads-page--osu .download-setting-field--mirror small {
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: 9px;
+  font-weight: 690;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.downloads-page--osu .downloads-settings-panel > .download-output-path {
+  grid-column: 2;
+  min-width: 0;
+  padding: 8px 10px;
+}
+
+.downloads-page--osu .downloads-settings-panel > .downloads-action-button {
+  grid-column: 3;
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+  font-size: 0;
+}
+
+.downloads-page--osu .downloads-settings-panel > .download-toggle-row {
+  grid-column: 1 / 3;
+  min-height: 30px;
+}
+
+.downloads-page--osu .downloads-settings-tool-status {
+  grid-column: 3;
+  padding: 0;
+  border: 0;
+}
+
+.downloads-page--osu .downloads-settings-tool-status .download-tool-pill {
+  grid-template-columns: 16px auto;
+  min-height: 30px;
+  padding: 0;
+}
+
+.downloads-page--osu .downloads-settings-tool-status .download-tool-pill em {
+  display: none;
+}
+
+.downloads-page--osu .downloads-queue-panel {
+  order: 0;
+  min-height: 0;
+  height: 100%;
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: var(--theme-panel-bg-strong);
+  box-shadow: var(--shadow-panel);
+}
+
+.downloads-page--osu .downloads-section-title--split > div {
+  min-width: 0;
+}
+
+.downloads-page--osu .downloads-queue-summary,
+.downloads-page--osu .downloads-queue-speed {
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.downloads-page--osu .downloads-queue-speed {
+  margin-left: auto;
+}
+
+.downloads-page--osu .download-job-list {
+  align-content: start;
+  gap: 8px;
+  padding: 2px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.downloads-page--osu .download-job-list > .empty-state,
+.downloads-page--osu .download-search-results > .empty-state,
+.downloads-page--osu .osu-account-beatmap-list > .empty-state,
+.downloads-page--osu .osu-account-results > .empty-state,
+.downloads-page--osu .osu-account-search-workspace > .empty-state {
+  max-width: none;
+  border: 0;
+  background: color-mix(in srgb, var(--theme-field-bg) 64%, transparent);
+  box-shadow: none;
+}
+
+.downloads-page--osu .download-job-row--compact {
+  grid-template-columns: minmax(178px, 1.15fr) minmax(142px, 0.85fr) 32px;
+  gap: 11px;
+  min-height: 112px;
+  padding: 12px;
+  border: 0;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--theme-field-bg) 78%, transparent);
+}
+
+.downloads-page--osu .download-job-row--compact:last-child {
+  border-bottom: 0;
+}
+
+.downloads-page--osu .download-job-row--compact .download-job-main {
+  grid-column: 1;
+  grid-row: 1;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.downloads-page--osu .download-job-artwork {
+  width: 58px;
+  height: 58px;
+  border-radius: 7px;
+}
+
+.downloads-page--osu .download-job-row--compact .download-job-progress {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+}
+
+.downloads-page--osu .download-job-row--compact .download-icon-button {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: center;
+  width: 32px;
+  min-height: 32px;
+}
+
+@media (max-width: 1320px) {
+  .downloads-page--osu .downloads-grid {
+    grid-template-columns: minmax(0, 1fr) 420px;
+  }
+
+  .downloads-page--osu .download-job-row--compact {
+    grid-template-columns: minmax(0, 1fr) 32px;
+  }
+
+  .downloads-page--osu .download-job-row--compact .download-job-progress {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .downloads-page--osu .download-job-row--compact .download-icon-button {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+@container (max-width: 1180px) {
+  .downloads-page--osu .downloads-grid {
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "url"
+      "account"
+      "side";
+    grid-template-rows: auto minmax(620px, 74vh) auto;
+  }
+
+  .downloads-page--osu .downloads-side {
+    height: auto;
+    grid-template-rows: auto minmax(460px, 62vh);
+  }
+}
+
+/* Retained styles extracted from src/renderer/styles/ui-polish.css */
+
+.downloads-action-button,
+.download-icon-button {
+  border-radius: var(--radius-md);
+}
+
+.downloads-page {
+  color: var(--theme-page-text);
+}
+
+.downloads-header h1 {
+  color: var(--theme-heading-text);
+}
+
+.downloads-header p {
+  color: var(--theme-muted-text);
+}
+
+.downloads-search-box,
+.downloads-url-box input,
+.download-setting-field select {
+  color: var(--theme-page-text);
+  border: 1px solid var(--echo-polish-border);
+  border-radius: var(--radius-md);
+  background: var(--echo-polish-field-bg);
+  box-shadow: none;
+}
+
+.downloads-search-box:focus-within,
+.downloads-url-box input:focus,
+.download-setting-field select:focus {
+  border-color: var(--echo-polish-active-border);
+  box-shadow: 0 0 0 3px var(--echo-polish-accent-bg);
+}
+
+.downloads-panel,
+.downloads-url-panel,
+.downloads-search-panel {
+  border-color: var(--echo-polish-border);
+  border-radius: var(--radius-md);
+  background: var(--echo-polish-surface);
+  box-shadow: var(--echo-polish-shadow-panel);
+}
+
+.downloads-panel {
+  background: var(--echo-polish-surface-strong);
+}
+
+.download-toggle-row {
+  color: var(--theme-button-text);
+}
+
+.download-toggle-row input[type="checkbox"] {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  appearance: none;
+  border: 1px solid var(--theme-field-border);
+  border-radius: 3px;
+  background: var(--theme-field-bg);
+  box-shadow: inset 0 1px 1px var(--theme-panel-bg-muted);
+}
+
+.download-toggle-row input[type="checkbox"]::before {
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--theme-on-accent);
+  border-width: 0 2px 2px 0;
+  content: '';
+  opacity: 0;
+  transform: rotate(45deg);
+}
+
+.download-toggle-row input[type="checkbox"]:checked {
+  border-color: var(--theme-accent-border);
+  background: var(--theme-accent-solid-bg);
+}
+
+.download-toggle-row input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+
+.download-toggle-row input[type="checkbox"]:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+.downloads-section-title {
+  color: var(--echo-polish-accent-text);
+}
+
+.downloads-action-button,
+.download-icon-button {
+  color: var(--theme-button-text);
+  border-color: var(--echo-polish-border);
+  background: var(--echo-polish-button-bg);
+  box-shadow: none;
+}
+
+.downloads-action-button:hover:not(:disabled),
+.download-icon-button:hover:not(:disabled) {
+  color: var(--theme-heading-text);
+  border-color: var(--echo-polish-border-strong);
+  background: var(--echo-polish-button-bg-hover);
+  transform: none;
+}
+
+.download-search-result,
+.download-job-row {
+  border-color: var(--echo-polish-border);
+  border-radius: var(--radius-md);
+  background: var(--echo-polish-row-bg);
+  box-shadow: none;
+}
+
+.download-search-result:hover,
+.download-job-row:hover {
+  border-color: var(--echo-polish-border-strong);
+  background: var(--echo-polish-row-bg-hover);
+  box-shadow: none;
+  transform: none;
+}
+
+.download-search-thumb,
+.download-job-icon {
+  border-color: var(--echo-polish-border);
+  border-radius: var(--radius-md);
+  background: var(--echo-polish-surface-muted);
+  box-shadow: var(--echo-polish-cover-shadow);
+}
+
+.download-progress-track {
+  background: var(--theme-control-bg);
+}
+
+.download-progress-track span {
+  background: var(--echo-polish-play-bg);
+}
+
+@media (max-width: 640px) {
+
+  .download-job-row {
+    border-radius: var(--radius-md);
+  }
+}

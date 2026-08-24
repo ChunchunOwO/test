@@ -1,0 +1,93 @@
+"lang"
+{
+  "english"
+  {
+    "tokens"
+    {
+      "#Status_Idle" "In the listening room"
+      "#Status_BrowsingLibrary" "In the library"
+      "#Status_PlayingLocalMusic" "Listening to local music"
+      "#Status_PlayingLocalMusicNight" "Listening after midnight"
+      "#Status_LoadingLocalMusic" "Cueing a local track"
+      "#Status_PausedLocalMusic" "Paused in the listening room"
+      "#Status_LoadingTrack" "Cueing · %title% — %artist%"
+      "#Status_PlayingTrack" "%title% — %artist%"
+      "#Status_PausedTrack" "Paused · %title% — %artist%"
+      "#Status_LoadingTrackDetails" "Cueing · %title% — %artist% · %details%"
+      "#Status_PlayingTrackDetails" "%title% — %artist% · %details%"
+      "#Status_PausedTrackDetails" "Paused · %title% — %artist% · %details%"
+    }
+  }
+  "schinese"
+  {
+    "tokens"
+    {
+      "#Status_Idle" "在听音室"
+      "#Status_BrowsingLibrary" "在曲库里"
+      "#Status_PlayingLocalMusic" "正在听本地音乐"
+      "#Status_PlayingLocalMusicNight" "午夜还在听"
+      "#Status_LoadingLocalMusic" "正在准备本地音乐"
+      "#Status_PausedLocalMusic" "在听音室暂停"
+      "#Status_LoadingTrack" "正在准备 %title% · %artist%"
+      "#Status_PlayingTrack" "正在听 %title% · %artist%"
+      "#Status_PausedTrack" "暂停于 %title% · %artist%"
+      "#Status_LoadingTrackDetails" "正在准备 %title% · %artist% · %details%"
+      "#Status_PlayingTrackDetails" "正在听 %title% · %artist% · %details%"
+      "#Status_PausedTrackDetails" "暂停于 %title% · %artist% · %details%"
+    }
+  }
+  "tchinese"
+  {
+    "tokens"
+    {
+      "#Status_Idle" "在聽音室"
+      "#Status_BrowsingLibrary" "在曲庫裡"
+      "#Status_PlayingLocalMusic" "正在聽本機音樂"
+      "#Status_PlayingLocalMusicNight" "午夜還在聽"
+      "#Status_LoadingLocalMusic" "正在準備本機音樂"
+      "#Status_PausedLocalMusic" "在聽音室暫停"
+      "#Status_LoadingTrack" "正在準備 %title% · %artist%"
+      "#Status_PlayingTrack" "正在聽 %title% · %artist%"
+      "#Status_PausedTrack" "暫停於 %title% · %artist%"
+      "#Status_LoadingTrackDetails" "正在準備 %title% · %artist% · %details%"
+      "#Status_PlayingTrackDetails" "正在聽 %title% · %artist% · %details%"
+      "#Status_PausedTrackDetails" "暫停於 %title% · %artist% · %details%"
+    }
+  }
+  "japanese"
+  {
+    "tokens"
+    {
+      "#Status_Idle" "リスニングルームにいます"
+      "#Status_BrowsingLibrary" "ライブラリを眺めています"
+      "#Status_PlayingLocalMusic" "ローカル音楽を聴いています"
+      "#Status_PlayingLocalMusicNight" "深夜に聴いています"
+      "#Status_LoadingLocalMusic" "ローカル音楽を準備中"
+      "#Status_PausedLocalMusic" "リスニングルームで一時停止中"
+      "#Status_LoadingTrack" "%title% — %artist% を準備中"
+      "#Status_PlayingTrack" "%title% — %artist% を聴いています"
+      "#Status_PausedTrack" "%title% — %artist% を一時停止中"
+      "#Status_LoadingTrackDetails" "%title% — %artist% を準備中 · %details%"
+      "#Status_PlayingTrackDetails" "%title% — %artist% を聴いています · %details%"
+      "#Status_PausedTrackDetails" "%title% — %artist% を一時停止中 · %details%"
+    }
+  }
+  "koreana"
+  {
+    "tokens"
+    {
+      "#Status_Idle" "리스닝룸에 있습니다"
+      "#Status_BrowsingLibrary" "라이브러리를 둘러보는 중"
+      "#Status_PlayingLocalMusic" "로컬 음악을 듣는 중"
+      "#Status_PlayingLocalMusicNight" "한밤중에 듣는 중"
+      "#Status_LoadingLocalMusic" "로컬 음악을 준비하는 중"
+      "#Status_PausedLocalMusic" "리스닝룸에서 일시 정지"
+      "#Status_LoadingTrack" "%title% — %artist% 준비 중"
+      "#Status_PlayingTrack" "%title% — %artist% 듣는 중"
+      "#Status_PausedTrack" "%title% — %artist% 일시 정지"
+      "#Status_LoadingTrackDetails" "%title% — %artist% 준비 중 · %details%"
+      "#Status_PlayingTrackDetails" "%title% — %artist% 듣는 중 · %details%"
+      "#Status_PausedTrackDetails" "%title% — %artist% 일시 정지 · %details%"
+    }
+  }
+}

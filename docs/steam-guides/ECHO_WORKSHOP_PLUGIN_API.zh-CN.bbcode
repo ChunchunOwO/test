@@ -1,0 +1,640 @@
+[h1]ECHO 创意工坊沙箱插件 API[/h1]
+
+本指南介绍 ECHO Steam 正式版的 Workshop 插件 API。插件是可编程的 .echo 包：它可以注册命令、工具面板、可搜索音源提供器和作者自写 Agent、订阅宿主事件，并在用户逐项授权后使用曲库、播放列表、队列、导航、频谱、直链音源和固定域名远程服务能力。
+
+插件运行在 opaque iframe 中，不会进入 Electron main、preload、Audio Core 或 native host。
+
+VST3/VST3i 接入使用独立的数据型 audio-plugin-profile 工坊项目。沙箱插件可以在外层清单中把它列为依赖，但拿不到 VST 二进制、原生句柄或任意参数执行入口；只有订阅者安装了匹配的本机插件与兼容的可选 Audio Core 适配器后，Audio Core 才能报告真实处理状态。
+
+[h1]最小插件包[/h1]
+
+[code]
+{
+  "type": "echo-plugin-package",
+  "version": 1,
+  "manifest": {
+    "id": "echo.community-tools",
+    "name": "Community Tools",
+    "version": "1.0.0",
+    "apiVersion": 2,
+    "entry": "plugin.js",
+    "permissions": ["library:read", "playback:share", "sources:provide", "sources:direct", "network:request", "agent:runtime", "lyrics:provide", "fs:plugin"],
+    "contributes": {
+      "commands": [
+        { "id": "library-summary", "title": "显示曲库摘要" },
+        { "id": "inspect-track", "title": "检查歌曲" }
+      ],
+      "trackContextMenus": [
+        { "id": "inspect-track-action", "title": "检查歌曲", "commandId": "inspect-track", "localOnly": false }
+      ],
+      "playerBarActions": [
+        { "id": "quick-summary", "title": "曲库摘要", "commandId": "library-summary", "icon": "sparkles" }
+      ],
+      "panels": [
+        { "id": "main", "title": "工具面板", "path": "panel.html", "placement": "utility" }
+      ],
+      "agents": [
+        { "id": "library-helper", "title": "曲库助手", "inputPlaceholder": "问问曲库" }
+      ],
+      "sourceProviders": [
+        { "id": "community-radio", "title": "社区电台目录" }
+      ],
+      "lyricsProviders": [
+        { "id": "community-lyrics", "title": "社区歌词源" }
+      ],
+      "metadataProviders": [
+        { "id": "community-metadata", "title": "社区元数据" }
+      ],
+      "coverProviders": [
+        { "id": "community-covers", "title": "社区封面" }
+      ],
+      "themePresets": [
+        {
+          "id": "aurora-glass",
+          "title": "极光玻璃",
+          "basePreset": "classic",
+          "preview": "linear-gradient(135deg, #08111f 0%, #257f96 100%)",
+          "swatches": ["#08111f", "#257f96", "#5cc8dc", "#f0b35b"],
+          "light": { "appBg": "#eef8ff", "panel": "#ffffff", "accent": "#257f96", "text": "#234150" },
+          "dark": { "appBg": "#08111f", "panel": "#142234", "accent": "#5cc8dc", "text": "#c8dce8" }
+        }
+      ]
+    }
+  },
+  "files": [
+    { "path": "plugin.js", "content": "..." },
+    { "path": "panel.html", "content": "..." },
+    { "path": "panel.js", "content": "..." },
+    { "path": "panel.css", "content": "..." }
+  ]
+}
+[/code]
+
+外层 Workshop 清单 id 必须与插件 manifest.id 完全一致。
+
+[h1]包限制[/h1]
+
+[list]
+[*]整个包最多 2 MB。
+[*]最多 32 个文本文件。
+[*]每个文件最多 512 KB。
+[*]允许 .html、.css、.js、.mjs、.json。
+[*]后台 entry 必须是包内 .js 文件；panel 必须是包内 .html 文件。
+[*]不允许 SVG、二进制、native addon、DLL、可执行文件、命令脚本或未声明文件。
+[/list]
+
+[h1]能力权限[/h1]
+
+[b]navigation[/b]
+
+打开已知的 ECHO 页面或歌词页，不接受任意 URL。
+
+[code]
+await echo.navigation.open('queue');
+[/code]
+
+[b]playback:read[/b]
+
+读取播放状态和 playback:status 事件。返回状态、曲目 id、进度、时长与音量，不返回文件路径。
+
+[b]playback:control[/b]
+
+[code]
+await echo.playback.play();
+await echo.playback.pause();
+await echo.playback.seek(90);
+[/code]
+
+[b]playback:share[/b]
+
+用于一起听插件。它恢复 getShareInfo、shareCurrentTrack、getShareTask 和 playUrl，但不会把本地路径或文件句柄交给插件。作者要在外层 echo.workshop.json 中列出上传与 CDN 域名：
+
+[code]
+"networkHosts": [
+  "together.example",
+  "cdn.together.example"
+]
+[/code]
+
+[code]
+const info = await echo.playback.getShareInfo();
+let task = await echo.playback.shareCurrentTrack({
+  uploadUrl: 'https://together.example/v1/tracks',
+  roomId: 'room-42'
+});
+
+while (task.state === 'queued' || task.state === 'uploading') {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  task = await echo.playback.getShareTask(task.id);
+}
+
+if (task.state === 'ready') {
+  await echo.playback.playUrl(task.playbackUrl, {
+    title: task.track.title,
+    artist: task.track.artist,
+    live: false
+  });
+}
+[/code]
+
+每次上传前，ECHO 都会显示歌曲标题和目标域名让用户确认。主进程把当前本地文件作为原始 POST body 流式上传，并附带 X-Echo-Share-Version: 1 与 base64url 编码的 X-Echo-Track-Metadata。服务返回 JSON playbackUrl；上传和播放域名都必须在 networkHosts 中。
+
+这是窄化的一起听上传协议，不是任意 fetch、WebSocket、Cookie 或文件 API。作者必须说明音频保存时长、删除方式和服务隐私规则；用户只能分享有权传输的音频。
+
+[h2]从 26.8.2 迁移一起听插件[/h2]
+
+如果你的旧插件曾依赖 playback:share、getShareInfo、shareCurrentTrack、getShareTask 或 playUrl，请迁移到本指南中的 Workshop manifest，并确认外层清单声明了所有上传与播放域名。不要用 echo.audio 或 sources:provide 模拟本地歌曲分享：echo.audio 只提供分析数据，sources:provide / sources:direct 只接收已经存在的外部音频 URL。
+
+shareCurrentTrack 的上传请求使用原始音频文件作为 POST body，并带有 Content-Type、Content-Length、X-Echo-Share-Version: 1 和 X-Echo-Track-Metadata。服务应返回 2xx JSON：
+
+[code]
+{
+  "playbackUrl": "https://cdn.together.example/rooms/room-42/track.flac"
+}
+[/code]
+
+也可使用 url 字段。响应正文最大 64 KB，返回 URL 的主机名同样必须出现在 networkHosts。任务状态为 queued、uploading、ready 或 error；插件应轮询 getShareTask，而不是假定一次调用已经上传完成。
+
+常见失败：
+
+[list]
+[*][b]capability-denied[/b]：没有声明或没有获批 playback:share。
+[*][b]share-destination-denied[/b]：上传或返回的播放域名不在 networkHosts。
+[*][b]share-current-track-unavailable[/b]：当前没有可分享的本地歌曲，或文件已经不可用。
+[*][b]share-response-invalid[/b]：服务没有返回合规的 2xx JSON 播放 URL。
+[*][b]share-upload-failed[/b]：连接中断、超时或服务拒绝上传。
+[/list]
+
+房间、成员、时钟同步、保留期限和删除接口由作者的服务负责。项目说明必须写清传输对象、服务域名、保存时间、删除办法和隐私规则；不要把账号 Cookie 或平台抓取链路包装成一起听功能。
+
+[b]audio:spectrum[/b]
+
+读取 Audio Core 提供的可视化频谱、能量、瞬态和遥测状态。最多返回 128 个 band，插件不能自己制造权威音频状态。
+
+[b]library:read[/b]
+
+读取经过清理的曲目、专辑、艺人、流派、收藏和本地播放列表。分页 pageSize 最大为 100；不返回本地路径、远程源标识或 provider URL。
+
+[b]library:control[/b]
+
+切换曲目/专辑收藏，创建本地播放列表并向其中添加曲目。不能导入或删除文件、编辑标签，也不能操作远程播放列表。
+
+[b]queue:read[/b]
+
+读取宿主持有的当前播放队列，并订阅 queue:changed。返回最多 500 项经过清理的曲目快照。
+
+[b]queue:control[/b]
+
+播放曲目，向队列追加曲目，播放或移除指定队列项，以及清空队列。所有操作都经过 ECHO 原有队列所有者。
+
+[b]sources:direct[/b]
+
+把 HTTP(S) 直链音源交给 ECHO 原有队列与 Audio Core 播放。当前会话首次使用某个来源域名时，ECHO 会再次显示插件名和域名，让用户确认。此能力不会给插件 fetch、响应正文、Cookie、自定义请求头、平台搜索、网页解析或下载接口。
+
+[code]
+await echo.sources.playDirect({
+  url: 'https://radio.example/live.mp3',
+  title: 'Community Radio',
+  artist: 'Live Stream',
+  live: true,
+});
+[/code]
+
+[b]sources:provide[/b]
+
+把作者声明的音源目录接入 ECHO 宿主持有的搜索界面。插件实现 search 和 resolve；用户选择结果后，ECHO 校验解析结果、显示直链来源确认，再交给现有队列与 Audio Core 播放。
+
+[code]
+const stations = [{
+  providerTrackId: 'ambient-live',
+  title: 'Ambient Radio',
+  artist: 'Community Station',
+  source: 'My licensed catalog',
+  playable: true
+}];
+
+echo.sources.registerProvider(
+  'community-radio',
+  { title: '社区电台目录' },
+  {
+    search: async ({ query, page, pageSize }) => {
+      const matches = stations.filter((station) =>
+        station.title.toLowerCase().includes(query.toLowerCase()));
+      return {
+        tracks: matches.slice((page - 1) * pageSize, page * pageSize),
+        total: matches.length,
+        hasMore: page * pageSize < matches.length
+      };
+    },
+    resolve: async ({ providerTrackId }) => {
+      if (providerTrackId !== 'ambient-live') throw new Error('station-not-found');
+      return {
+        url: 'https://radio.example/live.mp3',
+        title: 'Ambient Radio',
+        artist: 'Community Station',
+        live: true
+      };
+    }
+  }
+);
+[/code]
+
+每个插件最多声明 8 个提供器。ECHO 结果页提供“上一页 / 下一页”，翻页时会把新的 page 再传给 search；返回 hasMore: true 才会启用下一页。搜索词最多 240 字符，每页和每次返回最多 50 个结果，结果最大 64 KB，search / resolve 超时均为 12 秒。解析结果只保留 url、title、artist、album 和 live；Cookie、请求头、代理参数、文件路径和可执行对象都会被丢弃。
+
+sources:provide 本身不提供联网能力。它适合包内目录和生成式目录；远程目录可以另外申请 network:request，并把每个 API 域名列入外层 networkHosts。即使同时获批，插件仍不会得到 Cookie、平台登录、网页解析、WebSocket 或下载能力。
+
+[b]agent:runtime[/b]
+
+注册并运行由工坊作者实现的 Agent。ECHO 提供沙箱运行器与获批工具，不提供统一模型或 API Key；Agent 只能组合同一插件已经获得用户授权的能力。
+
+[code]
+echo.agents.register(
+  'library-helper',
+  { title: '曲库助手' },
+  async (input) => {
+    const summary = await echo.library.getSummary();
+    const tracks = await echo.library.getTracks({
+      search: String(input),
+      pageSize: 20,
+    });
+    return {
+      answer: `曲库共 ${summary.trackCount} 首，找到 ${tracks.total} 个结果。`,
+      tracks: tracks.items,
+    };
+  },
+);
+
+const result = await echo.agents.run(
+  'library-helper',
+  '找一些适合夜晚的歌',
+);
+[/code]
+
+Agent 输入字符串最多 4000 字符、返回值最多 32 KB、单次运行最多 15 秒。只有 manifest.contributes.agents 中声明的 Agent 才会出现；运行时不能偷偷注册未声明 Agent。
+
+[b]network:request[/b]
+
+用于远程歌词目录、网络音源目录、Webhook 或作者自有 Agent 服务。插件必须在外层 echo.workshop.json 的 networkHosts 中列出每个目标域名，用户启用时会看到这些域名。
+
+[code]
+const response = await echo.network.get(
+  'https://api.community.example/v1/stations?q=ambient',
+  { headers: { accept: 'application/json' } },
+);
+
+if (!response.ok) throw new Error(`catalog-http-${response.status}`);
+const stations = JSON.parse(response.body);
+
+const result = await echo.network.post(
+  'https://agent.community.example/v1/run',
+  JSON.stringify({ prompt: '整理一个夜间队列' }),
+  { headers: { 'content-type': 'application/json' } },
+);
+[/code]
+
+只支持 GET / POST。URL 最长 2048 字符，请求正文最多 256 KB，响应正文最多 1 MB，超时 10 秒，每个插件最多 4 个并发请求，跳转最多 3 次且每个目标仍须在 networkHosts 中。请求头只接受 Accept、Accept-Language、Content-Type 与 X-*。它不会携带浏览器 Cookie、Steam 身份、本地路径、Authorization 或自动 API Key，也不提供 WebSocket、平台登录、网页抓取或下载器。
+
+[b]元数据与封面提供器[/b]
+
+在 contributes.metadataProviders 与 contributes.coverProviders 中分别声明最多 8 个提供器，然后在后台 entry 注册：
+
+[code]
+echo.metadata.registerProvider('community-metadata', { title: '社区元数据' }, async ({ track }) => ({
+  candidates: [{
+    title: track.title,
+    artist: track.artist,
+    album: track.album,
+    genre: 'Ambient',
+    year: 2026,
+    source: '我的元数据服务',
+    confidence: 0.9
+  }]
+}));
+
+echo.covers.registerProvider('community-covers', { title: '社区封面' }, async ({ track }) => ({
+  candidates: [{
+    imageUrl: `https://images.example/covers/${encodeURIComponent(track.id)}.jpg`,
+    title: `${track.title} 封面`,
+    source: '我的已授权图片目录',
+    width: 1200,
+    height: 1200
+  }]
+}));
+[/code]
+
+就绪的提供器会出现在单曲“编辑标签”里的“创意工坊增强”区域。用户点击“查找标签”或“查找封面”后，ECHO 合并最多 24 个候选，让用户选择。元数据候选可填写标题、艺人、专辑、专辑艺人、流派、年份、音轨号、碟片号和 BPM；封面候选必须提供 HTTP(S) imageUrl。选择只会暂存，用户再次点击“保存标签”后才由现有媒体库流程下载并写入。
+
+提供器只收到歌曲 id、标题、艺人、专辑、专辑艺人和时长，不会收到本地路径。结果最多 64 KB，超时 12 秒。远程提供器可以组合另行获批的 network:request；标签校验、图片下载和实际保存仍由 ECHO 媒体库服务负责。
+
+[b]可导入的外观主题[/b]
+
+在 manifest.contributes.themePresets 中最多声明 12 个主题。每个主题需要唯一 id、标题、受支持且非 Pro 专属的 basePreset，并至少包含 light 或 dark 中的一组颜色覆盖。description、CSS 渐变 preview 和最多 6 个十六进制 swatches 可选。它是声明式贡献，不需要运行时注册，也不申请额外权限。
+
+用户启用插件后，进入“设置 → 外观 → 自定义主题 → 插件主题”，点击主题即可导入或更新到“我的主题”并立即应用。导入后的副本仍可继续修改颜色、模糊和动效；禁用插件不会删除用户已经导入的副本，再次点击则用当前工坊版本刷新同一副本。
+
+themePresets 只改变界面显示，不获得网络、本地路径、播放、Audio Core 或受保护主题解锁能力。需要完整皮肤或沙箱替换 UI 时，请改用独立的 theme 类型工坊项目。
+
+[b]lyrics:provide[/b]
+
+在 manifest.contributes.lyricsProviders 中声明最多 8 个歌词源，并在后台 entry 中注册：
+
+[code]
+echo.lyrics.registerProvider(
+  'community-lyrics',
+  { title: '社区歌词源' },
+  async ({ track, query }) => ({
+    candidates: [{
+      title: track.title,
+      language: 'zh-CN',
+      source: '我的合法歌词目录',
+      confidence: 0.9,
+      lrc: '[00:00.00]示例歌词'
+    }]
+  })
+);
+[/code]
+
+用户在歌词设置中选择来源并主动查询。插件只收到歌曲 id、标题、艺人、专辑、时长和可选搜索词，不会收到本地路径或音频内容。每次最多 24 个候选、256 KB，超时 12 秒；候选至少包含 lrc 或 text。用户再次点击“应用”后，宿主才通过原有类型化歌词接口写入当前歌词。
+
+这个权限本身不提供网络访问；远程歌词源还需申请 network:request 并声明服务域名。它仍不提供 Cookie、账号 Token、平台登录或网页抓取。作者必须确保有权分发或检索返回的歌词。
+
+[b]fs:plugin[/b]
+
+读写插件独立的小型状态：单值最多 16 KB，总量最多 64 KB。这不是文件系统 API。
+
+[h1]插件自定义设置[/h1]
+
+在 manifest.contributes.settings 中声明设置后，ECHO 会在宿主拥有的“插件设置”界面渲染表单。支持 string、number、boolean 和 select，最多 32 项；插件必须申请 fs:plugin。
+
+[code]
+"settings": [
+  {
+    "id": "summary-style",
+    "title": "摘要风格",
+    "type": "select",
+    "defaultValue": "brief",
+    "options": [
+      { "label": "简洁", "value": "brief" },
+      { "label": "详细", "value": "detailed" }
+    ]
+  },
+  {
+    "id": "show-notifications",
+    "title": "显示完成通知",
+    "type": "boolean",
+    "defaultValue": true
+  }
+]
+[/code]
+
+[code]
+const values = await echo.settings.get();
+const style = await echo.settings.get('summary-style');
+await echo.settings.set('show-notifications', false);
+const stop = echo.settings.onChanged((next) => renderSettings(next));
+[/code]
+
+宿主表单保存和 API 写入都会触发 settings:changed。值只属于当前插件，不会进入 ECHO 全局设置，也不会自动改变 Audio Core。Workshop 拒绝 secret 类型；不要收集 API Key、密码、Cookie、许可证或激活材料。
+
+[h1]命令[/h1]
+
+[code]
+echo.commands.register(
+  'library-summary',
+  { title: '显示曲库摘要' },
+  async () => {
+    const summary = await echo.library.getSummary();
+    await echo.storage.set('lastSummary', summary);
+    await echo.ui.notify(`曲库中有 ${summary.trackCount} 首歌曲`);
+  },
+);
+[/code]
+
+只有 manifest.contributes.commands 中声明的命令会出现在 ECHO。运行时不能偷偷注册未声明命令；宿主调用超时为 5 秒。
+
+[h2]歌曲右键菜单扩展[/h2]
+
+在 contributes.trackContextMenus 中把一个右键操作连接到已经声明的命令：
+
+[code]
+"commands": [{ "id": "inspect-track", "title": "检查歌曲" }],
+"trackContextMenus": [{
+  "id": "inspect-track-action",
+  "title": "检查歌曲",
+  "description": "显示歌曲格式摘要",
+  "commandId": "inspect-track",
+  "localOnly": true
+}]
+[/code]
+
+[code]
+echo.commands.register('inspect-track', { title: '检查歌曲' }, async (track) => {
+  await echo.ui.notify(`${track.title} · ${track.codec || 'unknown'}`);
+});
+[/code]
+
+操作会出现在所有单曲右键菜单中。命令第一个参数是由 ECHO 清理后的歌曲信息，包含标题、艺人、专辑和格式摘要，不包含本地路径。localOnly 为 true 时只在本地歌曲上显示。每个包最多 16 个歌曲操作，每个 commandId 必须指向同一清单中已声明的命令；批量选择菜单不会运行单曲操作。
+
+[h2]播放器栏快捷按钮[/h2]
+
+playerBarActions 可以把最多 8 个宿主渲染的图标按钮放入 ECHO 播放器栏，每个按钮连接同一插件已经声明的命令：
+
+[code]
+"commands": [{ "id": "show-status", "title": "显示状态" }],
+"playerBarActions": [{
+  "id": "quick-status",
+  "title": "快捷状态",
+  "description": "显示当前播放摘要",
+  "commandId": "show-status",
+  "icon": "sparkles"
+}]
+[/code]
+
+icon 可选 blocks、sparkles、bot、radio、list-music、heart、bookmark 或 zap。后台运行时注册对应命令之前按钮保持禁用；点击后仍走同一个 5 秒限时命令链，不会因为显示在播放器栏而自动获得播放或曲库权限。
+
+面板 placement 也会真实生效：main 打开大工作区，utility 打开窄侧边工具。用户可以在任何页面按 Ctrl+Shift+P 打开可搜索的插件坞。
+
+[h1]工具面板[/h1]
+
+[code]
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="panel.css">
+<main>
+  <h1>Community Tools</h1>
+  <p id="summary"></p>
+</main>
+<script src="__bridge__.js"></script>
+<script src="panel.js"></script>
+[/code]
+
+必须先加载 __bridge__.js，再加载面板脚本。面板与后台脚本是两个独立沙箱 frame，但共享同一个按插件隔离的 storage namespace。
+
+插件不能覆盖宿主持有的面板标题栏和关闭按钮。
+
+[h1]结构化曲库读取[/h1]
+
+[code]
+const albums = await echo.library.getAlbums({
+  search: 'live',
+  page: 1,
+  pageSize: 24,
+});
+
+const albumTracks = await echo.library.getAlbumTracks(
+  albums.items[0].id,
+);
+
+const artists = await echo.library.getArtists({ pageSize: 50 });
+const artistTracks = await echo.library.getArtistTracks(
+  artists.items[0].id,
+);
+
+const genres = await echo.library.getGenres();
+const genreAlbums = await echo.library.getGenreAlbums(
+  genres.items[0].id,
+);
+[/code]
+
+读取方法：
+
+[list]
+[*]getSummary
+[*]getTracks
+[*]getAlbums / getAlbumTracks
+[*]getArtists / getArtistTracks / getArtistAlbums
+[*]getGenres / getGenreTracks / getGenreAlbums
+[*]getPlaylists / getPlaylistItems
+[*]getLikedTracks / getLikedTrackIds
+[/list]
+
+[h1]收藏与本地播放列表[/h1]
+
+[code]
+await echo.library.toggleTrackLiked(trackId);
+await echo.library.toggleAlbumLiked(albumId);
+
+const playlist = await echo.library.createPlaylist({
+  name: '插件灵感收集',
+  description: '由我的 Workshop 插件维护',
+});
+
+await echo.library.addTracksToPlaylist(
+  playlist.id,
+  trackIds.slice(0, 20),
+);
+[/code]
+
+createPlaylist 的名称最多 120 字符，描述最多 500 字符。一次 addTracksToPlaylist 最多接受 200 个有效曲目 id。
+
+[h1]播放队列[/h1]
+
+[code]
+const queue = await echo.queue.get();
+
+await echo.queue.playTrack(
+  albumTracks.items[0].id,
+  albumTracks.items.map((track) => track.id),
+);
+
+await echo.queue.enqueueTrack(nextTrackId);
+await echo.queue.playItem(queue.items[0].queueId);
+await echo.queue.removeItem(queue.items[1].queueId);
+await echo.queue.clear();
+[/code]
+
+queueId 必须来自当前宿主队列快照。过期或不存在的 id 会返回 invalid-payload。
+
+[h1]事件[/h1]
+
+[code]
+const stopPlayback = echo.events.on(
+  'playback:status',
+  (status) => renderPlayback(status),
+);
+
+const stopSpectrum = echo.events.on(
+  'audio:spectrum',
+  ({ bands, energy, transient, state }) => {
+    renderSpectrum(bands, energy, transient, state);
+  },
+);
+
+const stopQueue = echo.events.on(
+  'queue:changed',
+  (queue) => renderQueue(queue),
+);
+
+echo.events.on('library:changed', refreshLibrary);
+echo.events.on('library:liked-changed', refreshLikes);
+
+// 不再需要时解除监听
+stopPlayback();
+stopSpectrum();
+stopQueue();
+[/code]
+
+[h1]私有状态与通知[/h1]
+
+[code]
+await echo.storage.set('layout', { mode: 'compact' });
+const layout = await echo.storage.get('layout');
+await echo.storage.remove('layout');
+
+await echo.ui.notify('灵感播放列表已经更新');
+[/code]
+
+storage key 必须是 1 至 64 个字母、数字、点、下划线或连字符，不能以双下划线开头。
+
+[h1]运行边界[/h1]
+
+后台与面板均使用 sandbox="allow-scripts"，不包含 allow-same-origin。Content Security Policy 禁止外部连接、媒体、子 frame 和 object。
+
+frame 不会获得 preload、Node、Electron、Steamworks、原始 window.echo、文件系统或 native host。
+
+每个 frame 每秒最多向宿主发送 20 个请求。播放、设备、DSP、EOF、进度和队列事实仍由 ECHO / Audio Core 持有。
+
+[h1]权限与更新[/h1]
+
+权限审批是精确匹配的。插件更新后，只要增加、删除或修改权限列表，现有批准就会失效，用户必须重新确认。
+
+建议每个插件只申请当前功能真正需要的能力。读取型插件不应申请 library:control 或 queue:control。
+
+[h1]常见错误[/h1]
+
+[list]
+[*][b]capability-denied[/b]：manifest 没有声明对应能力，或用户没有批准该版本的能力。
+[*][b]invalid-payload[/b]：id、分页、字符串长度或数值范围不符合要求。
+[*][b]library-unavailable[/b]：当前宿主没有可用的曲库桥。
+[*][b]playlist-unavailable[/b]：播放列表不存在或不是本地播放列表。
+[*][b]queue-unavailable[/b]：当前页面没有挂载宿主队列所有者。
+[*][b]track-unavailable[/b]：曲目不存在或当前不可播放。
+[*][b]rate-limited[/b]：单个 frame 超过每秒 20 个请求。
+[*][b]storage-quota-exceeded[/b]：单值或插件总存储超过配额。
+[/list]
+
+[h1]生命周期[/h1]
+
+[olist]
+[*]Steam 订阅和下载不会执行代码。
+[*]ECHO 校验外层清单、文件哈希、.echo 包、插件清单和权限。
+[*]项目保持停用状态。
+[*]用户点击“使用”，确认精确权限清单。
+[*]ECHO 记录该修订的批准并启用插件。
+[*]命令和面板出现在宿主持有的“插件”入口。
+[*]更新、篡改、停用或权限不匹配会移除运行时。
+[/olist]
+
+希望这套 API 能成为你的创作积木：做一个新的队列工作流、专辑浏览器、收藏整理器、频谱艺术面板，或者我们还没有想到的音乐工具。
+
+[h1]发布前自检[/h1]
+
+[olist]
+[*]清单 id 与 .echo manifest.id 完全一致，apiVersion 与最低 ECHO 版本正确。
+[*]只申请功能实际需要的能力；权限变化后测试重新授权流程。
+[*]检查所有命令、面板、音源提供器和 Agent 都在 contributes 中声明。
+[*]对空曲库、无当前歌曲、网络失败、用户拒绝、超时和限流提供可理解提示。
+[*]一起听或 network:request 项目列出全部 networkHosts，并写明服务方、用途、发送字段、保存/删除规则和关闭方式。
+[*]可搜索音源与直链音源只使用你有权提供的直接流，不包含平台搜索、登录、网页提取或下载。
+[*]运行 prepare 和 validate，然后通过真实 Steam 订阅、下载、启用、更新、停用流程验收。
+[/olist]

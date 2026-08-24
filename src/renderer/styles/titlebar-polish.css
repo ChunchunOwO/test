@@ -1,0 +1,202 @@
+/*
+ * Titlebar polish layer.
+ * Loads after app.css / ui-polish.css / theme-presets.css and only refines the
+ * app titlebar (brand, quick actions, window controls). Uses theme variables so
+ * light / dark / preset themes adapt automatically. Decorations are disabled in
+ * the lyrics shell and wallpaper-transparent mode where the titlebar floats
+ * over artwork.
+ */
+
+/* ---------------------------------------------------------------- surface */
+
+.app-titlebar {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 55%, transparent);
+}
+
+html[data-theme="dark"] .app-titlebar {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+/* Companion hues derived from the theme accent so the prism line follows
+ * every theme preset instead of hard-coding colors. */
+.app-titlebar {
+  --titlebar-prism-cool: color-mix(in oklch, var(--theme-accent-solid-bg) 62%, #22d3ee);
+  --titlebar-prism-warm: color-mix(in oklch, var(--theme-accent-solid-bg) 68%, #f472b6);
+}
+
+/* Neutral top sheen for depth; no color wash on the surface itself. */
+.app-titlebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #ffffff 34%, transparent),
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .app-titlebar::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.035),
+    transparent 55%
+  );
+}
+
+/* Prism hairline over the flat 1px bottom border: the titlebar's signature.
+ * Accent-anchored cool and warm companions meet mid-line, fading at edges. */
+.app-titlebar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 55%, transparent) 12%,
+    color-mix(in srgb, var(--titlebar-prism-cool) 60%, transparent) 42%,
+    color-mix(in srgb, var(--titlebar-prism-warm) 45%, transparent) 72%,
+    transparent 96%
+  );
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .app-titlebar::after {
+  opacity: 0.6;
+}
+
+.app-shell--lyrics .app-titlebar,
+.app-shell--wallpaper-ready[data-wallpaper-ui-transparent="true"] .app-titlebar {
+  box-shadow: none;
+}
+
+.app-shell--lyrics .app-titlebar::before,
+.app-shell--lyrics .app-titlebar::after,
+.app-shell--wallpaper-ready[data-wallpaper-ui-transparent="true"] .app-titlebar::before,
+.app-shell--wallpaper-ready[data-wallpaper-ui-transparent="true"] .app-titlebar::after {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ brand */
+
+.app-titlebar-brand {
+  gap: 8px;
+}
+
+.app-titlebar-brand strong {
+  letter-spacing: 0.012em;
+  background: linear-gradient(
+    118deg,
+    var(--theme-heading-text) 8%,
+    color-mix(in srgb, var(--theme-heading-text) 30%, var(--theme-accent-solid-bg)) 70%,
+    color-mix(in srgb, var(--theme-heading-text) 22%, var(--titlebar-prism-cool)) 96%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html[data-theme="dark"] .app-titlebar-brand strong {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--theme-accent-solid-bg) 45%, transparent));
+}
+
+/* Steam badge: softer rounded rectangle instead of the full pill. */
+.app-titlebar-brand .app-titlebar-steam-badge {
+  border-radius: 6px;
+}
+
+/* ---------------------------------------------------------- quick actions */
+
+.titlebar-action svg,
+.window-control svg {
+  transition: transform 190ms cubic-bezier(0.2, 0.82, 0.18, 1);
+}
+
+.titlebar-action:hover svg {
+  transform: translateY(-1px) scale(1.07);
+}
+
+.titlebar-action[data-active="true"],
+.titlebar-action[data-drawer-open="true"] {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-accent-text) 22%, transparent);
+}
+
+html[data-theme="dark"] .titlebar-action[data-active="true"],
+html[data-theme="dark"] .titlebar-action[data-drawer-open="true"] {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent-strong) 30%, transparent);
+}
+
+.titlebar-action:focus-visible,
+.window-control:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-accent-text) 55%, transparent);
+  outline-offset: 1px;
+}
+
+/* --------------------------------------------------------- window controls */
+
+/* Soft divider between quick actions and window controls. */
+.window-controls::before {
+  content: "";
+  align-self: center;
+  width: 1px;
+  height: 15px;
+  margin: 0 7px 0 5px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--theme-subtle-text) 38%, transparent) 30%,
+    color-mix(in srgb, var(--theme-subtle-text) 38%, transparent) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.app-shell--standalone .window-controls::before,
+.app-shell--lyrics .window-controls::before {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .window-controls::before {
+    display: none;
+  }
+}
+
+.window-control:hover svg {
+  transform: scale(1.06);
+}
+
+/* Keep the close button red on hover in every theme (the generic dark-theme
+ * hover rule outranks app.css's close style), with a soft danger glow. */
+.window-control--close:hover,
+html[data-theme="dark"] .window-control--close:hover {
+  color: var(--theme-on-accent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--theme-danger-solid-bg) 92%, #ffffff),
+    var(--theme-danger-solid-bg) 62%
+  );
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--theme-danger-solid-bg) 38%, transparent);
+}
+
+.window-control--close:hover svg {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titlebar-action svg,
+  .window-control svg {
+    transition: none;
+  }
+
+  .titlebar-action:hover svg,
+  .window-control:hover svg {
+    transform: none;
+  }
+}

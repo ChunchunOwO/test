@@ -1,0 +1,885 @@
+/*
+ * Remote / cloud-drive polish.
+ * Loaded by RemoteSourcesPanel so it does not grow app.css.
+ * Tokens only: --theme-* / --echo-polish-* / --echo-motion-*.
+ */
+
+/* ---------- Page shell (standalone route, not Settings) ---------- */
+
+/*
+ * Never set `display` on `.page-surface` itself. All retained routes share the
+ * same grid cell; `[hidden] { display: none }` is what keeps inactive pages
+ * from flashing through.
+ */
+.page-surface[data-route-id='remote'][hidden] {
+  display: none !important;
+}
+
+.page-surface[data-route-id='remote'] .remote-sources-panel--empty {
+  overflow: auto;
+}
+
+.remote-library-home-source-copy h3 button {
+  display: inline;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.remote-library-home-source-copy h3 button:disabled {
+  cursor: default;
+}
+
+.remote-library-home-add {
+  margin-top: 8px;
+}
+
+/* ---------- Empty landing ---------- */
+
+.remote-empty-library-header h2 {
+  background: linear-gradient(
+    118deg,
+    var(--theme-heading-text) 46%,
+    color-mix(in srgb, var(--theme-accent-text-strong, var(--theme-accent-text)) 84%, var(--theme-heading-text)) 94%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.remote-empty-recommended {
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.remote-empty-recommended:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    var(--echo-polish-shadow-row, 0 10px 24px rgb(15 23 42 / 0.06)),
+    0 0 0 1px color-mix(in srgb, var(--theme-accent-solid-bg) 18%, transparent);
+}
+
+.remote-empty-alternative-list button {
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.remote-empty-alternative-list button:hover {
+  transform: translateX(3px);
+}
+
+.remote-empty-alternative-list button:active {
+  transform: translateX(3px) scale(0.985);
+}
+
+.remote-empty-preview {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 88%, transparent);
+}
+
+/* ---------- Connected workbench ---------- */
+
+.remote-sources-workbench {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.remote-workbench-header {
+  display: grid;
+  grid-template-columns: minmax(180px, auto) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px;
+  min-width: 0;
+}
+
+.remote-workbench-title {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.remote-workbench-title h1 {
+  margin: 0;
+  color: var(--theme-heading-text);
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 820;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  background: linear-gradient(
+    118deg,
+    var(--theme-heading-text) 46%,
+    color-mix(in srgb, var(--theme-accent-text-strong, var(--theme-accent-text)) 84%, var(--theme-heading-text)) 94%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.remote-sources-workbench .remote-library-home-summary {
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 72%, transparent);
+  box-shadow: none;
+}
+
+.remote-sources-workbench .remote-library-home-summary strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.remote-sources-workbench .remote-library-home-header-actions button {
+  min-height: 36px;
+  border-radius: 10px;
+}
+
+.remote-sources-workbench .remote-library-home-header-actions button:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.remote-sources-workbench .remote-library-home-message {
+  margin: 0;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.remote-workbench-body {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: minmax(240px, 292px) minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.remote-workbench-sidebar,
+.remote-workbench-main,
+.remote-workbench-browser,
+.remote-workbench-add,
+.remote-sources-workbench .remote-browser-workbench,
+.remote-sources-workbench .remote-file-browser {
+  min-width: 0;
+  min-height: 0;
+}
+
+.remote-workbench-sidebar {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-content: start;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.remote-workbench-sidebar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 4px;
+}
+
+.remote-workbench-sidebar-head strong {
+  color: var(--theme-heading-text);
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: 0.04em;
+}
+
+.remote-workbench-sidebar-head span {
+  color: var(--theme-muted-text);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.remote-sources-workbench .remote-library-home-list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  overflow: auto;
+  min-height: 0;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.remote-sources-workbench .remote-library-home-list > article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  padding: 6px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 78%, transparent);
+  box-shadow: none;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.remote-sources-workbench .remote-library-home-list > article:hover {
+  transform: translateX(2px);
+}
+
+.remote-sources-workbench .remote-library-home-list > article[data-active='true'] {
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 42%, var(--theme-panel-border));
+  background: color-mix(in srgb, var(--theme-accent-bg) 72%, var(--theme-panel-bg));
+  box-shadow:
+    inset 3px 0 0 var(--theme-accent-solid-bg),
+    inset 0 0 22px color-mix(in srgb, var(--theme-accent-solid-bg) 7%, transparent);
+  transform: none;
+}
+
+.remote-workbench-source-select {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  padding: 6px 6px 6px 4px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.remote-workbench-source-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.remote-workbench-source-select:focus-visible {
+  outline: 3px solid var(--theme-focus-ring);
+  outline-offset: 1px;
+}
+
+.remote-sources-workbench .remote-library-home-source-icon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.remote-workbench-status-dot {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid color-mix(in srgb, var(--theme-panel-bg) 88%, white);
+  border-radius: 999px;
+  background: var(--theme-muted-text);
+}
+
+.remote-workbench-status-dot[data-tone='healthy'] {
+  background: #34d399;
+}
+
+.remote-workbench-status-dot[data-tone='working'] {
+  background: var(--theme-accent-solid-bg, var(--theme-accent-text));
+}
+
+.remote-workbench-status-dot[data-tone='attention'] {
+  background: #fbbf24;
+}
+
+.remote-workbench-status-dot[data-tone='offline'] {
+  background: var(--theme-danger-text, #f87171);
+}
+
+.remote-workbench-status-dot[data-tone='paused'] {
+  background: color-mix(in srgb, var(--theme-muted-text) 72%, transparent);
+}
+
+.remote-sources-workbench .remote-library-home-source-copy h3 {
+  font-size: 13px;
+}
+
+.remote-sources-workbench .remote-library-home-source-copy p {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.remote-workbench-source-select em {
+  color: var(--theme-muted-text);
+  font-size: 12px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.remote-sources-workbench .remote-library-home-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 0 4px 4px;
+}
+
+.remote-sources-workbench .remote-library-home-source-actions button {
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.remote-workbench-source-delete {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  min-width: 28px;
+  padding: 0;
+  color: var(--theme-muted-text);
+}
+
+.remote-workbench-source-delete:hover {
+  border-color: var(--theme-danger-border);
+  background: var(--theme-danger-panel-bg);
+  color: var(--theme-danger-text);
+}
+
+.remote-workbench-recents {
+  display: grid;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+}
+
+.remote-workbench-recents > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  color: var(--theme-muted-text);
+  font-size: 11px;
+  font-weight: 740;
+}
+
+.remote-workbench-recents button {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--theme-page-text);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.remote-workbench-recents button svg {
+  grid-row: 1 / span 2;
+  color: var(--theme-muted-text);
+}
+
+.remote-workbench-recents button strong,
+.remote-workbench-recents button small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remote-workbench-recents button strong {
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.remote-workbench-recents button small {
+  color: var(--theme-muted-text);
+  font-size: 10px;
+}
+
+.remote-workbench-recents button:hover {
+  background: color-mix(in srgb, var(--theme-accent-bg) 55%, transparent);
+  transform: translateX(2px);
+}
+
+/* Add sheet replaces the browser in-place so the idle/file list cannot bleed through. */
+
+.remote-workbench-main {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+}
+
+.remote-workbench-browser {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+}
+
+.remote-workbench-main[data-adding='true'] .remote-workbench-browser {
+  display: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.remote-workbench-add {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  min-height: 0;
+  height: 100%;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  border-radius: 14px;
+  background: var(--theme-panel-bg);
+  box-shadow: var(--echo-polish-shadow-row, 0 16px 40px rgb(15 23 42 / 0.12));
+}
+
+.remote-workbench-add-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+}
+
+.remote-workbench-add-bar strong {
+  color: var(--theme-heading-text);
+  font-size: 13px;
+  font-weight: 780;
+}
+
+.remote-workbench-add-bar button {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-accent-bg) 70%, transparent);
+  color: var(--theme-heading-text);
+  cursor: pointer;
+}
+
+.remote-workbench-add .remote-empty-library {
+  gap: 16px;
+  padding: 16px 16px 18px;
+}
+
+.remote-workbench-add .remote-empty-library-header,
+.remote-workbench-add .remote-empty-library-trust,
+.remote-workbench-add .remote-empty-preview {
+  display: none;
+}
+
+.remote-workbench-add .remote-empty-library-body {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.remote-workbench-add .remote-empty-recommended {
+  padding: 14px 16px;
+}
+
+.remote-workbench-add .remote-empty-alternative-list button {
+  background: var(--theme-panel-bg);
+}
+
+/* ---------- File browser ---------- */
+
+.remote-sources-workbench .remote-browser-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  height: 100%;
+}
+
+.remote-sources-workbench .remote-file-browser {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
+  padding: 14px 16px 12px;
+  border-radius: 14px;
+  border-color: color-mix(in srgb, var(--theme-panel-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 86%, transparent);
+}
+
+.remote-file-browser--idle {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  color: var(--theme-muted-text);
+}
+
+.remote-file-browser--idle svg {
+  color: var(--theme-accent-text-strong, var(--theme-accent-text));
+  opacity: 0.88;
+}
+
+.remote-file-browser--idle strong {
+  color: var(--theme-heading-text);
+  font-size: 16px;
+}
+
+.remote-file-browser--idle span {
+  max-width: 28em;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.remote-sources-workbench .remote-file-browser-head {
+  align-items: center;
+}
+
+.remote-sources-workbench .remote-file-browser-head h3 {
+  color: var(--theme-heading-text);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.remote-sources-workbench .remote-file-browser-actions button,
+.remote-sources-workbench .remote-browser-empty button,
+.remote-sources-workbench .remote-browser-error button,
+.remote-sources-workbench .remote-file-row-actions button,
+.remote-sources-workbench .remote-browser-playback button {
+  min-height: 30px;
+  border-radius: 8px;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease,
+    transform 140ms ease;
+}
+
+.remote-sources-workbench .remote-file-browser-actions button:hover:not(:disabled),
+.remote-sources-workbench .remote-file-row-actions button:hover:not(:disabled),
+.remote-sources-workbench .remote-browser-playback button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.remote-sources-workbench .remote-file-browser-actions button:active:not(:disabled),
+.remote-sources-workbench .remote-file-row-actions button:active:not(:disabled),
+.remote-sources-workbench .remote-browser-playback button:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.remote-sources-workbench .remote-browser-breadcrumbs {
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-control-bg, var(--theme-panel-bg-muted)) 70%, transparent);
+}
+
+.remote-sources-workbench .remote-browser-breadcrumbs button {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+}
+
+.remote-sources-workbench .remote-browser-breadcrumbs button:not(:last-child)::after {
+  margin-left: 6px;
+  color: var(--theme-muted-text);
+  content: '/';
+  pointer-events: none;
+}
+
+.remote-sources-workbench .remote-browser-breadcrumbs button[aria-current='page'] {
+  background: color-mix(in srgb, var(--theme-accent-bg) 70%, transparent);
+  color: var(--theme-heading-text);
+}
+
+.remote-sources-workbench .remote-sync-preview[data-compact='true'] > header {
+  padding: 8px 12px;
+}
+
+.remote-sources-workbench .remote-sync-preview[data-compact='true'] h3 {
+  font-size: 14px;
+}
+
+.remote-sources-workbench .remote-sync-preview[data-compact='true'] > p {
+  padding: 0 12px 8px;
+  font-size: 12px;
+}
+
+.remote-sources-workbench .remote-sync-preview[data-compact='true'] .remote-sync-preview-counts {
+  gap: 6px;
+  padding: 0 12px 8px;
+}
+
+.remote-sources-workbench .remote-sync-preview[data-compact='true'] .remote-sync-preview-counts > span {
+  padding: 8px 10px;
+}
+
+.remote-sources-workbench .remote-sync-preview[data-compact='true'] > footer {
+  padding: 8px 12px 10px;
+}
+
+.remote-sources-workbench .remote-browser-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.remote-browser-search.echo-search-surface {
+  display: flex;
+  flex: 1 1 220px;
+  align-items: center;
+  gap: 8px;
+  min-width: 180px;
+  min-height: 34px;
+  padding: 0 8px 0 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-control-bg, var(--theme-panel-bg-muted)) 82%, transparent);
+}
+
+.remote-browser-search.echo-search-surface > input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  outline: none;
+}
+
+.remote-browser-search-count {
+  color: var(--theme-muted-text);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.remote-browser-playback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.remote-sources-workbench .remote-browser-playback button {
+  min-height: 28px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+.remote-sources-workbench .remote-browser-directory-stats span {
+  min-height: 26px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.remote-sources-workbench .remote-browser-filter {
+  padding: 3px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-control-bg, var(--theme-panel-bg-muted)) 78%, transparent);
+}
+
+.remote-sources-workbench .remote-browser-filter button {
+  min-height: 26px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+.remote-sources-workbench .remote-browser-filter button.active {
+  background: color-mix(in srgb, var(--theme-accent-solid-bg) 16%, var(--theme-panel-bg));
+  color: var(--theme-heading-text);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 18%, transparent);
+}
+
+.remote-browser-error {
+  color: var(--theme-warning-text);
+  border-color: var(--theme-warning-border, color-mix(in srgb, var(--theme-warning-text) 36%, transparent));
+  background: color-mix(in srgb, var(--theme-warning-text) 8%, var(--theme-panel-bg));
+}
+
+.remote-sources-workbench .remote-browser-empty,
+.remote-sources-workbench .remote-browser-error,
+.remote-sources-workbench .remote-browser-loading-note {
+  border-radius: 12px;
+}
+
+.remote-browser-empty--hero {
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 180px;
+  text-align: center;
+}
+
+.remote-browser-empty--hero > div {
+  justify-items: center;
+}
+
+.remote-sources-workbench .remote-file-list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0;
+  overflow: auto;
+  min-height: 0;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.remote-file-list-head,
+.remote-sources-workbench .remote-file-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px 108px minmax(132px, auto);
+  gap: 10px;
+  align-items: center;
+}
+
+.remote-file-list-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 4px 10px 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 92%, transparent);
+  color: var(--theme-muted-text);
+  font-size: 10px;
+  font-weight: 740;
+  letter-spacing: 0.04em;
+}
+
+.remote-file-list-head > span:nth-child(2),
+.remote-file-list-head > span:nth-child(3),
+.remote-file-row-size,
+.remote-file-row-mtime {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.remote-file-list-head > span:last-child,
+.remote-file-row-actions {
+  justify-self: end;
+}
+
+.remote-sources-workbench .remote-file-row {
+  padding: 7px 10px;
+  border-color: transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: default;
+  transition: background-color 130ms ease, transform 130ms ease;
+}
+
+.remote-sources-workbench .remote-file-row[data-kind='directory'],
+.remote-sources-workbench .remote-file-row[data-kind='audio'] {
+  cursor: pointer;
+}
+
+.remote-sources-workbench .remote-file-row[data-kind='directory'] {
+  background: transparent;
+}
+
+.remote-sources-workbench .remote-file-row:hover {
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover, var(--theme-accent-bg)) 78%, transparent);
+}
+
+.remote-sources-workbench .remote-file-row[data-playing='true'] {
+  background: color-mix(in srgb, var(--theme-accent-bg) 78%, transparent);
+  box-shadow: inset 3px 0 0 var(--theme-accent-solid-bg, var(--theme-accent-text));
+}
+
+.remote-file-row-size,
+.remote-file-row-mtime {
+  color: var(--theme-muted-text);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.remote-sources-workbench .remote-file-kind {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--theme-accent-bg) 70%, transparent);
+  color: var(--theme-accent-text-strong, var(--theme-accent-text));
+}
+
+.remote-sources-workbench .remote-file-row[data-kind='file'] .remote-file-kind {
+  background: color-mix(in srgb, var(--theme-panel-bg-muted, var(--theme-control-bg)) 80%, transparent);
+  color: var(--theme-muted-text);
+}
+
+.remote-sources-workbench .remote-file-row-actions button:first-child {
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 38%, var(--theme-panel-border));
+  color: var(--theme-accent-text-strong, var(--theme-accent-text));
+}
+
+.remote-sync-preview {
+  border-radius: 14px;
+}
+
+/* ---------- Narrow / settings ---------- */
+
+@media (max-width: 1180px) {
+  .remote-workbench-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .remote-sources-workbench .remote-library-home-summary {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 960px) {
+  .remote-workbench-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(280px, 1fr);
+  }
+
+  .remote-workbench-sidebar {
+    grid-template-rows: auto auto auto;
+    max-height: 280px;
+  }
+
+  .page-surface[data-route-id='remote'] .remote-sources-panel--empty,
+  .page-surface[data-route-id='remote'] .remote-sources-workbench {
+    padding: 16px 18px 14px;
+  }
+}
+
+@media (max-width: 760px) {
+  .remote-workbench-header {
+    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .remote-sources-workbench .remote-library-home-header-actions {
+    justify-content: flex-start;
+  }
+
+  .remote-file-list-head > span:nth-child(2),
+  .remote-file-list-head > span:nth-child(3),
+  .remote-file-row-size,
+  .remote-file-row-mtime {
+    display: none;
+  }
+
+  .remote-file-list-head,
+  .remote-sources-workbench .remote-file-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}

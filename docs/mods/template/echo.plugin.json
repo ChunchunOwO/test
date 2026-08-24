@@ -1,0 +1,16 @@
+{
+  "id": "com.example.hello-mod",
+  "name": "Hello ECHO Mod",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "minEchoVersion": "26.8.15",
+  "description": "一个最小的 ECHOSteam 模组模板。",
+  "icon": "icon.svg",
+  "entry": "plugin.js",
+  "panel": "panel.html",
+  "permissions": ["playback:read"],
+  "contributes": {
+    "panels": [{ "id": "main", "title": "Hello ECHO", "path": "panel.html", "placement": "main" }],
+    "commands": [{ "id": "show-status", "title": "显示播放状态" }]
+  }
+}

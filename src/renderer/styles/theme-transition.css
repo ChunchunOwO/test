@@ -1,0 +1,72 @@
+html[data-theme-transition='view']::view-transition-old(root) {
+  animation: echo-theme-snapshot-out 220ms cubic-bezier(0.2, 0.82, 0.18, 1) both;
+  mix-blend-mode: normal;
+}
+
+html[data-theme-transition='view']::view-transition-new(root) {
+  animation: echo-theme-snapshot-in 220ms cubic-bezier(0.2, 0.82, 0.18, 1) both;
+  mix-blend-mode: normal;
+}
+
+@keyframes echo-theme-snapshot-out {
+  to { opacity: 0; }
+}
+
+@keyframes echo-theme-snapshot-in {
+  from { opacity: 0; }
+}
+
+html[data-theme-transition='fallback'] body,
+html[data-theme-transition='fallback'] .app-shell,
+html[data-theme-transition='fallback'] .app-titlebar,
+html[data-theme-transition='fallback'] .sidebar,
+html[data-theme-transition='fallback'] .page-surface,
+html[data-theme-transition='fallback'] .player-bar,
+html[data-theme-transition='fallback'] .player-bar-host,
+html[data-theme-transition='fallback'] .settings-section,
+html[data-theme-transition='fallback'] .setting-row,
+html[data-theme-transition='fallback'] .settings-theme-preset-card,
+html[data-theme-transition='fallback'] .settings-theme-custom-summary,
+html[data-theme-transition='fallback'] .settings-theme-custom-panel,
+html[data-theme-transition='fallback'] .settings-theme-custom-details,
+html[data-theme-transition='fallback'] .settings-theme-custom-color-card,
+html[data-theme-transition='fallback'] .settings-theme-custom-sliders,
+html[data-theme-transition='fallback'] .settings-action-button,
+html[data-theme-transition='fallback'] .settings-danger-button,
+html[data-theme-transition='fallback'] .chip-button {
+  transition:
+    background-color var(--echo-motion-panel-ms, 160ms) var(--echo-motion-ease-standard, ease),
+    border-color var(--echo-motion-panel-ms, 160ms) var(--echo-motion-ease-standard, ease),
+    box-shadow var(--echo-motion-panel-ms, 160ms) var(--echo-motion-ease-standard, ease),
+    color var(--echo-motion-panel-ms, 160ms) var(--echo-motion-ease-standard, ease),
+    opacity var(--echo-motion-panel-ms, 160ms) var(--echo-motion-ease-standard, ease),
+    filter var(--echo-motion-panel-ms, 160ms) var(--echo-motion-ease-standard, ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-transition]::view-transition-old(root),
+  html[data-theme-transition]::view-transition-new(root) {
+    animation: none;
+  }
+
+  html[data-theme-transition='fallback'] body,
+  html[data-theme-transition='fallback'] .app-shell,
+  html[data-theme-transition='fallback'] .app-titlebar,
+  html[data-theme-transition='fallback'] .sidebar,
+  html[data-theme-transition='fallback'] .page-surface,
+  html[data-theme-transition='fallback'] .player-bar,
+  html[data-theme-transition='fallback'] .player-bar-host,
+  html[data-theme-transition='fallback'] .settings-section,
+  html[data-theme-transition='fallback'] .setting-row,
+  html[data-theme-transition='fallback'] .settings-theme-preset-card,
+  html[data-theme-transition='fallback'] .settings-theme-custom-summary,
+  html[data-theme-transition='fallback'] .settings-theme-custom-panel,
+  html[data-theme-transition='fallback'] .settings-theme-custom-details,
+  html[data-theme-transition='fallback'] .settings-theme-custom-color-card,
+  html[data-theme-transition='fallback'] .settings-theme-custom-sliders,
+  html[data-theme-transition='fallback'] .settings-action-button,
+  html[data-theme-transition='fallback'] .settings-danger-button,
+  html[data-theme-transition='fallback'] .chip-button {
+    transition: none;
+  }
+}

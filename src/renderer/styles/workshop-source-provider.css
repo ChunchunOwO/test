@@ -1,0 +1,174 @@
+.workshop-source-provider {
+  position: fixed;
+  inset: 64px 24px 92px auto;
+  z-index: 2147483646;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  inline-size: min(560px, calc(100vw - 48px));
+  max-block-size: calc(100vh - 156px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 28%, transparent);
+  border-radius: 16px;
+  color: var(--echo-text, #fff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 97%, transparent);
+  box-shadow: 0 22px 68px rgb(0 0 0 / 42%);
+}
+
+.workshop-source-provider > header,
+.workshop-source-provider > header div,
+.workshop-source-provider > form,
+.workshop-source-provider > form button,
+.workshop-source-provider__results article,
+.workshop-source-provider__results article > button {
+  display: flex;
+  align-items: center;
+}
+
+.workshop-source-provider__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-block-start: 4px;
+}
+
+.workshop-source-provider__pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-inline-size: 92px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 16%, transparent);
+  border-radius: 9px;
+  color: inherit;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 82%, transparent);
+}
+
+.workshop-source-provider__pagination span {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-source-provider > header {
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-block-end: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+}
+
+.workshop-source-provider > header div {
+  gap: 8px;
+}
+
+.workshop-source-provider > header span,
+.workshop-source-provider > p,
+.workshop-source-provider__results > small,
+.workshop-source-provider__results article small,
+.workshop-source-provider__results article em {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-source-provider > header button {
+  display: grid;
+  inline-size: 30px;
+  block-size: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+}
+
+.workshop-source-provider > p {
+  margin: 12px 16px 0;
+}
+
+.workshop-source-provider > form {
+  gap: 8px;
+  padding: 14px 16px;
+}
+
+.workshop-source-provider > form input {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  flex: 1;
+  padding: 10px 11px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 18%, transparent);
+  border-radius: 10px;
+  color: inherit;
+  background: var(--echo-field, #0f1322);
+}
+
+.workshop-source-provider > form button,
+.workshop-source-provider__results article > button {
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 9px;
+  color: var(--echo-on-accent, #fff);
+  background: var(--echo-accent, #6678ff);
+}
+
+.workshop-source-provider > form button {
+  min-inline-size: 90px;
+  padding: 10px 12px;
+}
+
+.workshop-source-provider__error {
+  color: var(--echo-danger, #ff7f91) !important;
+}
+
+.workshop-source-provider__results {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  overflow: auto;
+  padding: 0 16px 16px;
+}
+
+.workshop-source-provider__results article {
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 72%, transparent);
+}
+
+.workshop-source-provider__results article > span {
+  display: grid;
+  min-inline-size: 0;
+  gap: 3px;
+}
+
+.workshop-source-provider__results article strong,
+.workshop-source-provider__results article small,
+.workshop-source-provider__results article em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workshop-source-provider__results article em {
+  color: var(--echo-danger, #ff7f91);
+  font-style: normal;
+}
+
+.workshop-source-provider__results article > button {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+}
+
+.workshop-source-provider button:disabled {
+  cursor: default;
+  opacity: 0.52;
+}
+
+@media (max-width: 720px) {
+  .workshop-source-provider {
+    inset: 54px 12px 74px;
+    inline-size: auto;
+    max-block-size: none;
+  }
+}

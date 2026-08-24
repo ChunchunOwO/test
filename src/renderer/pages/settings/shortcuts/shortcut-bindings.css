@@ -1,0 +1,167 @@
+.settings-page .settings-shortcut-bindings {
+  display: grid;
+  gap: 0;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-bindings > #settings-shortcuts-bindings {
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-height: 0;
+  margin: 10px 0 0;
+  padding: 4px 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page .settings-shortcut-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 18px;
+  flex-wrap: wrap;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-bindings > .settings-shortcut-toolbar {
+  margin: 0;
+  padding: 8px 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page .settings-shortcut-group-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-page .settings-shortcut-group-actions .settings-action-button {
+  min-height: 32px;
+  padding-inline: 12px;
+}
+
+.settings-page .settings-shortcut-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 0 0 2px;
+}
+
+.settings-page .settings-shortcut-categories .list-filter-chip {
+  min-height: 30px;
+  padding-inline: 12px;
+  border-radius: 8px;
+}
+
+.settings-page .settings-shortcut-table {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.settings-page .settings-shortcut-groups {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-page .settings-shortcut-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 8px 14px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-list-row-border) 82%, transparent);
+  border-top: 0;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 72%, transparent);
+  color: var(--theme-page-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-page .settings-shortcut-group-header:hover {
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover) 88%, transparent);
+}
+
+.settings-page .settings-shortcut-group-header:focus-visible {
+  outline: 0;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--theme-accent) 28%, transparent);
+}
+
+.settings-page .settings-shortcut-group-chevron {
+  flex: 0 0 auto;
+  color: var(--theme-text-muted);
+  transform: rotate(-90deg);
+  transition: transform 160ms ease;
+}
+
+.settings-page .settings-shortcut-group[data-expanded='true'] .settings-shortcut-group-chevron {
+  transform: rotate(0deg);
+}
+
+.settings-page .settings-shortcut-group-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--theme-accent);
+}
+
+.settings-page .settings-shortcut-group-title {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.settings-page .settings-shortcut-group-meta {
+  margin-left: auto;
+  color: var(--theme-text-muted);
+  font-size: 12px;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-table > .setting-row--shortcut-header {
+  border-radius: 9px 9px 0 0;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-group-body .setting-row--shortcut:last-child {
+  border-radius: 0;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-group:last-child .settings-shortcut-group-body .setting-row--shortcut:last-child,
+.settings-page #settings-sec-shortcuts .settings-shortcut-group:last-child[data-expanded='false'] .settings-shortcut-group-header {
+  border-radius: 0 0 9px 9px;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-empty {
+  margin: 0;
+  padding: 18px 16px 20px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
+}
+
+@media (max-width: 1180px) {
+  .settings-page #settings-sec-shortcuts .settings-shortcut-bindings > .settings-shortcut-toolbar {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 860px) {
+  .settings-page .settings-shortcut-group-header {
+    min-height: 38px;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+  }
+
+  .settings-page .settings-shortcut-group-meta {
+    width: 100%;
+    margin-left: 30px;
+  }
+}

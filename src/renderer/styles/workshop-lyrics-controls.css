@@ -1,0 +1,60 @@
+.workshop-lyrics-source-picker,
+.workshop-lyrics-theme-picker {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #7c8cff) 22%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--echo-panel, #ffffff) 82%, transparent);
+}
+
+.workshop-lyrics-source-picker > p,
+.workshop-lyrics-theme-picker > p {
+  margin: 0;
+  color: var(--echo-text-muted, #687085);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.workshop-lyrics-source-picker .lyrics-drawer-select {
+  display: grid;
+  gap: 6px;
+  color: var(--echo-text-muted, #687085);
+  font-size: 12px;
+}
+
+.workshop-lyrics-source-picker .lyrics-drawer-select select {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 10px;
+  color: var(--echo-text, #202435);
+  background: var(--echo-panel, #ffffff);
+}
+
+.workshop-lyrics-source-picker__search {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.workshop-lyrics-source-picker__search input {
+  min-width: 0;
+}
+
+.workshop-lyrics-source-picker__search button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background: var(--echo-accent, #6677ee);
+  cursor: pointer;
+}
+
+.workshop-lyrics-source-picker__search button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}

@@ -1,0 +1,265 @@
+.steam-leaderboard-panel {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 16px;
+  color: var(--theme-heading-text);
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 92%, transparent);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--theme-panel-border-strong) 14%, transparent);
+  backdrop-filter: blur(var(--theme-panel-blur, 0));
+}
+
+.steam-leaderboard-header,
+.steam-leaderboard-heading,
+.steam-leaderboard-actions,
+.steam-leaderboard-tabs,
+.steam-leaderboard-summary,
+.steam-leaderboard-list li {
+  display: flex;
+  align-items: center;
+}
+
+.steam-leaderboard-header {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.steam-leaderboard-heading {
+  gap: 10px;
+  min-width: 0;
+}
+
+.steam-leaderboard-heading small {
+  color: var(--theme-accent-text);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+
+.steam-leaderboard-heading h2 {
+  margin: 2px 0;
+  color: var(--theme-heading-text);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.steam-leaderboard-heading p {
+  margin: 0;
+  color: var(--theme-muted-text);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.steam-leaderboard-emblem {
+  display: grid;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--theme-accent-border);
+  border-radius: 10px;
+  color: var(--theme-accent-text-strong);
+  background: var(--theme-accent-bg);
+}
+
+.steam-leaderboard-actions {
+  gap: 7px;
+  flex: 0 0 auto;
+}
+
+.steam-leaderboard-actions button,
+.steam-leaderboard-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 31px;
+  padding: 0 10px;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 8px;
+  color: var(--theme-muted-text);
+  background: var(--theme-control-bg);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 680;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.steam-leaderboard-actions button.is-active,
+.steam-leaderboard-tabs button.is-active {
+  border-color: var(--theme-accent-border);
+  color: var(--theme-accent-text-strong);
+  background: var(--theme-accent-bg);
+}
+
+.steam-leaderboard-actions button:hover:not(:disabled),
+.steam-leaderboard-tabs button:hover:not(:disabled) {
+  border-color: var(--theme-accent-border);
+  color: var(--theme-heading-text);
+  background: var(--theme-control-bg-hover);
+}
+
+.steam-leaderboard-actions button:focus-visible,
+.steam-leaderboard-tabs button:focus-visible {
+  outline: 2px solid var(--theme-accent-solid-bg);
+  outline-offset: 2px;
+}
+
+.steam-leaderboard-actions button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.steam-leaderboard-tabs {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.steam-leaderboard-tab-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 2px;
+  background: var(--theme-panel-border-strong);
+}
+
+.steam-leaderboard-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--theme-panel-border);
+  border-radius: 10px;
+  background: var(--theme-panel-border);
+}
+
+.steam-leaderboard-summary span {
+  display: grid;
+  min-height: 58px;
+  align-content: center;
+  gap: 3px;
+  padding: 9px 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 88%, var(--theme-panel-bg));
+}
+
+.steam-leaderboard-summary small {
+  color: var(--theme-muted-text);
+  font-size: 10px;
+}
+
+.steam-leaderboard-summary strong {
+  overflow: hidden;
+  color: var(--theme-heading-text);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.steam-leaderboard-list {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steam-leaderboard-list li {
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 64%, transparent);
+}
+
+.steam-leaderboard-list li.is-current-user {
+  border-color: var(--theme-accent-border);
+  background: var(--theme-accent-bg);
+}
+
+.steam-leaderboard-list li > strong {
+  width: 48px;
+  color: var(--theme-accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.steam-leaderboard-player {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 1px;
+  padding: 6px 0;
+}
+
+.steam-leaderboard-player span {
+  overflow: hidden;
+  color: var(--theme-heading-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.steam-leaderboard-player small {
+  overflow: hidden;
+  color: var(--theme-muted-text);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.steam-leaderboard-list li em {
+  color: var(--theme-heading-text);
+  font-style: normal;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.steam-leaderboard-opt-in {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--theme-accent-border) 70%, transparent);
+  border-radius: 10px;
+  color: var(--theme-muted-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 68%, transparent);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.steam-leaderboard-opt-in strong {
+  color: var(--theme-heading-text);
+}
+
+.steam-leaderboard-empty,
+.steam-leaderboard-error {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 9px;
+  color: var(--theme-muted-text);
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 72%, transparent);
+  font-size: 12px;
+}
+
+.steam-leaderboard-error {
+  border: 1px solid var(--theme-danger-border);
+  color: var(--theme-danger-text);
+  background: var(--theme-danger-bg);
+}
+
+@media (max-width: 760px) {
+  .steam-leaderboard-panel {
+    padding: 13px;
+  }
+
+  .steam-leaderboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .steam-leaderboard-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .steam-leaderboard-tab-divider {
+    display: none;
+  }
+}

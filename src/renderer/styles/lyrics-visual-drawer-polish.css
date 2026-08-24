@@ -1,0 +1,852 @@
+/*
+ * Lyrics "visual settings" drawer refinement layer (画面视觉).
+ * Loads after app.css / lyrics.css and only restyles the lyrics visual
+ * settings drawer (.audio-drawer-root.lyrics-visual-settings-drawer-root).
+ *
+ * This is the sibling of lyrics-drawer-polish.css: same design language,
+ * mirrored token ladder (renamed --llp-* -> --lvp-*), scoped to this
+ * drawer's own root so neither file leaks into the other. The fixed violet
+ * tokens (--llp-theme-accent-rgb / --llp-theme-accent-deep /
+ * --llp-theme-glow-rgb) are defined once in lyrics-drawer-polish.css and
+ * reused here; they do not follow page theme presets.
+ */
+
+@scope (.lyrics-visual-settings-drawer-root) {
+
+.audio-drawer {
+  --lvp-acc: rgb(var(--llp-theme-accent-rgb));
+  --lvp-acc-deep: var(--llp-theme-accent-deep);
+  --lvp-acc-soft: color-mix(in oklab, var(--lvp-acc) 82%, #f4f6ff);
+  --lvp-acc-softer: color-mix(in oklab, var(--lvp-acc) 66%, #f4f6ff);
+  --lvp-acc-glow: color-mix(in oklab, var(--lvp-acc) 76%, #05070f);
+
+  --lvp-shell-border: rgba(151, 167, 226, 0.2);
+  --lvp-shell-bg:
+    radial-gradient(130% 56% at 100% 0%, rgb(var(--llp-theme-accent-rgb) / 0.14), transparent 60%),
+    radial-gradient(90% 40% at 0% 100%, rgb(var(--llp-theme-glow-rgb) / 0.08), transparent 62%),
+    linear-gradient(172deg, rgba(30, 35, 56, 0.985) 0%, rgba(26, 31, 49, 0.99) 44%, rgba(21, 25, 40, 0.995) 100%);
+  --lvp-shell-shadow:
+    inset 1px 1px 0 rgba(224, 231, 255, 0.06),
+    -36px 0 110px rgba(6, 9, 20, 0.56);
+  --lvp-fade-top: linear-gradient(to bottom, rgba(29, 34, 55, 0.97) 0%, rgba(29, 34, 55, 0.88) 30%, rgba(29, 34, 55, 0) 100%);
+  --lvp-fade-bottom: linear-gradient(to top, rgba(21, 25, 40, 0.95) 0%, rgba(21, 25, 40, 0) 100%);
+
+  --lvp-title-gradient: linear-gradient(118deg, #f5f7ff 32%, color-mix(in oklab, var(--lvp-acc) 38%, #f6f8ff) 88%);
+
+  --lvp-heading-text: rgba(230, 235, 254, 0.95);
+  --lvp-bright-text: #f4f6ff;
+  --lvp-soft-text: rgba(214, 222, 250, 0.85);
+  --lvp-dim-text: rgba(210, 219, 246, 0.58);
+  --lvp-label-text: rgba(178, 191, 232, 0.72);
+  --lvp-caption-text: rgba(178, 191, 232, 0.55);
+  --lvp-hover-text: rgba(240, 243, 255, 0.94);
+
+  --lvp-hairline: rgba(165, 179, 228, 0.13);
+  --lvp-hairline-faint: rgba(163, 178, 226, 0.09);
+  --lvp-hairline-strong: rgba(148, 164, 222, 0.17);
+  --lvp-ring: rgba(188, 202, 238, 0.1);
+  --lvp-ring-faint: rgba(188, 202, 238, 0.09);
+  --lvp-ring-hover: rgba(188, 202, 238, 0.24);
+
+  --lvp-card-bg: rgba(255, 255, 255, 0.038);
+  --lvp-card-bg-raised: rgba(255, 255, 255, 0.055);
+  --lvp-glass-bg: rgba(255, 255, 255, 0.045);
+  --lvp-glass-bg-hover: rgba(255, 255, 255, 0.09);
+  --lvp-tile-bg: rgba(148, 164, 222, 0.11);
+  --lvp-tint-bg: rgba(148, 164, 222, 0.09);
+  --lvp-tint-bg-hover: rgba(129, 146, 228, 0.13);
+  --lvp-well-bg: rgba(9, 13, 26, 0.44);
+  --lvp-well-bg-focus: rgba(9, 13, 26, 0.6);
+  --lvp-well-bg-soft: rgba(9, 13, 26, 0.36);
+  --lvp-well-bg-faint: rgba(10, 14, 27, 0.26);
+  --lvp-inset-shadow: inset 0 1px 4px rgba(4, 7, 16, 0.36);
+
+  --lvp-accent-icon: color-mix(in oklab, var(--lvp-acc) 74%, #f4f6ff);
+  --lvp-accent-icon-bright: color-mix(in oklab, var(--lvp-acc) 64%, #f4f6ff);
+  --lvp-accent-text: color-mix(in oklab, var(--lvp-acc) 22%, #f4f6ff);
+  --lvp-accent-border: rgb(var(--llp-theme-accent-rgb) / 0.68);
+  --lvp-accent-border-soft: color-mix(in srgb, var(--lvp-acc-soft) 20%, transparent);
+  --lvp-accent-border-mid: color-mix(in srgb, var(--lvp-acc-soft) 38%, transparent);
+  --lvp-accent-bg-faint: rgb(var(--llp-theme-accent-rgb) / 0.1);
+  --lvp-accent-bg-soft: rgb(var(--llp-theme-accent-rgb) / 0.13);
+  --lvp-focus-ring: color-mix(in srgb, var(--lvp-acc-soft) 72%, transparent);
+  --lvp-focus-halo: 0 0 0 3px rgb(var(--llp-theme-accent-rgb) / 0.14);
+
+  --lvp-header-icon-bg: linear-gradient(150deg, rgb(var(--llp-theme-accent-rgb) / 0.24), rgb(var(--llp-theme-glow-rgb) / 0.14));
+  --lvp-header-icon-ring: color-mix(in srgb, var(--lvp-acc-soft) 22%, transparent);
+  --lvp-switch-off-bg: rgba(148, 164, 222, 0.22);
+  --lvp-switch-off-shadow: inset 0 1px 3px rgba(6, 10, 20, 0.32);
+  --lvp-switch-on-bg: linear-gradient(135deg, var(--lvp-acc), var(--lvp-acc-deep));
+  --lvp-switch-on-shadow:
+    inset 0 1px 0 rgba(226, 233, 255, 0.24),
+    0 2px 10px color-mix(in srgb, var(--lvp-acc-glow) 30%, transparent);
+  --lvp-knob-shadow:
+    0 2px 6px rgba(8, 12, 24, 0.36),
+    0 0 0 0.5px rgba(8, 12, 24, 0.12);
+  --lvp-range-fill: var(--lvp-acc);
+  --lvp-range-rest: rgba(148, 164, 222, 0.22);
+
+  --lvp-menu-bg: linear-gradient(168deg, rgba(30, 36, 57, 0.98), rgba(23, 28, 45, 0.985));
+  --lvp-menu-shadow:
+    inset 0 1px 0 rgba(224, 231, 255, 0.07),
+    0 24px 64px rgba(4, 7, 16, 0.52);
+
+  --lvp-match-border: color-mix(in srgb, var(--lvp-acc-soft) 30%, transparent);
+  --lvp-match-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--lvp-acc-soft) 52%, transparent),
+    0 8px 24px rgba(20, 26, 50, 0.14);
+  --lvp-match-active-border: color-mix(in srgb, var(--lvp-acc-softer) 60%, transparent);
+  --lvp-match-active-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--lvp-acc-softer) 82%, transparent),
+    0 0 0 3px rgb(var(--llp-theme-accent-rgb) / 0.13),
+    0 10px 28px rgba(20, 26, 50, 0.18);
+}
+
+/* ---------- Shell ---------- */
+
+.audio-drawer-scrim {
+  background: rgba(7, 10, 20, 0.54); /* theme-color-allow: fixed dark-glass overlay scrim */
+}
+
+.lyrics-visual-settings-drawer {
+  border-left: 1px solid var(--lvp-shell-border);
+  border-radius: 30px 0 0 30px;
+  background: var(--lvp-shell-bg);
+  box-shadow: var(--lvp-shell-shadow);
+}
+
+.audio-drawer::before {
+  border-radius: 30px 0 0 0;
+  background: var(--lvp-fade-top);
+}
+
+.audio-drawer::after {
+  background: var(--lvp-fade-bottom);
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-scroll {
+  padding: 20px 20px 26px;
+  overscroll-behavior: contain;
+  scrollbar-color: color-mix(in srgb, var(--lvp-bright-text) 28%, transparent) transparent;
+  scrollbar-width: auto;
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-header {
+  margin-bottom: 14px;
+}
+
+/* Visible thin scrollbar for orientation in the long single column */
+.lyrics-visual-settings-drawer .audio-drawer-scroll::-webkit-scrollbar {
+  display: block;
+  width: 9px;
+  background: transparent;
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-scroll::-webkit-scrollbar-track {
+  margin: 8px 0;
+  background: transparent;
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-scroll::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lvp-bright-text) 18%, transparent);
+  background-clip: padding-box;
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-scroll:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--lvp-bright-text) 32%, transparent);
+  background-clip: padding-box;
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--lvp-bright-text) 50%, transparent);
+  background-clip: padding-box;
+}
+
+/* ---------- Header ---------- */
+
+.audio-drawer .audio-drawer-header h2 {
+  background: var(--lvp-title-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 19px;
+  font-weight: 760;
+  letter-spacing: -0.012em;
+}
+
+.audio-drawer .audio-drawer-header > div > svg {
+  box-sizing: content-box;
+  flex: 0 0 auto;
+  padding: 9px;
+  color: var(--lvp-accent-icon-bright);
+  border-radius: 13px;
+  background: var(--lvp-header-icon-bg);
+  box-shadow: inset 0 0 0 1px var(--lvp-header-icon-ring);
+}
+
+.audio-drawer .audio-drawer-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--lvp-glass-bg);
+  box-shadow: inset 0 0 0 1px var(--lvp-ring);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.audio-drawer .audio-drawer-close:hover {
+  color: var(--lvp-bright-text);
+  background: var(--lvp-glass-bg-hover);
+  box-shadow: inset 0 0 0 1px var(--lvp-ring-hover);
+}
+
+.audio-drawer .audio-drawer-close svg {
+  transition: transform var(--echo-motion-page-ms) var(--echo-motion-ease-standard);
+}
+
+.audio-drawer .audio-drawer-close:hover svg {
+  transform: rotate(90deg);
+}
+
+/* ---------- Smart search ---------- */
+
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__field {
+  min-height: 42px;
+  padding: 0 10px 0 15px;
+  border: 1px solid var(--lvp-hairline-strong);
+  border-radius: 999px;
+  background: var(--lvp-well-bg);
+  box-shadow: var(--lvp-inset-shadow);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__field:focus-within {
+  border-color: var(--lvp-accent-border);
+  background: var(--lvp-well-bg-focus);
+  box-shadow: var(--lvp-focus-halo);
+}
+
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__field kbd {
+  padding: 3px 7px;
+  color: var(--lvp-caption-text);
+  border: 0;
+  border-radius: 999px;
+  background: var(--lvp-tint-bg);
+  font-weight: 640;
+  letter-spacing: 0.05em;
+}
+
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__clear,
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__steppers button {
+  border-radius: 999px;
+}
+
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__meta {
+  min-height: 0;
+  padding: 0 6px 0 2px;
+  background: transparent;
+}
+
+:scope .lyrics-visual-settings-drawer .drawer-smart-search__results {
+  display: none;
+}
+
+/* ---------- Section shell ---------- */
+
+/* The drawer header already reads 画面视觉; the repeated in-body section
+   title directly below the search adds nothing, so it is dropped. */
+.lyrics-visual-settings-drawer .audio-drawer-options > .audio-drawer-section-title {
+  display: none;
+}
+
+.lyrics-visual-settings-drawer .audio-drawer-section.audio-drawer-options {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* ---------- Group cards ---------- */
+
+/* Groups become section cards (same look as the lyrics settings drawer's
+   collapsible sections) instead of hairline-separated flat rows. */
+.lyrics-settings-drawer .lyrics-visual-group,
+.lyrics-settings-drawer .audio-drawer-options > .lyrics-visual-group,
+.lyrics-settings-drawer .audio-drawer-options > .lyrics-visual-group--background,
+.lyrics-settings-drawer .audio-drawer-options > .audio-drawer-section-title + .lyrics-visual-group:not(.lyrics-visual-group--background) {
+  margin-top: 0;
+  padding-top: 0;
+  border: 1px solid var(--lvp-hairline);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 80%),
+    var(--lvp-card-bg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045); /* theme-color-allow: fixed dark-glass card highlight */
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group + .lyrics-visual-group {
+  margin-top: 8px;
+}
+
+.lyrics-settings-drawer .audio-drawer-options > .lyrics-visual-group {
+  margin-top: 8px;
+}
+
+.lyrics-settings-drawer .audio-drawer-options > .lyrics-visual-group--background {
+  margin-top: 0;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group[data-collapsed="true"]:hover {
+  border-color: var(--lvp-accent-border-soft);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 28px rgba(6, 10, 22, 0.32);
+  transform: none;
+}
+
+/* Flatten the toggle; the card is the surface */
+.lyrics-settings-drawer .lyrics-visual-group__toggle {
+  min-height: 58px;
+  padding: 12px;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  transition: background-color 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group__toggle:hover {
+  border-color: transparent;
+  background: var(--lvp-tint-bg);
+}
+
+.lyrics-settings-drawer .lyrics-visual-group--open .lyrics-visual-group__toggle {
+  border-radius: 18px 18px 0 0;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group__toggle:focus-visible {
+  outline: 2px solid var(--lvp-focus-ring);
+  outline-offset: -2px;
+}
+
+/* Icon tile in group headers */
+.lyrics-settings-drawer .lyrics-visual-group__heading {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group__heading > svg {
+  box-sizing: content-box;
+  flex: 0 0 auto;
+  padding: 7px;
+  color: var(--lvp-accent-icon);
+  border-radius: 10px;
+  background: var(--lvp-tile-bg);
+  box-shadow: inset 0 0 0 1px var(--lvp-ring-faint);
+}
+
+.lyrics-settings-drawer .lyrics-visual-group__heading strong {
+  color: var(--lvp-bright-text);
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group__heading small {
+  color: var(--lvp-caption-text);
+  font-size: 11.5px;
+  font-weight: 560;
+}
+
+.lyrics-settings-drawer .lyrics-visual-group__toggle > svg:last-child {
+  color: var(--lvp-caption-text);
+}
+
+/* Chevron nudge on hover while collapsed */
+.lyrics-settings-drawer .lyrics-visual-group[data-collapsed="true"] .lyrics-visual-group__toggle:hover > svg:last-child {
+  transform: translateY(2px);
+}
+
+/* Body sits inside the card with a hairline under the header */
+.lyrics-settings-drawer .lyrics-visual-group__content {
+  margin: 0 12px;
+  padding: 12px 0 14px;
+  border-top: 1px solid var(--lvp-hairline-faint);
+}
+
+/* ---------- Toggle rows & switches ---------- */
+
+.lyrics-settings-drawer .audio-toggle-row {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.lyrics-settings-drawer .audio-toggle-row:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.lyrics-settings-drawer .audio-toggle-row > span > svg {
+  flex: 0 0 auto;
+  color: var(--lvp-label-text);
+}
+
+.lyrics-settings-drawer .audio-toggle-row input {
+  width: 46px;
+  height: 26px;
+  background: var(--lvp-switch-off-bg);
+  box-shadow: var(--lvp-switch-off-shadow);
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.lyrics-settings-drawer .audio-toggle-row input::before {
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  box-shadow: var(--lvp-knob-shadow);
+  transition:
+    transform 240ms cubic-bezier(0.3, 1.25, 0.4, 1),
+    width 160ms ease;
+}
+
+.lyrics-settings-drawer .audio-toggle-row input:checked {
+  background: var(--lvp-switch-on-bg);
+  box-shadow: var(--lvp-switch-on-shadow);
+}
+
+.lyrics-settings-drawer .audio-toggle-row input:checked::before {
+  transform: translateX(20px);
+}
+
+/* Tactile knob squish while pressed */
+.lyrics-settings-drawer .audio-toggle-row input:active:not(:disabled)::before {
+  width: 24px;
+}
+
+.lyrics-settings-drawer .audio-toggle-row input:checked:active:not(:disabled)::before {
+  transform: translateX(16px);
+}
+
+/* ---------- Descriptions ---------- */
+
+.lyrics-settings-drawer .lyrics-visual-group__content > p {
+  margin: -2px 2px 2px;
+  color: var(--lvp-dim-text);
+  font-size: 11.5px;
+  font-weight: 520;
+  line-height: 1.55;
+}
+
+/* ---------- Range sliders ---------- */
+
+.lyrics-settings-drawer .lyrics-drawer-range {
+  color: var(--lvp-soft-text);
+  border: 1px solid var(--lvp-hairline-faint);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02); /* theme-color-allow: fixed dark-glass well */
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range:hover,
+.lyrics-settings-drawer .lyrics-drawer-range:focus-within {
+  border-color: var(--lvp-hairline);
+  background: rgba(255, 255, 255, 0.035); /* theme-color-allow: fixed dark-glass well hover */
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range strong {
+  color: var(--lvp-heading-text);
+  font-size: 12.5px;
+  font-weight: 640;
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range span > em {
+  min-width: 44px;
+  padding: 3px 8px;
+  color: var(--lvp-accent-text);
+  border-radius: 999px;
+  background: var(--lvp-tint-bg);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"] {
+  accent-color: var(--lvp-range-fill);
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--lvp-range-rest);
+  box-shadow: inset 0 1px 2px rgba(4, 7, 16, 0.3); /* theme-color-allow: fixed dark-glass track inset */
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"]::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff; /* theme-color-allow: white slider thumb on fixed dark shell */
+  box-shadow:
+    0 2px 6px rgba(8, 12, 24, 0.4),
+    0 0 0 1px rgba(8, 12, 24, 0.1);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"]:hover:not(:disabled)::-webkit-slider-thumb {
+  transform: scale(1.12);
+  box-shadow:
+    0 2px 6px rgba(8, 12, 24, 0.4),
+    0 0 0 5px rgb(var(--llp-theme-accent-rgb) / 0.16);
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"]:active:not(:disabled)::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"]:focus-visible {
+  outline: none;
+}
+
+.lyrics-settings-drawer .lyrics-drawer-range input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 2px 6px rgba(8, 12, 24, 0.4),
+    0 0 0 3px var(--lvp-focus-ring);
+}
+
+/* ---------- Panels (page style / font / color / mini player) ---------- */
+
+.lyrics-settings-drawer .lyrics-color-panel,
+.lyrics-settings-drawer .lyrics-font-panel {
+  border: 1px solid var(--lvp-hairline-faint);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02); /* theme-color-allow: fixed dark-glass panel */
+}
+
+/* Page style panel leads its group with an accent card */
+.lyrics-visual-settings-drawer .lyrics-page-style-panel {
+  border: 1px solid var(--lvp-accent-border-soft);
+  border-radius: 14px;
+  /* theme-color-allow: accent wash derived from theme hook vars */
+  background: linear-gradient(120deg, rgb(var(--llp-theme-accent-rgb) / 0.1), rgb(var(--llp-theme-glow-rgb) / 0.05));
+  box-shadow: none;
+}
+
+.lyrics-visual-settings-drawer .lyrics-page-style-panel > p {
+  color: var(--lvp-dim-text);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.lyrics-visual-settings-drawer .lyrics-page-style-panel__rose-controls {
+  border-top: 1px solid var(--lvp-hairline-faint);
+}
+
+.lyrics-visual-settings-drawer .lyrics-page-style-panel__rose-controls p {
+  color: var(--lvp-dim-text);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.lyrics-visual-settings-drawer .lyrics-page-style-panel__rose-controls .lyrics-drawer-range {
+  border: 0;
+  background: transparent;
+}
+
+.lyrics-visual-settings-drawer .lyrics-page-style-panel__rose-controls .lyrics-rose-vinyl-gradient-toggle {
+  border-top: 1px solid var(--lvp-hairline-faint);
+}
+
+.lyrics-settings-drawer .lyrics-color-panel__header strong {
+  color: var(--lvp-heading-text);
+}
+
+.lyrics-settings-drawer .lyrics-color-panel__header > em {
+  color: var(--lvp-caption-text);
+}
+
+/* ---------- Selects (StyledSelect) ---------- */
+
+.lyrics-settings-drawer .styled-select .sort-button {
+  color: var(--lvp-soft-text);
+  border: 1px solid var(--lvp-hairline-strong);
+  border-radius: 12px;
+  background: var(--lvp-well-bg-faint);
+  box-shadow: none;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.lyrics-settings-drawer .styled-select .sort-button:hover:not(:disabled),
+.lyrics-settings-drawer .styled-select .sort-button[aria-expanded="true"] {
+  color: var(--lvp-hover-text);
+  border-color: var(--lvp-accent-border-mid);
+  background: var(--lvp-tint-bg);
+  box-shadow: none;
+}
+
+.lyrics-settings-drawer .styled-select .sort-button:focus-visible {
+  border-color: var(--lvp-accent-border);
+  box-shadow: var(--lvp-focus-halo);
+}
+
+.lyrics-settings-drawer .styled-select .sort-button-chevron {
+  color: var(--lvp-caption-text);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lyrics-settings-drawer .styled-select .sort-button[aria-expanded="true"] .sort-button-chevron {
+  transform: rotate(180deg);
+}
+
+.lyrics-settings-drawer .styled-select .sort-menu {
+  padding: 5px;
+  border: 1px solid var(--lvp-hairline-strong);
+  border-radius: 13px;
+  background: var(--lvp-menu-bg);
+  box-shadow: var(--lvp-menu-shadow);
+}
+
+.lyrics-settings-drawer .styled-select .sort-option {
+  min-height: 34px;
+  border-radius: 9px;
+  color: var(--lvp-soft-text);
+  background: transparent;
+}
+
+.lyrics-settings-drawer .styled-select .sort-option:hover {
+  color: var(--lvp-hover-text);
+  background: var(--lvp-glass-bg);
+}
+
+.lyrics-settings-drawer .styled-select .sort-option[data-active="true"],
+.lyrics-settings-drawer .styled-select .sort-option[aria-selected="true"] {
+  color: var(--lvp-bright-text);
+  background: var(--lvp-accent-bg-soft);
+}
+
+.lyrics-visual-settings-drawer .lyrics-page-style-select .sort-option svg {
+  color: var(--lvp-accent-icon);
+}
+
+/* ---------- Background mode select ---------- */
+
+.lyrics-settings-drawer .lyrics-background-select__trigger {
+  border: 1px solid var(--lvp-hairline-strong);
+  border-radius: 12px;
+  background: var(--lvp-well-bg-faint);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-background-select__trigger:hover:not(:disabled) {
+  border-color: var(--lvp-accent-border-mid);
+  background: var(--lvp-tint-bg);
+}
+
+.lyrics-settings-drawer .lyrics-background-select__trigger:focus-visible {
+  border-color: var(--lvp-accent-border);
+  box-shadow: var(--lvp-focus-halo);
+}
+
+.lyrics-settings-drawer .lyrics-background-select__menu {
+  padding: 5px;
+  border: 1px solid var(--lvp-hairline-strong);
+  border-radius: 13px;
+  background: var(--lvp-menu-bg);
+  box-shadow: var(--lvp-menu-shadow);
+}
+
+.lyrics-settings-drawer .lyrics-background-select__option {
+  border-radius: 9px;
+  color: var(--lvp-soft-text);
+}
+
+.lyrics-settings-drawer .lyrics-background-select__option:hover,
+.lyrics-settings-drawer .lyrics-background-select__option:focus-visible {
+  color: var(--lvp-hover-text);
+  background: var(--lvp-glass-bg);
+}
+
+.lyrics-settings-drawer .lyrics-background-select__option[aria-selected="true"] {
+  color: var(--lvp-bright-text);
+  background: var(--lvp-accent-bg-soft);
+}
+
+/* ---------- Cover tuning collapse + wallpaper / font action pills ---------- */
+
+.lyrics-settings-drawer .lyrics-background-tuning-collapse-button {
+  border: 1px solid var(--lvp-hairline);
+  border-radius: 11px;
+  background: var(--lvp-card-bg);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-background-tuning-collapse-button:hover {
+  border-color: var(--lvp-accent-border-soft);
+  background: var(--lvp-card-bg-raised);
+}
+
+.lyrics-settings-drawer .audio-device-pill {
+  border: 1px solid var(--lvp-hairline);
+  border-radius: 11px;
+  background: var(--lvp-card-bg);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.lyrics-settings-drawer .audio-device-pill:hover:not(:disabled) {
+  border-color: var(--lvp-accent-border-soft);
+  background: var(--lvp-card-bg-raised);
+}
+
+.lyrics-settings-drawer .lyrics-wallpaper-path {
+  color: var(--lvp-caption-text);
+}
+
+/* ---------- Font picker button ---------- */
+
+.lyrics-settings-drawer .lyrics-font-picker-button {
+  border: 1px solid var(--lvp-hairline-strong);
+  border-radius: 12px;
+  background: var(--lvp-well-bg-faint);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-font-picker-button:hover:not(:disabled) {
+  border-color: var(--lvp-accent-border-mid);
+  background: var(--lvp-tint-bg);
+}
+
+.lyrics-settings-drawer .lyrics-font-picker-button:focus-visible {
+  border-color: var(--lvp-accent-border);
+  box-shadow: var(--lvp-focus-halo);
+}
+
+.lyrics-settings-drawer .lyrics-font-picker-button em {
+  color: var(--lvp-caption-text);
+}
+
+/* ---------- Color swatches & preview ---------- */
+
+.lyrics-settings-drawer .lyrics-color-swatch {
+  border-color: var(--lvp-hairline-strong);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-color-swatch:hover {
+  transform: translateY(-1px) scale(1.06);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(6, 10, 22, 0.4);
+}
+
+.lyrics-settings-drawer .lyrics-color-swatch[aria-pressed="true"] {
+  border-color: transparent;
+  box-shadow:
+    0 0 0 2px rgba(21, 25, 40, 0.9),
+    0 0 0 4px var(--lvp-accent-border);
+}
+
+.lyrics-settings-drawer .lyrics-color-reset {
+  color: var(--lvp-soft-text);
+  border-color: var(--lvp-hairline-strong);
+  border-radius: 999px;
+  background: var(--lvp-glass-bg);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.lyrics-settings-drawer .lyrics-color-reset:hover:not(:disabled) {
+  color: var(--lvp-bright-text);
+  border-color: var(--lvp-ring-hover);
+  background: var(--lvp-glass-bg-hover);
+}
+
+.lyrics-settings-drawer .lyrics-color-preview {
+  border: 1px solid var(--lvp-hairline-faint);
+  border-radius: 12px;
+  background: var(--lvp-well-bg-faint);
+}
+
+/* ---------- Error note ---------- */
+
+.lyrics-settings-drawer .audio-drawer-error {
+  padding: 10px 12px;
+  color: #ffd9d9; /* theme-color-allow: fixed danger tint on dark shell */
+  border: 1px solid rgba(255, 143, 143, 0.3); /* theme-color-allow: fixed danger tint on dark shell */
+  border-radius: 12px;
+  background: rgba(255, 94, 94, 0.1); /* theme-color-allow: fixed danger tint on dark shell */
+}
+
+/* ---------- Search highlight & focus ---------- */
+
+.lyrics-settings-drawer [data-drawer-search-match="true"] {
+  border-color: var(--lvp-match-border);
+  box-shadow: var(--lvp-match-shadow);
+}
+
+.lyrics-settings-drawer [data-drawer-search-active="true"] {
+  border-color: var(--lvp-match-active-border);
+  box-shadow: var(--lvp-match-active-shadow);
+  scroll-margin-top: 12px;
+}
+
+.lyrics-settings-drawer :is(button, input, summary):focus-visible {
+  outline: 2px solid var(--lvp-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-drawer .audio-drawer-close svg,
+  .lyrics-settings-drawer .lyrics-visual-group,
+  .lyrics-settings-drawer .lyrics-visual-group__toggle,
+  .lyrics-settings-drawer .audio-toggle-row input,
+  .lyrics-settings-drawer .audio-toggle-row input::before,
+  .lyrics-settings-drawer .lyrics-drawer-range input[type="range"]::-webkit-slider-thumb,
+  .lyrics-settings-drawer .lyrics-color-swatch {
+    transition-duration: 1ms;
+    transition-delay: 0ms;
+  }
+}
+
+}

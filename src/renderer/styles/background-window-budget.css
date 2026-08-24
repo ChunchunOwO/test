@@ -1,0 +1,12 @@
+/*
+ * A hidden BrowserWindow has no reason to advance decorative CSS timelines.
+ * Pausing preserves the exact rendered frame and resumes without remounting.
+ */
+.app-shell[data-render-budget='hidden'],
+.app-shell[data-render-budget='hidden']::before,
+.app-shell[data-render-budget='hidden']::after,
+.app-shell[data-render-budget='hidden'] *,
+.app-shell[data-render-budget='hidden'] *::before,
+.app-shell[data-render-budget='hidden'] *::after {
+  animation-play-state: paused !important;
+}

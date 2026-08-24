@@ -1,0 +1,99 @@
+/* Shared theme tint for every lyrics page style. The style remains the visual
+   owner; this layer only contributes the current app theme when enabled. */
+
+.lyrics-page {
+  --lyrics-theme-filter-opacity: 0.38;
+  --lyrics-theme-filter-blend-mode: soft-light;
+}
+
+.lyrics-backdrop-theme-filter {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(
+      ellipse 76% 64% at 14% 16%,
+      rgb(var(--preset-accent-rgb, 91 151 220) / 0.5),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 70% 62% at 88% 78%,
+      rgb(var(--preset-secondary-rgb, 127 200 214) / 0.42),
+      transparent 70%
+    ),
+    linear-gradient(
+      132deg,
+      rgb(var(--preset-panel-rgb, 18 22 30) / 0.16),
+      transparent 44%,
+      rgb(var(--preset-accent-rgb, 91 151 220) / 0.14)
+    );
+  mix-blend-mode: var(--lyrics-theme-filter-blend-mode);
+  opacity: var(--lyrics-theme-filter-opacity);
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.lyrics-page[data-theme-filter="false"] .lyrics-backdrop-theme-filter {
+  display: none;
+}
+
+.lyrics-page[data-lyrics-page-style="editorial"] {
+  --lyrics-theme-filter-opacity: 0.24;
+  --lyrics-theme-filter-blend-mode: multiply;
+}
+
+.lyrics-page[data-lyrics-page-style="folded"] {
+  --lyrics-theme-filter-opacity: 0.34;
+  --lyrics-theme-filter-blend-mode: screen;
+}
+
+.lyrics-page[data-lyrics-page-style="roseVinyl"] {
+  --lyrics-theme-filter-opacity: 0.3;
+}
+
+.lyrics-page[data-lyrics-page-style="cinemaStage"] {
+  --lyrics-theme-filter-opacity: 0.28;
+  --lyrics-theme-filter-blend-mode: screen;
+}
+
+.lyrics-page[data-lyrics-page-style="kineticPoster"] {
+  --lyrics-theme-filter-opacity: 0.36;
+  --lyrics-theme-filter-blend-mode: color;
+}
+
+.lyrics-page[data-lyrics-page-style="coverStage"] {
+  --lyrics-theme-filter-opacity: 0.28;
+  --lyrics-theme-filter-blend-mode: color;
+}
+
+.lyrics-page[data-lyrics-page-style="cutBoard"] {
+  --lyrics-theme-filter-opacity: 0.32;
+  --lyrics-theme-filter-blend-mode: screen;
+}
+
+/* Cover Stage owns a separate artwork surface above LyricsBackdrop. */
+.lyrics-page[data-theme-filter="true"][data-lyrics-page-style="coverStage"] .lyrics-cover-stage-artwork::before {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(
+      ellipse 72% 68% at 18% 20%,
+      rgb(var(--preset-accent-rgb, 91 151 220) / 0.34),
+      transparent 72%
+    ),
+    linear-gradient(
+      118deg,
+      transparent 38%,
+      rgb(var(--preset-secondary-rgb, 127 200 214) / 0.2)
+    );
+  mix-blend-mode: color;
+  content: "";
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lyrics-backdrop-theme-filter {
+    transition: none;
+  }
+}

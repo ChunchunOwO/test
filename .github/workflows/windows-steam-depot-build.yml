@@ -1,0 +1,65 @@
+name: Windows Steam depot build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-x64:
+    name: Windows x64 Steam depot artifact
+    runs-on: windows-2022
+    timeout-minutes: 90
+    env:
+      CSC_LINK: ${{ secrets.ECHO_WINDOWS_CSC_LINK }}
+      CSC_KEY_PASSWORD: ${{ secrets.ECHO_WINDOWS_CSC_KEY_PASSWORD }}
+      ECHO_WINDOWS_PUBLISHER_NAME: ${{ secrets.ECHO_WINDOWS_PUBLISHER_NAME }}
+      ECHO_STEAM_RELEASE_APP_ID: ${{ vars.ECHO_STEAM_RELEASE_APP_ID }}
+      ECHO_STEAM_PRO_DLC_APP_ID: ${{ vars.ECHO_STEAM_PRO_DLC_APP_ID }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Require Steam build configuration
+        shell: pwsh
+        run: |
+          if ($env:ECHO_STEAM_RELEASE_APP_ID -notmatch '^[1-9][0-9]*$') {
+            throw 'ECHO_STEAM_RELEASE_APP_ID must be a positive numeric App ID.'
+          }
+          if ($env:ECHO_STEAM_PRO_DLC_APP_ID -notmatch '^[1-9][0-9]*$') {
+            throw 'ECHO_STEAM_PRO_DLC_APP_ID must be a positive numeric DLC App ID.'
+          }
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and verify Steam depot content
+        run: npm run build:win:steam
+
+      - name: Create Steam release preflight report
+        run: npm run steam:release:preflight
+
+      - name: Upload verified loose depot artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: echo-steam-win-x64-${{ github.run_number }}
+          path: dist/win-unpacked/**
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload Steam preflight report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: echo-steam-preflight-${{ github.run_number }}
+          path: artifacts/steam-preflight/**
+          if-no-files-found: warn
+          retention-days: 30

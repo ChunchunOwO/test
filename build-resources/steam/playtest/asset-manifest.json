@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "appId": 5105150,
+  "product": "ECHO Playtest",
+  "sources": [
+    "build-resources/icons/software.png (ECHO-owned mascot artwork)",
+    "misc/eq-pro-live-spectrum-final.png (ECHO UI QA capture; bottom player strip excluded)",
+    "misc/crossfeed-after.png (ECHO UI QA capture; bottom player strip excluded)"
+  ],
+  "notes": [
+    "No third-party album covers, lyrics, artists, or user library paths are present in exports.",
+    "library_hero.png intentionally contains no text or logo.",
+    "All title text is deterministic and limited to ECHO / PLAYTEST."
+  ],
+  "files": [
+    {
+      "file": "capsule_header.png",
+      "sha256": "b1c664326a05adc6526b973fd988e34a7fd91093656d74dadb8a6470f448c230"
+    },
+    {
+      "file": "capsule_small.png",
+      "sha256": "2750f8dcb77b058389f0cc70673dfc7e46d6c8a588a9cc2756a338f4ffbada8e"
+    },
+    {
+      "file": "capsule_main.png",
+      "sha256": "b968a057bfdfd295290dfa4aa70f52f6f29216a81bc12ad517af5e184078ed65"
+    },
+    {
+      "file": "library_capsule.png",
+      "sha256": "198bd251398cfae8868214f55c7f6386f430fbf68d3f03176b365a170e7cd5e1"
+    },
+    {
+      "file": "library_header.png",
+      "sha256": "22026626dbe730d857f5c4117f287f25326d811749a5a469bfd69f9893a96942"
+    },
+    {
+      "file": "library_hero.png",
+      "sha256": "be5bcf55e0cca776105c578a22f2509b198d293076a12bd2fe62a0f9d57f560f"
+    },
+    {
+      "file": "library_logo.png",
+      "sha256": "320c85229bb66cba8002bb009de654877eba2986333d7f651f5bf4b78f223f33"
+    }
+  ]
+}

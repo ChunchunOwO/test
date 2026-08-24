@@ -1,0 +1,1670 @@
+/*
+ * Settings page visual polish layer.
+ * Loads after app.css / ui-polish.css / theme-presets.css and only refines the
+ * settings shell (header, nav rail, board cards, controls, preset cards, anchors).
+ * Everything is driven by --theme-* / --echo-polish-* tokens so dark mode and
+ * theme presets adapt automatically.
+ */
+
+/* ---------- Header ---------- */
+
+.settings-page .settings-header h1 {
+  background: linear-gradient(
+    118deg,
+    var(--theme-heading-text) 46%,
+    color-mix(in srgb, var(--theme-accent-text-strong, var(--theme-accent-text)) 84%, var(--theme-heading-text)) 94%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Category rail ---------- */
+
+.settings-page .settings-nav {
+  padding: 9px 8px;
+  border-color: color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 44%, transparent);
+  box-shadow: none;
+}
+
+.settings-page .settings-nav-group-label {
+  font-weight: 660;
+  letter-spacing: 0.085em;
+  opacity: 0.92;
+  transition: color 160ms ease, opacity 160ms ease;
+}
+
+/* Wayfinding: the group heading that owns the active route lights up too. */
+.settings-page .settings-nav-group:has(.settings-nav-item.active) .settings-nav-group-label {
+  color: var(--theme-accent-text);
+  opacity: 1;
+}
+
+.settings-page .settings-nav-group:has(.settings-nav-item.is-danger.active) .settings-nav-group-label {
+  color: var(--theme-danger-text);
+}
+
+.settings-page .settings-nav-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9px;
+  transition:
+    color 190ms ease,
+    background-color 190ms ease,
+    border-color 190ms ease,
+    box-shadow 190ms ease,
+    opacity 190ms ease,
+    transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Rows lean toward the cursor with a springy return; hover reacts fast,
+   release settles slow (asymmetric timing is what makes it feel tactile). */
+.settings-page .settings-nav-item:hover:not(.active) {
+  transform: translateX(3px);
+}
+
+.settings-page .settings-nav-item:active:not(.active) {
+  transform: translateX(3px) scale(0.965);
+}
+
+/* One-shot sheen that sweeps across a row the moment it is selected. */
+.settings-page .settings-nav-item::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 34%,
+    rgb(255 255 255 / 0.16) 48%,
+    rgb(255 255 255 / 0.05) 52%,
+    transparent 66%
+  );
+  opacity: 0;
+  transform: translateX(-130%);
+}
+
+.settings-page .settings-nav-item.active::after {
+  animation: settings-nav-shine 620ms 90ms cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+.settings-page .settings-nav-item::before {
+  position: absolute;
+  top: 50%;
+  left: 1px;
+  width: 3px;
+  height: 17px;
+  border-radius: 999px;
+  content: '';
+  background: linear-gradient(
+    180deg,
+    var(--theme-accent-text),
+    color-mix(in srgb, var(--theme-accent-solid-bg) 78%, var(--theme-accent-text))
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--theme-accent-solid-bg) 52%, transparent);
+  opacity: 0;
+  transform: translateY(-50%) scaleY(0.35);
+  transition:
+    opacity 130ms ease,
+    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Hover and keyboard focus preview the rail indicator before commit. */
+.settings-page .settings-nav-item:hover::before,
+.settings-page .settings-nav-item:focus-visible::before {
+  opacity: 0.4;
+  transform: translateY(-50%) scaleY(0.55);
+}
+
+.settings-page .settings-nav-label {
+  font-size: 13.5px;
+  font-weight: 640;
+  letter-spacing: 0.005em;
+  transition: font-weight 140ms ease;
+}
+
+.settings-page .settings-nav-item.active .settings-nav-label {
+  font-weight: 720;
+}
+
+.settings-page .settings-nav-icon {
+  border-radius: 8px;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.settings-page .settings-nav-item:hover {
+  color: var(--theme-heading-text);
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover) 88%, transparent);
+  transition-duration: 90ms;
+}
+
+/* The danger row warns on approach instead of only after selection. */
+.settings-page .settings-nav-item.is-danger:hover:not(.active) {
+  color: var(--theme-danger-text);
+  background: color-mix(in srgb, var(--theme-danger-bg) 44%, transparent);
+}
+
+.settings-page .settings-nav-item.is-danger:hover::before {
+  background: var(--theme-danger-text);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--theme-danger-text) 45%, transparent);
+}
+
+/* Pressing snaps near-instantly; the spring plays on release instead. */
+.settings-page .settings-nav-item:active {
+  transition-duration: 45ms;
+}
+
+.settings-page .settings-nav-item.active,
+.settings-page .settings-nav-item.active:hover {
+  color: var(--theme-heading-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 42%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-accent-bg) 72%, transparent), transparent 78%),
+    color-mix(in srgb, var(--theme-list-row-bg-active) 80%, transparent);
+  box-shadow: none;
+}
+
+.settings-page .settings-nav-item.active::before {
+  opacity: 1;
+  transform: translateY(-50%) scaleY(1);
+}
+
+.settings-page .settings-nav-item.is-danger.active,
+.settings-page .settings-nav-item.is-danger.active:hover {
+  color: var(--theme-danger-text);
+  border-color: color-mix(in srgb, var(--theme-danger-border) 70%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-danger-bg) 84%, transparent), transparent 78%),
+    var(--theme-list-row-bg-active);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-strong) 62%, transparent);
+}
+
+.settings-page .settings-nav-item.is-danger.active::before {
+  background: var(--theme-danger-text);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--theme-danger-text) 45%, transparent);
+}
+
+/* Lighter icon strokes keep the rail airy; the active glyph returns
+   to full weight for emphasis. */
+.settings-page .settings-nav-icon svg {
+  stroke-width: 1.75;
+}
+
+.settings-page .settings-nav-item.active .settings-nav-icon svg {
+  stroke-width: 2;
+}
+
+/* Vertical rail refinements: compact rows, plain icons, quiet active tint.
+   Scoped to the vertical layout; below 760px the rail turns horizontal. */
+@media (min-width: 761px) {
+  .settings-page .settings-nav {
+    gap: 13px;
+  }
+
+  /* The label's trailing hairline is separation enough; dropping the
+     full-width divider keeps the rail airy. */
+  .settings-page .settings-nav-group + .settings-nav-group {
+    padding-top: 9px;
+    border-top: 0;
+  }
+
+  .settings-page .settings-nav-group-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 2px 9px 6px;
+    font-size: 10.5px;
+  }
+
+  /* Trailing hairline gives each group heading a quiet horizon. */
+  .settings-page .settings-nav-group-label::after {
+    content: '';
+    flex: 1 1 auto;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-panel-border) 62%, transparent),
+      transparent 94%
+    );
+  }
+
+  .settings-page .settings-nav-group:has(.settings-nav-item.active) .settings-nav-group-label::after {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-accent-border) 72%, transparent),
+      transparent 94%
+    );
+  }
+
+  .settings-page .settings-nav-group:has(.settings-nav-item.is-danger.active) .settings-nav-group-label::after {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-danger-border) 72%, transparent),
+      transparent 94%
+    );
+  }
+
+  /* Groups surface with a soft stagger when the page mounts. */
+  .settings-page .settings-nav-group {
+    animation: settings-nav-group-in 300ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+  }
+
+  .settings-page .settings-nav-group:nth-child(2) { animation-delay: 35ms; }
+  .settings-page .settings-nav-group:nth-child(3) { animation-delay: 70ms; }
+  .settings-page .settings-nav-group:nth-child(4) { animation-delay: 105ms; }
+  .settings-page .settings-nav-group:nth-child(n + 5) { animation-delay: 140ms; }
+
+  /* Spotlight: while the pointer explores the rail, unrelated rows step back. */
+  @media (hover: hover) {
+    .settings-page .settings-nav:hover .settings-nav-item:not(:hover, .active) {
+      opacity: 0.78;
+    }
+  }
+
+  .settings-page .settings-nav-item {
+    min-height: 46px;
+    grid-template-columns: 26px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 6px 9px;
+  }
+
+  .settings-page .settings-nav-item svg {
+    margin-top: 0;
+  }
+
+  .settings-page .settings-nav-icon {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    color: color-mix(in srgb, currentColor 82%, transparent);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .settings-page .settings-nav-item:hover .settings-nav-icon {
+    color: currentColor;
+    background: transparent;
+  }
+
+  .settings-page .settings-nav-item.active .settings-nav-icon,
+  .settings-page .settings-nav-item.active:hover .settings-nav-icon {
+    color: var(--theme-accent-text);
+    border: 0;
+    background: color-mix(in srgb, var(--theme-accent-bg) 78%, transparent);
+    box-shadow: none;
+  }
+
+  /* The glyph settles into its plinth with a small overshoot. */
+  .settings-page .settings-nav-item.active .settings-nav-icon svg {
+    animation: settings-nav-icon-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .settings-page .settings-nav-item.is-danger .settings-nav-icon {
+    background: transparent;
+  }
+
+  .settings-page .settings-nav-item.is-danger.active .settings-nav-icon,
+  .settings-page .settings-nav-item.is-danger.active:hover .settings-nav-icon {
+    color: var(--theme-danger-text);
+    background: color-mix(in srgb, var(--theme-danger-bg) 66%, transparent);
+    box-shadow: none;
+  }
+
+  /* Descriptions stay visible on every row; the active one takes the tint. */
+  .settings-page .settings-nav-copy {
+    row-gap: 2px;
+  }
+
+  .settings-page .settings-nav-desc {
+    color: color-mix(in srgb, var(--theme-subtle-text) 88%, transparent);
+    transition: color 190ms ease;
+  }
+
+  .settings-page .settings-nav-item:hover .settings-nav-desc {
+    color: var(--theme-subtle-text);
+  }
+
+  .settings-page .settings-nav-item.active .settings-nav-desc {
+    color: color-mix(in srgb, var(--theme-accent-text) 34%, var(--theme-subtle-text));
+  }
+
+  .settings-page .settings-nav-item.is-danger.active .settings-nav-desc {
+    color: color-mix(in srgb, var(--theme-danger-text) 34%, var(--theme-subtle-text));
+  }
+
+  /* The plinth rides along: lifts on hover, compresses under the press. */
+  .settings-page .settings-nav-item:hover:not(.active) .settings-nav-icon {
+    transform: translateY(-1px);
+  }
+
+  .settings-page .settings-nav-item:active:not(.active) .settings-nav-icon {
+    transform: translateY(0) scale(0.9);
+    transition-duration: 45ms;
+  }
+}
+
+@keyframes settings-nav-shine {
+  0% {
+    opacity: 0;
+    transform: translateX(-130%);
+  }
+
+  22% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(130%);
+  }
+}
+
+@keyframes settings-nav-group-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@keyframes settings-nav-icon-pop {
+  from {
+    transform: scale(0.92);
+  }
+}
+
+/* Keyboard focus stays visible even on the decorated active row. */
+.settings-page .settings-nav .settings-nav-item:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+/* Horizontal rail (narrow layouts): scrollable pills with snap stops. */
+@media (max-width: 760px) {
+  .settings-page .settings-nav {
+    gap: 6px;
+    padding: 2px 2px 8px;
+    scroll-snap-type: x proximity;
+  }
+
+  .settings-page .settings-nav-item {
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid color-mix(in srgb, var(--theme-panel-border) 60%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--theme-panel-bg) 72%, transparent);
+    scroll-snap-align: start;
+  }
+
+  .settings-page .settings-nav-item::before {
+    display: none;
+  }
+
+  /* No sideways lean in a horizontal row; presses still dip the pill. */
+  .settings-page .settings-nav-item:hover:not(.active) {
+    transform: none;
+  }
+
+  .settings-page .settings-nav-item:active:not(.active) {
+    transform: scale(0.96);
+  }
+
+  .settings-page .settings-nav-item.active,
+  .settings-page .settings-nav-item.active:hover {
+    color: var(--theme-accent-text);
+    border-color: color-mix(in srgb, var(--theme-accent-border) 80%, transparent);
+    background: color-mix(in srgb, var(--theme-accent-bg) 88%, transparent);
+    box-shadow: 0 6px 16px -10px color-mix(in srgb, var(--theme-accent-solid-bg) 60%, transparent);
+  }
+
+  .settings-page .settings-nav-item.is-danger.active,
+  .settings-page .settings-nav-item.is-danger.active:hover {
+    color: var(--theme-danger-text);
+    border-color: color-mix(in srgb, var(--theme-danger-border) 80%, transparent);
+    background: color-mix(in srgb, var(--theme-danger-bg) 80%, transparent);
+    box-shadow: none;
+  }
+}
+
+/* ---------- Board cards (subsection headers + grouped rows) ---------- */
+
+.settings-page .settings-section--panel:not(#settings-sec-library) > .settings-subsection-title,
+.settings-page #settings-sec-general > .settings-subsection-title,
+.settings-page .settings-expanded-panel--playback > .settings-subsection-title {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--theme-panel-bg-strong) 74%, transparent),
+      color-mix(in srgb, var(--theme-panel-bg) 66%, transparent)
+    );
+}
+
+/* Library / experimental / shortcuts style their own subsection headers. */
+.settings-page .settings-section--panel:not(#settings-sec-library):not(#settings-sec-experimental):not(#settings-sec-shortcuts)
+  > .settings-subsection-title span::before,
+.settings-page .settings-expanded-panel--playback > .settings-subsection-title span::before {
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  margin-right: 9px;
+  border-radius: 999px;
+  content: '';
+  vertical-align: -2px;
+  background: linear-gradient(
+    180deg,
+    var(--theme-accent-text),
+    color-mix(in srgb, var(--theme-accent-text) 55%, transparent)
+  );
+}
+
+/* Keep the experimental block aligned with the Advanced settings board rows. */
+.settings-page #settings-sec-advancedCustom > #settings-sec-experimental {
+  box-sizing: border-box;
+  padding-inline: 20px;
+}
+
+@media (max-width: 760px) {
+  .settings-page #settings-sec-advancedCustom > #settings-sec-experimental {
+    padding-inline: 14px;
+  }
+}
+
+/* ---------- Chips ---------- */
+
+.settings-page .list-filter-chip {
+  min-height: 34px;
+  border-radius: 999px;
+  padding-inline: 14px;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+/* Option chips (language, sources, scan modes) lift on approach and dip
+   under the press; scoped to chip rows so segmented filters stay static. */
+.settings-page .settings-chip-row .list-filter-chip:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.settings-page .settings-chip-row .list-filter-chip:not(:disabled):active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 45ms;
+}
+
+.settings-page .list-filter-chip.active {
+  color: var(--theme-on-accent);
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 74%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 88%, var(--theme-on-accent) 12%),
+    var(--theme-accent-solid-bg) 58%,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 86%, var(--theme-heading-text) 14%)
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 24%, transparent),
+    0 6px 14px -6px color-mix(in srgb, var(--theme-accent-solid-bg) 55%, transparent);
+}
+
+.settings-page .list-filter-chip.active:hover {
+  color: var(--theme-on-accent);
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 84%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 82%, var(--theme-on-accent) 18%),
+    var(--theme-accent-solid-bg) 62%,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 88%, var(--theme-heading-text) 12%)
+  );
+}
+
+/* ---------- Buttons and inline controls ---------- */
+
+.settings-page .settings-action-button,
+.settings-page .settings-icon-button,
+.settings-page .settings-danger-button {
+  border-radius: var(--radius-sm);
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.settings-page .settings-action-button:hover,
+.settings-page .settings-icon-button:hover {
+  box-shadow: none;
+}
+
+/* Presses dip near-instantly; the return eases back at normal speed. */
+.settings-page .settings-action-button:not(:disabled):active,
+.settings-page .settings-icon-button:not(:disabled):active,
+.settings-page .settings-danger-button:not(:disabled):active {
+  transform: translateY(1px);
+  transition-duration: 45ms;
+}
+
+.settings-page .settings-inline-toggle {
+  border-radius: 10px;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+/* ---------- Toggle switch feel ---------- */
+
+/* The knob squashes wider under the press and snaps back on release,
+   staying anchored to whichever side it currently occupies. */
+.settings-page .toggle-btn span {
+  transition:
+    left 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    width 130ms ease,
+    background-color 160ms ease;
+}
+
+.settings-page .toggle-btn:not(:disabled):active span {
+  width: 22px;
+}
+
+.settings-page .toggle-btn.active:not(:disabled):active span {
+  left: 17px;
+}
+
+.settings-page .settings-time-field input {
+  border-radius: 9px;
+}
+
+/* ---------- Theme preset summary and cards ---------- */
+
+.settings-page .settings-theme-preset-summary {
+  border-radius: 12px;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.settings-page .settings-theme-preset-summary:hover {
+  border-color: color-mix(in srgb, var(--theme-accent-border) 68%, transparent);
+  box-shadow: var(--echo-polish-shadow-row);
+}
+
+.settings-page .settings-theme-preset-summary-preview {
+  border-radius: 9px;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--theme-panel-border) 55%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-strong) 70%, transparent);
+}
+
+.settings-page .settings-theme-preset-card {
+  border-radius: 12px;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 170ms ease,
+    transform 190ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.settings-page .settings-theme-preset-card:hover:not(.locked) {
+  border-color: color-mix(in srgb, var(--theme-accent-border) 66%, transparent);
+  box-shadow:
+    var(--echo-polish-shadow-row),
+    0 14px 30px -18px color-mix(in srgb, var(--theme-accent-solid-bg) 38%, rgb(20 30 46 / 0.3));
+  transform: translateY(-2px);
+}
+
+.settings-page .settings-theme-preset-card.active {
+  border-color: color-mix(in srgb, var(--theme-accent-border) 88%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-accent-bg) 56%, transparent), transparent 62%),
+    var(--theme-panel-bg);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--theme-accent-border) 68%, transparent),
+    var(--echo-polish-shadow-row);
+}
+
+.settings-page .settings-theme-preset-preview {
+  border-radius: 9px;
+  box-shadow:
+    inset 0 0 0 1px rgb(16 24 40 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.settings-page .settings-theme-preset-swatches span {
+  box-shadow: inset 0 0 0 1px rgb(16 24 40 / 0.14);
+}
+
+/* ---------- Section anchor index ---------- */
+
+.settings-page .settings-section-index-item {
+  transition: color 140ms ease;
+}
+
+.settings-page .settings-section-index-item > span {
+  transition: background-color 140ms ease, box-shadow 140ms ease;
+}
+
+.settings-page .settings-section-index-item[data-active='true'] {
+  font-weight: 800;
+}
+
+.settings-page .settings-section-index-item[data-active='true'] > span {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-accent-bg) 88%, transparent);
+}
+
+/* ---------- General section card groups ---------- */
+
+/* Card cap: rounder corners plus a hairline divider before the first row. */
+.settings-page #settings-sec-general > .settings-subsection-title {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 10px 10px 0 0;
+}
+
+/* More breathing room between the Performance / Basics / Window / Features cards. */
+.settings-page #settings-sec-general > .settings-subsection-title:not(:first-of-type) {
+  margin-top: 20px;
+}
+
+.settings-page #settings-sec-general > .section-title + .settings-subsection-title {
+  margin-top: 0;
+}
+
+.settings-page #settings-sec-general > .section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding: 0 2px 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+}
+
+.settings-page #settings-sec-general > .section-title h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.settings-page #settings-sec-general > .section-title .section-title-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--theme-accent-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 72%, transparent);
+}
+
+.settings-page #settings-sec-general > .setting-row,
+.settings-page #settings-sec-general > .settings-account-panel {
+  border-right-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-left-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  scroll-margin-top: 58px;
+  transition:
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.settings-page #settings-sec-general > .settings-subsection-title {
+  scroll-margin-top: 8px;
+}
+
+.settings-page #settings-sec-general > .setting-row {
+  border-bottom-color: color-mix(in srgb, var(--theme-list-row-border) 42%, transparent);
+}
+
+/* Directional hover kept on top of the card fill instead of a flat repaint. */
+.settings-page #settings-sec-general > .setting-row:hover:not([data-search-highlight='true']) {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-list-row-bg-hover) 88%, transparent),
+      color-mix(in srgb, var(--theme-list-row-bg-hover) 26%, transparent) 86%
+    ),
+    color-mix(in srgb, var(--theme-panel-bg) 64%, transparent);
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--theme-accent-text) 72%, transparent);
+}
+
+/* Keyboard focus on a control lights the whole row so Tab wayfinding stays obvious. */
+.settings-page #settings-sec-general > .setting-row:focus-within:not(:hover, [data-search-highlight='true']) {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-accent-bg) 54%, transparent),
+      transparent 82%
+    ),
+    color-mix(in srgb, var(--theme-panel-bg) 64%, transparent);
+  box-shadow: inset 2px 0 0 var(--theme-accent-text);
+}
+
+/* Card closers: rounder bottom corners and a soft resting shadow. */
+.settings-page #settings-sec-general > .setting-row:has(+ .settings-subsection-title),
+.settings-page #settings-sec-general > .settings-account-panel:has(+ .settings-subsection-title),
+.settings-page #settings-sec-general > :last-child {
+  border-bottom-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-radius: 0 0 10px 10px;
+  box-shadow: var(--echo-polish-shadow-row);
+}
+
+.settings-page #settings-sec-general > .setting-row:has(+ .settings-subsection-title):hover:not([data-search-highlight='true']),
+.settings-page #settings-sec-general > :last-child:hover:not([data-search-highlight='true']) {
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--theme-accent-text) 72%, transparent),
+    var(--echo-polish-shadow-row);
+}
+
+.settings-page #settings-sec-general > .setting-row:has(+ .settings-subsection-title):focus-within:not(:hover, [data-search-highlight='true']),
+.settings-page #settings-sec-general > :last-child:focus-within:not(:hover, [data-search-highlight='true']) {
+  box-shadow:
+    inset 2px 0 0 var(--theme-accent-text),
+    var(--echo-polish-shadow-row);
+}
+
+/* Enabled/disabled pills tint with the accent when their toggle is on. */
+.settings-page #settings-sec-general .settings-inline-toggle:has(.toggle-btn.active) {
+  color: var(--theme-accent-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 58%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 62%, var(--theme-panel-bg-muted));
+}
+
+/* Muted descriptions sharpen while their row is under the pointer. */
+.settings-page #settings-sec-general .setting-info p {
+  transition: opacity 140ms ease;
+}
+
+.settings-page #settings-sec-general > .setting-row:hover .setting-info p {
+  opacity: 1;
+}
+
+/* Search-jump highlight pings once so the eye lands on the right row. */
+.settings-page #settings-sec-general > .setting-row[data-search-highlight='true'] {
+  animation: settings-general-highlight-ping 900ms ease-out 1;
+}
+
+@keyframes settings-general-highlight-ping {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-focus-ring) 48%, transparent);
+  }
+
+  35% {
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--theme-focus-ring) 26%, transparent);
+  }
+}
+
+/* Card headers pin to the top of the scroll shell so long boards keep
+   their context; the fill goes near-opaque with a blur while pinned. */
+@media (min-width: 761px) {
+  .settings-page #settings-sec-general > .settings-subsection-title {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--theme-panel-bg-strong) 94%, transparent),
+        color-mix(in srgb, var(--theme-panel-bg) 90%, transparent)
+      );
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Subsection copy: keep the title tight, let the caption wrap instead of
+   stretching the cap into two competing headlines. */
+.settings-page #settings-sec-general > .settings-subsection-title {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+.settings-page #settings-sec-general > .settings-subsection-title small {
+  flex: 1 1 220px;
+  line-height: 1.4;
+  opacity: 0.86;
+}
+
+/* Bare switches sit on the same optical line as labelled pills. */
+.settings-page #settings-sec-general > .setting-row > .toggle-btn {
+  margin-inline-end: 4px;
+}
+
+.settings-page #settings-sec-general .toggle-btn:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+.settings-page #settings-sec-general .toggle-btn.active:focus-visible {
+  box-shadow:
+    0 8px 18px color-mix(in srgb, var(--theme-accent-solid-bg) 28%, transparent),
+    0 0 0 3px var(--theme-focus-ring);
+}
+
+/* Language / source chips share a quiet tray so they read as one control. */
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row {
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 62%, transparent);
+}
+
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row .list-filter-chip {
+  min-height: 30px;
+  padding-inline: 12px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row .list-filter-chip:hover:not(:disabled, .active) {
+  background: color-mix(in srgb, var(--theme-button-bg-hover) 88%, transparent);
+}
+
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row .list-filter-chip:not(:disabled):hover,
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row .list-filter-chip:not(:disabled):active {
+  transform: none;
+}
+
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row .list-filter-chip.active,
+.settings-page #settings-sec-general > .setting-row > .settings-chip-row .list-filter-chip.active:hover {
+  color: var(--theme-on-accent);
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 74%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 88%, var(--theme-on-accent) 12%),
+    var(--theme-accent-solid-bg) 58%,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 86%, var(--theme-heading-text) 14%)
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 24%, transparent),
+    0 6px 14px -6px color-mix(in srgb, var(--theme-accent-solid-bg) 55%, transparent);
+}
+
+.settings-page #settings-sec-general .list-filter-chip:focus-visible,
+.settings-page #settings-sec-general .settings-action-button:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+/* Ultralight is the heaviest action on this board; keep it a filled CTA. */
+.settings-page #settings-row-ultra-light-mode .settings-action-button {
+  color: var(--theme-on-accent);
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 74%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 88%, var(--theme-on-accent) 12%),
+    var(--theme-accent-solid-bg) 58%,
+    color-mix(in srgb, var(--theme-accent-solid-bg) 86%, var(--theme-heading-text) 14%)
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 24%, transparent),
+    0 8px 16px -8px color-mix(in srgb, var(--theme-accent-solid-bg) 55%, transparent);
+}
+
+.settings-page #settings-row-ultra-light-mode .settings-action-button:hover:not(:disabled) {
+  color: var(--theme-on-accent);
+  border-color: color-mix(in srgb, var(--theme-accent-solid-bg) 84%, transparent);
+}
+
+.settings-page #settings-row-ultra-light-mode .settings-action-button:focus-visible {
+  color: var(--theme-on-accent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 24%, transparent),
+    0 8px 16px -8px color-mix(in srgb, var(--theme-accent-solid-bg) 55%, transparent),
+    0 0 0 3px var(--theme-focus-ring);
+}
+
+.settings-page #settings-row-first-run-wizard .settings-action-button {
+  color: var(--theme-accent-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 62%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 48%, transparent);
+}
+
+/* UI scale: treat stepper + presets as one instrument cluster. */
+.settings-page #settings-row-ui-scale .settings-scale-stepper,
+.settings-page #settings-row-ui-scale .settings-scale-presets button {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.settings-page #settings-row-ui-scale .settings-scale-stepper {
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 78%, transparent);
+}
+
+.settings-page #settings-row-ui-scale .settings-scale-presets button {
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-chip-bg) 78%, transparent);
+}
+
+.settings-page #settings-row-ui-scale .settings-scale-presets button.active {
+  color: var(--theme-accent-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 78%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 72%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-accent-border) 42%, transparent);
+}
+
+.settings-page #settings-row-ui-scale .settings-scale-reset {
+  border-radius: 8px;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+/* Pet: compact toolbar + size slider, not a loose pile of chips. */
+.settings-page #settings-sec-general .settings-pet-control {
+  min-width: min(340px, 100%);
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 58%, transparent);
+}
+
+.settings-page #settings-sec-general .settings-pet-control .settings-chip-row {
+  width: 100%;
+  max-width: none;
+  justify-content: flex-end;
+}
+
+.settings-page #settings-sec-general .settings-pet-size {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.settings-page #settings-sec-general .settings-pet-size > span {
+  color: var(--theme-subtle-text);
+  font-size: 11.5px;
+  font-weight: 650;
+}
+
+.settings-page #settings-sec-general .settings-status-text {
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 70%, transparent);
+}
+
+.settings-page #settings-sec-general .settings-status-text--good {
+  color: var(--theme-accent-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 58%, transparent);
+}
+
+.settings-page #settings-sec-general .settings-range-field span {
+  min-height: 28px;
+  border-radius: 8px;
+  color: var(--theme-heading-text);
+  border-color: color-mix(in srgb, var(--theme-panel-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 82%, transparent);
+}
+
+.settings-page #settings-row-dev-console .settings-cache-panel {
+  width: max-content;
+  max-width: 100%;
+  gap: 8px;
+}
+
+.settings-page #settings-row-dev-console .settings-chip-row {
+  max-width: none;
+}
+
+@media (max-width: 760px) {
+  .settings-page #settings-sec-general > .setting-row > .settings-chip-row,
+  .settings-page #settings-sec-general .settings-pet-control {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .settings-page #settings-sec-general .settings-pet-control {
+    justify-items: stretch;
+  }
+
+  .settings-page #settings-sec-general .settings-pet-control .settings-chip-row,
+  .settings-page #settings-sec-general > .setting-row > .settings-chip-row {
+    justify-content: flex-start;
+  }
+
+  .settings-page #settings-sec-general .settings-pet-size {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Dark theme tuning ---------- */
+
+html[data-theme='dark'] .settings-page .settings-nav {
+  background: color-mix(in srgb, var(--theme-panel-bg) 38%, transparent);
+  box-shadow: none;
+}
+
+html[data-theme='dark'] .settings-page #settings-sec-general > .settings-subsection-title,
+html[data-theme='dark'] .settings-page #settings-sec-general > .setting-row,
+html[data-theme='dark'] .settings-page #settings-sec-general > .settings-account-panel {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+}
+
+html[data-theme='dark'] .settings-page #settings-sec-general .settings-pet-control,
+html[data-theme='dark'] .settings-page #settings-sec-general > .setting-row > .settings-chip-row {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 36%, transparent);
+}
+
+html[data-theme='dark'] .settings-page .settings-theme-preset-preview {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.09),
+    inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+html[data-theme='dark'] .settings-page .settings-theme-preset-swatches span {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.16);
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-page .settings-nav-item,
+  .settings-page .settings-nav-item::before,
+  .settings-page .settings-nav-icon,
+  .settings-page .settings-nav-label,
+  .settings-page .settings-nav-copy,
+  .settings-page .settings-nav-desc,
+  .settings-page .settings-nav-group-label,
+  .settings-page .list-filter-chip,
+  .settings-page .settings-action-button,
+  .settings-page .settings-icon-button,
+  .settings-page .settings-danger-button,
+  .settings-page #settings-sec-general > .setting-row,
+  .settings-page #settings-sec-general .setting-info p,
+  .settings-page .toggle-btn span,
+  .settings-page .settings-inline-toggle,
+  .settings-page #settings-row-ui-scale .settings-scale-stepper,
+  .settings-page #settings-row-ui-scale .settings-scale-presets button,
+  .settings-page #settings-row-ui-scale .settings-scale-reset,
+  .settings-page .settings-theme-preset-summary,
+  .settings-page .settings-theme-preset-card,
+  .settings-page .settings-section-index-item,
+  .settings-page .settings-section-index-item > span,
+  .settings-page #settings-sec-shortcuts .list-filter-chip,
+  .settings-page #settings-sec-shortcuts .settings-action-button,
+  .settings-page #settings-sec-shortcuts .settings-shortcut-key,
+  .settings-page #settings-sec-shortcuts .setting-row--shortcut {
+    transition: none;
+  }
+
+  .settings-page .settings-theme-preset-card:hover:not(.locked) {
+    transform: none;
+  }
+
+  .settings-page .settings-nav-group,
+  .settings-page .settings-nav-item.active .settings-nav-icon svg,
+  .settings-page .settings-nav-item.active::after,
+  .settings-page #settings-sec-general > .setting-row[data-search-highlight='true'] {
+    animation: none;
+  }
+
+  .settings-page .settings-chip-row .list-filter-chip:not(:disabled):hover,
+  .settings-page .settings-chip-row .list-filter-chip:not(:disabled):active,
+  .settings-page .settings-action-button:not(:disabled):active,
+  .settings-page .settings-icon-button:not(:disabled):active,
+  .settings-page .settings-danger-button:not(:disabled):active {
+    transform: none;
+  }
+
+  .settings-page .toggle-btn:not(:disabled):active span {
+    width: 18px;
+  }
+
+  .settings-page .toggle-btn.active:not(:disabled):active span {
+    left: 21px;
+  }
+
+  .settings-page .settings-nav-item:hover:not(.active),
+  .settings-page .settings-nav-item:active:not(.active),
+  .settings-page .settings-nav-item:hover:not(.active) .settings-nav-icon,
+  .settings-page .settings-nav-item:active:not(.active) .settings-nav-icon {
+    transform: none;
+  }
+
+  .settings-page .settings-nav:hover .settings-nav-item:not(:hover, .active) {
+    opacity: 1;
+  }
+}
+
+/* ---------- Shortcuts board ----------
+   Keep the binding table compact enough to scan, with enough breathing room
+   between the profile, filters, categories, and editable rows. */
+
+.settings-page #settings-sec-shortcuts {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0;
+}
+
+.settings-page #settings-sec-shortcuts > * {
+  grid-column: 1 / -1;
+}
+
+.settings-page #settings-sec-shortcuts > .section-title {
+  min-height: 0;
+  margin: 0 0 16px;
+  padding: 0 0 20px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+}
+
+.settings-page #settings-sec-shortcuts > .section-title h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.settings-page #settings-sec-shortcuts > .settings-subsection-title,
+.settings-page #settings-sec-shortcuts .settings-shortcut-bindings > .settings-subsection-title {
+  min-height: 0;
+  margin: 0;
+  padding: 20px 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-shortcuts > .settings-subsection-title span,
+.settings-page #settings-sec-shortcuts .settings-shortcut-bindings > .settings-subsection-title span {
+  font-size: 14px;
+  font-weight: 780;
+  letter-spacing: 0.01em;
+}
+
+.settings-page #settings-sec-shortcuts > .settings-subsection-title small,
+.settings-page #settings-sec-shortcuts .settings-shortcut-bindings > .settings-subsection-title small {
+  color: var(--theme-subtle-text);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.settings-page #settings-sec-shortcuts > .settings-shortcut-profile {
+  min-height: 0;
+  padding: 18px 20px;
+  border-color: color-mix(in srgb, var(--theme-panel-border) 82%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 82%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-strong) 88%, transparent);
+}
+
+.settings-page .settings-shortcut-profile-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+}
+
+.settings-page .settings-shortcut-profile-copy {
+  gap: 14px 24px;
+}
+
+.settings-page .settings-shortcut-profile-copy > div:first-child > span {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.settings-page .settings-shortcut-profile .settings-shortcut-toolbar-actions {
+  gap: 6px;
+}
+
+.settings-page .settings-shortcut-profile .settings-action-button,
+.settings-page .settings-shortcut-profile .settings-action-button + .settings-action-button {
+  min-height: 30px;
+  padding-inline: 10px;
+  border: 1px solid color-mix(in srgb, var(--theme-button-border) 88%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--theme-button-bg) 72%, transparent);
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.settings-page .settings-shortcut-profile .settings-action-button:hover {
+  box-shadow: none;
+  background: var(--theme-button-bg-hover);
+}
+
+.settings-page .settings-shortcut-profile .settings-action-button:last-child {
+  color: var(--theme-accent-text);
+  border-color: color-mix(in srgb, var(--theme-accent-border) 62%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 42%, transparent);
+}
+
+.settings-page .settings-shortcut-summary span {
+  padding-inline: 10px;
+  font-size: 11.5px;
+  font-weight: 650;
+}
+
+.settings-page .settings-shortcut-summary span.is-warning {
+  color: var(--theme-warning-text);
+}
+
+.settings-page #settings-sec-shortcuts > .settings-shortcut-note {
+  display: block;
+  max-width: 72ch;
+  margin: 14px 0 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--theme-subtle-text);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-bindings > #settings-shortcuts-bindings {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 0;
+  margin: 16px 0 0;
+  padding: 14px 0 8px;
+  border: 0;
+  background: transparent;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-filter-board {
+  display: grid;
+  margin-bottom: 20px;
+  padding: 6px 18px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 66%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-strong) 88%, transparent);
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-filter-board > .settings-shortcut-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px 24px;
+  margin: 0;
+  padding: 14px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-filter-section,
+.settings-page #settings-sec-shortcuts .settings-shortcut-category-section {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px 18px;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-category-section {
+  padding: 16px 0;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-filter-label {
+  color: var(--theme-muted-text);
+  font-size: 11.5px;
+  font-weight: 760;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.settings-page .settings-shortcut-filter {
+  width: max-content;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted) 70%, transparent);
+  gap: 3px;
+}
+
+.settings-page .settings-shortcut-filter .list-filter-chip,
+.settings-page .settings-shortcut-filter .list-filter-chip.active,
+.settings-page .settings-shortcut-filter .list-filter-chip.active:hover {
+  min-height: 32px;
+  padding-inline: 12px;
+  border-color: transparent;
+  border-radius: 4px;
+  background: transparent;
+  box-shadow: none;
+  font-size: 12.5px;
+  font-weight: 720;
+}
+
+.settings-page .settings-shortcut-filter .list-filter-chip svg {
+  display: none;
+}
+
+.settings-page .settings-shortcut-filter .list-filter-chip:hover {
+  background: color-mix(in srgb, var(--theme-button-bg-hover) 88%, transparent);
+}
+
+.settings-page .settings-shortcut-filter .list-filter-chip.active,
+.settings-page .settings-shortcut-filter .list-filter-chip.active:hover {
+  color: var(--theme-on-accent);
+  background: var(--theme-accent-solid-bg);
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-categories {
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-categories .list-filter-chip {
+  min-height: 34px;
+  padding-inline: 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+}
+
+.settings-page #settings-sec-shortcuts .setting-row--shortcut {
+  min-height: 70px;
+  padding: 12px 16px;
+  border-right-color: color-mix(in srgb, var(--theme-panel-border) 82%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--theme-list-row-border) 78%, transparent);
+  border-left-color: color-mix(in srgb, var(--theme-panel-border) 82%, transparent);
+  background: color-mix(in srgb, var(--theme-panel-bg) 70%, transparent);
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.settings-page #settings-sec-shortcuts .setting-row--shortcut:last-child {
+  border-radius: 0 0 6px 6px;
+}
+
+.settings-page #settings-sec-shortcuts .setting-row--shortcut:hover {
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover) 78%, transparent);
+  box-shadow: inset 2px 0 0 var(--theme-accent-text);
+}
+
+.settings-page #settings-sec-shortcuts .setting-row--shortcut-header,
+.settings-page #settings-sec-shortcuts .setting-row--shortcut-header:hover {
+  min-height: 40px;
+  padding-block: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--theme-panel-border) 70%, transparent);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 94%, transparent);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.settings-page #settings-sec-shortcuts .setting-row--shortcut-header span,
+.settings-page #settings-sec-shortcuts .setting-row--shortcut-header span:not(:first-child) {
+  height: auto;
+  justify-content: flex-start;
+  color: var(--theme-muted-text);
+  border-radius: 0;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: 0.04em;
+}
+
+.settings-page #settings-sec-shortcuts .setting-info-icon {
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--theme-accent-border) 42%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--theme-accent-bg) 58%, transparent);
+}
+
+.settings-page #settings-sec-shortcuts .setting-info h3 {
+  font-size: 13.5px;
+  font-weight: 760;
+}
+
+.settings-page #settings-sec-shortcuts .setting-info p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 11.5px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-control {
+  grid-template-columns: minmax(88px, 1fr) 28px 40px;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-key,
+.settings-page #settings-sec-shortcuts .settings-shortcut-unavailable {
+  min-height: 32px;
+  border-radius: 4px;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-key {
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0 9px;
+  border-color: color-mix(in srgb, var(--theme-panel-border) 88%, transparent);
+  background: color-mix(in srgb, var(--theme-field-bg-strong, var(--theme-button-bg)) 92%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-panel-bg-strong) 70%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--theme-panel-border) 50%, transparent);
+  font-family: var(--echo-mono-font-family);
+  font-size: 12px;
+  font-weight: 680;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-key.is-empty {
+  color: var(--theme-subtle-text);
+  border-style: dashed;
+  background: transparent;
+  box-shadow: none;
+  font-weight: 560;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-key:hover,
+.settings-page #settings-sec-shortcuts .settings-shortcut-key.is-recording {
+  color: var(--theme-accent-text);
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--theme-accent-border) 78%, transparent);
+  background: color-mix(in srgb, var(--theme-accent-bg) 64%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-accent) 14%, transparent);
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-key:focus-visible {
+  outline: 0;
+  border-color: color-mix(in srgb, var(--theme-accent-border) 84%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-accent) 18%, transparent);
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-unavailable {
+  justify-content: flex-start;
+  padding: 0 9px;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-clear {
+  width: 28px;
+  min-height: 28px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-shortcuts .toggle-btn {
+  align-self: center;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-control .settings-inline-error {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 11px;
+}
+
+.settings-page #settings-sec-shortcuts .settings-shortcut-empty {
+  margin: 0;
+  padding: 22px 14px;
+  border-right: 1px solid color-mix(in srgb, var(--theme-panel-border) 82%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 82%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--theme-panel-border) 82%, transparent);
+  border-radius: 0 0 6px 6px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 70%, transparent);
+}
+
+@media (max-width: 1180px) {
+  .settings-page #settings-sec-shortcuts .settings-shortcut-filter-board > .settings-shortcut-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .settings-page #settings-sec-shortcuts .settings-shortcut-group-actions {
+    justify-content: flex-start;
+  }
+
+  .settings-page .settings-shortcut-filter {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 980px) {
+  .settings-page #settings-sec-shortcuts .settings-shortcut-filter-section,
+  .settings-page #settings-sec-shortcuts .settings-shortcut-category-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .settings-page #settings-sec-shortcuts .setting-row--shortcut:hover {
+    box-shadow: none;
+  }
+}
+
+/* About / Advanced Custom live in settings-about.css. */
+
+.settings-page .settings-header[data-has-back='true'] {
+  align-items: center;
+}
+
+.settings-page .settings-header[data-has-back='true'] .settings-header-copy {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 8px;
+}
+
+.settings-page .settings-header-copy {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: 0;
+}
+
+.settings-page .settings-header[data-has-back='true'] .settings-header-copy h1,
+.settings-page .settings-header[data-has-back='true'] .settings-header-context {
+  grid-column: 2;
+}
+
+.settings-page .settings-header-copy h1 {
+  min-width: 0;
+}
+
+.settings-page .settings-header-back {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--theme-muted-text);
+  background: transparent;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  animation: settings-header-back-in var(--echo-motion-page-ms) var(--echo-motion-ease-standard) both;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.settings-page .settings-header-back:hover {
+  color: var(--theme-heading-text);
+  background: var(--theme-control-bg-hover);
+}
+
+.settings-page .settings-header-back:active {
+  opacity: 0.82;
+}
+
+.settings-page .settings-header-back:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-accent-text) 55%, transparent);
+  outline-offset: 1px;
+}
+
+.app-shell:not(.app-shell--standalone):not(.app-shell--sidebar-auto-hide) {
+  transition: grid-template-columns var(--echo-motion-sidebar-ms) var(--echo-motion-ease-standard);
+}
+
+.app-shell:not(.app-shell--standalone):not(.app-shell--sidebar-auto-hide) .sidebar {
+  transition:
+    transform var(--echo-motion-sidebar-ms) var(--echo-motion-ease-sidebar),
+    visibility 0s linear var(--echo-motion-sidebar-ms);
+}
+
+.app-shell.app-shell--settings-focus:not(.app-shell--standalone) {
+  grid-template-columns: 0 minmax(0, 1fr);
+}
+
+.app-shell.app-shell--settings-focus:not(.app-shell--standalone) .sidebar {
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) {
+  padding: 24px 38px 28px;
+}
+
+@keyframes settings-header-back-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-page .settings-header-back {
+    animation: none;
+    transition: none;
+  }
+
+  .settings-page .settings-header-back:active {
+    opacity: 1;
+  }
+
+  .app-shell:not(.app-shell--standalone):not(.app-shell--sidebar-auto-hide),
+  .app-shell:not(.app-shell--standalone):not(.app-shell--sidebar-auto-hide) .sidebar,
+  .app-shell.app-shell--settings-focus:not(.app-shell--standalone) .sidebar {
+    transition: none;
+  }
+
+}

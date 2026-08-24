@@ -1,0 +1,521 @@
+/*
+ * Danger settings visual system.
+ * Loaded from DangerSettingsSection so it sits after the settings polish layer.
+ * Tokens only; theme presets keep owning color differences.
+ */
+
+.settings-page #settings-sec-danger.settings-section--panel {
+  gap: 16px;
+}
+
+.settings-page #settings-sec-danger > .section-title .section-title-icon {
+  color: var(--theme-danger-text);
+  border-color: color-mix(in srgb, var(--theme-danger-border) 58%, var(--theme-panel-border));
+  background: color-mix(in srgb, var(--theme-danger-bg) 62%, var(--theme-panel-bg));
+}
+
+.settings-page #settings-sec-danger > #settings-subsection-danger-irreversible span::before {
+  background: linear-gradient(
+    180deg,
+    var(--theme-danger-text),
+    color-mix(in srgb, var(--theme-danger-text) 55%, transparent)
+  );
+}
+
+.danger-settings__banner {
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 80%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-panel-bg-muted, var(--theme-panel-bg)) 88%, transparent);
+}
+
+.danger-settings__banner strong,
+.danger-settings__banner p,
+.danger-db h3,
+.danger-db p,
+.danger-card h3,
+.danger-card p,
+.danger-action-card h3,
+.danger-action-card p,
+.danger-confirm-dialog h3,
+.danger-confirm-dialog p {
+  margin: 0;
+}
+
+.danger-settings__banner strong,
+.danger-db h3,
+.danger-card h3,
+.danger-action-card h3,
+.danger-confirm-dialog h3 {
+  color: var(--theme-heading-text);
+  font-size: 14px;
+  font-weight: 820;
+}
+
+.danger-settings__banner p,
+.danger-db p,
+.danger-card p,
+.danger-action-card p,
+.danger-confirm-dialog p,
+.danger-card__keep,
+.danger-action-card small {
+  color: var(--theme-muted-text);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.settings-page #settings-sec-danger .settings-database-protection,
+.danger-card {
+  display: grid;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 88%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--theme-panel-bg-strong) 88%, transparent),
+      color-mix(in srgb, var(--theme-panel-bg) 72%, transparent)
+    );
+  box-shadow: 0 8px 24px rgba(39, 59, 84, 0.035);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.settings-page #settings-sec-danger .settings-database-protection {
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.danger-card {
+  gap: 14px;
+  padding: 16px;
+}
+
+.danger-card.danger-duplicates {
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.danger-card.danger-duplicates .danger-card__header {
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 68%, transparent);
+}
+
+.settings-page #settings-sec-danger .settings-database-protection[data-health='corrupt'],
+.settings-page #settings-sec-danger .settings-database-protection[data-health='unreadable'] {
+  border-color: color-mix(in srgb, var(--theme-danger-border) 62%, var(--theme-panel-border));
+}
+
+.danger-db__header,
+.danger-card__header,
+.danger-confirm-dialog__header,
+.settings-page #settings-sec-danger .settings-database-protection > header.danger-db__header {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.danger-db__icon,
+.danger-card__icon,
+.danger-action-card__icon,
+.danger-confirm-dialog__icon {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-accent-text);
+  border: 1px solid color-mix(in srgb, var(--theme-accent-border) 48%, var(--theme-panel-border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--theme-accent-bg) 50%, var(--theme-panel-bg));
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.settings-page #settings-sec-danger .settings-database-protection[data-health='ok'] .danger-db__icon {
+  color: var(--theme-success-text);
+  border-color: color-mix(in srgb, var(--theme-success-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-success-bg) 70%, var(--theme-panel-bg));
+}
+
+.settings-page #settings-sec-danger .settings-database-protection[data-health='corrupt'] .danger-db__icon,
+.settings-page #settings-sec-danger .settings-database-protection[data-health='unreadable'] .danger-db__icon,
+.danger-action-card[data-tone='danger'] .danger-action-card__icon,
+.danger-confirm-dialog[data-tone='danger'] .danger-confirm-dialog__icon {
+  color: var(--theme-danger-text);
+  border-color: color-mix(in srgb, var(--theme-danger-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-danger-bg) 70%, var(--theme-panel-bg));
+}
+
+.settings-page #settings-sec-danger .settings-database-protection header > div,
+.danger-card__header > div,
+.danger-confirm-dialog__header > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.settings-page #settings-sec-danger .settings-database-protection .danger-db__header {
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 68%, transparent);
+}
+
+.settings-page #settings-sec-danger .settings-database-protection header > div {
+  min-width: 0;
+}
+
+.settings-page #settings-sec-danger .settings-database-health--ok {
+  color: var(--theme-success-text);
+  border-color: color-mix(in srgb, var(--theme-success-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-success-bg) 72%, transparent);
+}
+
+.danger-db__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.danger-db__facts > span {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  padding: 12px 16px;
+  border-right: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+}
+
+.danger-db__facts > span:last-child {
+  border-right: 0;
+}
+
+.danger-db__facts em {
+  overflow: hidden;
+  color: var(--theme-subtle-text, var(--theme-muted-text));
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.danger-db__facts strong {
+  overflow: hidden;
+  color: var(--theme-heading-text);
+  font-size: 13px;
+  font-weight: 780;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.danger-db__steps {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 12px 16px;
+  list-style: none;
+  border-top: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+}
+
+.danger-db__steps li {
+  color: var(--theme-muted-text);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.danger-db__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+}
+
+.danger-db__tools,
+.danger-db__recover,
+.danger-action-group__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.danger-action-list {
+  display: grid;
+  gap: 12px;
+}
+
+.danger-action-group {
+  display: grid;
+  gap: 8px;
+}
+
+.settings-page #settings-sec-danger .settings-danger-button:not(:disabled):hover {
+  color: var(--theme-danger-text);
+  border-color: color-mix(in srgb, var(--theme-danger-border) 72%, transparent);
+  background: color-mix(in srgb, var(--theme-danger-bg) 58%, var(--theme-chip-bg));
+}
+
+.danger-db__note {
+  margin: 0;
+  padding: 0 16px 12px;
+}
+
+.danger-db__event {
+  margin: 0;
+  padding: 10px 16px 12px;
+  border-top: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+  color: var(--theme-muted-text);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.danger-card__keep,
+.danger-action-card small,
+.danger-confirm-dialog__keep {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: color-mix(in srgb, var(--theme-success-text) 78%, var(--theme-heading-text));
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.danger-card__keep svg,
+.danger-action-card small svg,
+.danger-confirm-dialog__keep svg {
+  flex: 0 0 auto;
+}
+
+.danger-action-card {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 15px;
+  border: 1px solid color-mix(in srgb, var(--theme-panel-border) 86%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-panel-bg-strong) 82%, transparent);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.danger-action-card[data-tone='caution'] {
+  border-color: color-mix(in srgb, var(--theme-danger-border) 28%, var(--theme-panel-border));
+}
+
+.danger-action-card[data-tone='danger'] {
+  border-color: color-mix(in srgb, var(--theme-danger-border) 58%, var(--theme-panel-border));
+  background: color-mix(in srgb, var(--theme-danger-bg) 16%, var(--theme-panel-bg-strong));
+}
+
+.danger-action-card:hover {
+  border-color: color-mix(in srgb, var(--theme-panel-border-strong) 72%, transparent);
+}
+
+.danger-action-card[data-tone='caution']:hover,
+.danger-action-card[data-tone='danger']:hover {
+  border-color: color-mix(in srgb, var(--theme-danger-border) 64%, var(--theme-panel-border));
+}
+
+.danger-action-card__copy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.danger-action-card__action,
+.danger-action-card__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.danger-duplicates__preview {
+  display: grid;
+  gap: 8px;
+  padding: 0 16px 14px;
+}
+
+.settings-page #settings-sec-danger .settings-duplicate-cleanup-progress {
+  margin: 0 16px 12px;
+}
+
+.settings-page #settings-sec-danger .settings-duplicate-cleanup-summary,
+.settings-page #settings-sec-danger .settings-library-quality-row {
+  border-color: color-mix(in srgb, var(--theme-panel-border) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-chip-bg) 42%, transparent);
+}
+
+.settings-page #settings-sec-danger .settings-duplicate-cleanup-summary {
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.settings-page #settings-sec-danger .settings-duplicate-cleanup-summary:hover {
+  border-color: color-mix(in srgb, var(--theme-panel-border-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--theme-chip-bg) 70%, transparent);
+}
+
+.settings-page #settings-sec-danger .settings-library-quality-row small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page #settings-sec-danger .danger-duplicates__chevron {
+  transition: transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.settings-page #settings-sec-danger .settings-duplicate-cleanup-summary[aria-expanded='true'] .danger-duplicates__chevron {
+  transform: rotate(180deg);
+}
+
+.danger-confirm-backdrop {
+  z-index: 120;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.danger-confirm-backdrop[data-state='open'] {
+  opacity: 1;
+}
+
+.danger-confirm-backdrop[data-state='closing'] {
+  opacity: 0;
+}
+
+.danger-confirm-dialog {
+  display: grid;
+  width: min(460px, 100%);
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--theme-danger-border) 46%, var(--theme-panel-border-strong));
+  border-radius: 14px;
+  background: var(--theme-modal-bg);
+  box-shadow: var(--theme-shadow-soft);
+  opacity: 0;
+  transform: translateY(12px) scale(0.985);
+  transition:
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.danger-confirm-dialog[data-state='open'] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.danger-confirm-dialog[data-state='closing'] {
+  opacity: 0;
+  transform: translateY(10px) scale(0.99);
+}
+
+.danger-confirm-dialog__keep {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-success-bg) 58%, var(--theme-chip-bg));
+  color: var(--theme-heading-text);
+  font-size: 12px;
+}
+
+.danger-confirm-dialog__field {
+  max-width: none;
+}
+
+.danger-confirm-dialog__input-wrap {
+  position: relative;
+  display: block;
+}
+
+.danger-confirm-dialog__input-wrap input {
+  width: 100%;
+  padding-right: 36px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.danger-confirm-dialog__field[data-match='match'] input {
+  border-color: color-mix(in srgb, var(--theme-success-border) 80%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-success-bg) 80%, transparent);
+}
+
+.danger-confirm-dialog__field[data-match='mismatch'] input {
+  border-color: color-mix(in srgb, var(--theme-danger-border) 70%, transparent);
+}
+
+.danger-confirm-dialog__match {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  display: inline-flex;
+  color: var(--theme-success-text);
+  transform: translateY(-50%);
+}
+
+.danger-confirm-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.settings-page #settings-sec-danger .settings-danger-button[data-ready='true']:not(:disabled),
+.danger-confirm-dialog .settings-danger-button[data-ready='true']:not(:disabled) {
+  color: var(--theme-on-accent, #fff);
+  border-color: color-mix(in srgb, var(--theme-danger-solid-bg) 78%, transparent);
+  background: color-mix(in srgb, var(--theme-danger-solid-bg) 88%, var(--theme-danger-text));
+}
+
+@media (max-width: 760px) {
+  .danger-action-card,
+  .danger-db__header,
+  .danger-card__header,
+  .danger-confirm-dialog__header,
+  .settings-page #settings-sec-danger .settings-database-protection > header.danger-db__header {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+
+  .danger-action-card__action,
+  .settings-page #settings-sec-danger .settings-database-health {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .danger-db__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .danger-db__facts > span {
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+  }
+
+  .danger-db__facts > span:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .danger-action-card,
+  .danger-action-card__icon,
+  .danger-confirm-backdrop,
+  .danger-confirm-dialog,
+  .danger-confirm-dialog__input-wrap input,
+  .settings-page #settings-sec-danger .danger-duplicates__chevron,
+  .settings-page #settings-sec-danger .settings-database-protection {
+    transition: none;
+  }
+
+  .danger-confirm-dialog,
+  .danger-confirm-dialog[data-state='open'],
+  .danger-confirm-dialog[data-state='closing'] {
+    transform: none;
+  }
+}

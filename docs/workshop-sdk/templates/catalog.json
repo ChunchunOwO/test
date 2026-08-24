@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "templates": [
+    { "kind": "theme", "entry": "theme.json", "tag": "Theme" },
+    { "kind": "lyrics-style", "entry": "lyrics-style.json", "tag": "Lyrics Scene" },
+    { "kind": "visualizer-preset", "entry": "visualizer.json", "tag": "Visualizer" },
+    { "kind": "dsp-preset", "entry": "dsp.json", "tag": "DSP Preset" },
+    { "kind": "audio-plugin-profile", "entry": "audio-plugin-profile.json", "tag": "Audio Plugin Profile" },
+    { "kind": "plugin-package", "entry": "community.echo", "tag": "Sandboxed Plugin" }
+  ]
+}

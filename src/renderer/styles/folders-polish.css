@@ -1,0 +1,563 @@
+/*
+ * Folders workbench visual polish layer.
+ * Loads right after folders.css (imported by FoldersPage.tsx) and only refines
+ * the folders shell: sidebar tree, detail header, toolbar, action panel,
+ * scan progress and floating menus. Everything is driven by --theme-* tokens
+ * so dark mode and theme presets adapt automatically.
+ */
+
+/* ---------- Sidebar header ---------- */
+
+.folders-workbench .folders-pane-header h1 {
+  background: linear-gradient(
+    118deg,
+    var(--theme-heading-text) 46%,
+    color-mix(in srgb, var(--theme-accent-text-strong, var(--theme-accent-text)) 84%, var(--theme-heading-text)) 94%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.folders-workbench .folder-source-switch button {
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+.folders-workbench .folder-source-switch button:hover:not(.active) {
+  color: var(--theme-heading-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 38%, transparent);
+}
+
+.folders-workbench .folder-source-switch button.active {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 22%, transparent);
+}
+
+.folders-workbench .folders-header-actions .tool-button {
+  transition: color 140ms ease, border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
+}
+
+.folders-workbench .folders-header-actions .tool-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.folders-workbench .folders-header-actions .tool-button:active:not(:disabled) {
+  transform: translateY(0) scale(0.96);
+}
+
+/* ---------- Folder tree rows ---------- */
+
+.folders-workbench .folder-root-button,
+.folders-workbench .folder-tree-node {
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.folders-workbench .folder-root-button:hover:not([data-active='true']):not([data-dragging='true']),
+.folders-workbench .folder-tree-node:hover:not([data-active='true']) {
+  transform: translateX(2px);
+}
+
+.folders-workbench .folder-root-button:active:not([data-dragging='true']),
+.folders-workbench .folder-tree-node:active {
+  transform: translateX(2px) scale(0.985);
+}
+
+/* Selected row: soften the flat accent rail with a faint glow. */
+.folders-workbench .folder-root-button[data-active='true'],
+.folders-workbench .folder-tree-node[data-active='true'] {
+  box-shadow:
+    inset 3px 0 0 var(--theme-accent-solid-bg),
+    inset 0 0 22px color-mix(in srgb, var(--theme-accent-solid-bg) 7%, transparent);
+}
+
+.folders-workbench .folder-expand-hit {
+  transition: background-color 130ms ease, color 130ms ease;
+}
+
+.folders-workbench .folder-expand-hit:not([data-hidden='true']):hover {
+  color: var(--theme-accent-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 66%, transparent);
+}
+
+.folders-workbench .pinned-folders button {
+  transition: color 130ms ease, background-color 130ms ease, transform 150ms ease;
+}
+
+.folders-workbench .pinned-folders button:hover {
+  transform: translateX(2px);
+}
+
+/* Sidebar tree scrollbar: thin and quiet instead of the default gutter. */
+.folders-workbench .folders-root-list {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--theme-panel-border) 78%, transparent) transparent;
+}
+
+.folders-workbench .folders-root-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.folders-workbench .folders-root-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--theme-panel-border) 78%, transparent);
+}
+
+.folders-workbench .folders-root-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- Detail header ---------- */
+
+.folders-workbench .folder-cover-stack {
+  position: relative;
+}
+
+/* Inner ring keeps stacked covers from bleeding into the backdrop. */
+.folders-workbench .folder-cover-stack::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-heading-text) 9%, transparent);
+  content: '';
+  pointer-events: none;
+}
+
+.folders-workbench .folder-metrics strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.folders-workbench .folder-breadcrumbs button {
+  transition: color 130ms ease, background-color 130ms ease;
+}
+
+.folders-workbench .folder-detail-actions > button {
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 160ms ease,
+    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.folders-workbench .folder-detail-actions > button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.folders-workbench .folder-detail-actions > button:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.folders-workbench .folder-detail-actions > .primary-action:hover:not(:disabled) {
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--theme-accent-solid-bg) 34%, transparent);
+}
+
+/* ---------- Track toolbar ---------- */
+
+.folders-workbench .folder-track-toolbar .search-box {
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.folders-workbench .folder-track-toolbar .search-box:focus-within {
+  border-color: color-mix(in srgb, var(--theme-accent-border) 82%, transparent);
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+.folders-workbench .folder-scope-control button {
+  transition: color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+}
+
+.folders-workbench .folder-scope-control button:hover:not([aria-pressed='true']) {
+  color: var(--theme-heading-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 36%, transparent);
+}
+
+.folders-workbench .folder-track-column-sort {
+  transition: color 130ms ease;
+}
+
+.folders-workbench .folder-track-column-sort[data-active='true'] span {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--theme-accent-text-strong, var(--theme-accent-text)) 55%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 5px;
+}
+
+/* Track rows keep their layout from folders.css; only ease state changes. */
+.folders-workbench .folders-main .track-row {
+  transition: background-color 140ms ease, box-shadow 140ms ease;
+}
+
+/* ---------- Right action panel ---------- */
+
+.folders-workbench .folder-import-box input {
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.folders-workbench .folder-import-box input:focus-visible {
+  border-color: color-mix(in srgb, var(--theme-accent-border) 82%, transparent);
+  box-shadow: 0 0 0 3px var(--theme-focus-ring);
+}
+
+.folders-workbench .folder-import-box button,
+.folders-workbench .folder-action-grid button,
+.folders-workbench .folder-management-more > summary,
+.folders-workbench .folder-next-steps button,
+.folders-workbench .folders-empty-action {
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease,
+    transform 150ms ease;
+}
+
+.folders-workbench .folder-import-box button:active:not(:disabled),
+.folders-workbench .folder-action-grid button:active:not(:disabled),
+.folders-workbench .folder-next-steps button:active:not(:disabled),
+.folders-workbench .folders-empty-action:active {
+  transform: scale(0.97);
+}
+
+.folders-workbench .folder-manage-section .folder-action-grid .danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--theme-danger-text) 10%, transparent);
+}
+
+/* ---------- Scan progress ---------- */
+
+/* Running scans get a soft moving sheen on top of the solid fill. */
+.folders-workbench .folder-scan-card[data-running='true'] .folder-scan-progress-track > span,
+.folders-workbench .remote-scan-progress--active .remote-scan-progress-track > span {
+  position: relative;
+  overflow: hidden;
+}
+
+.folders-workbench .folder-scan-card[data-running='true'] .folder-scan-progress-track > span::after,
+.folders-workbench .remote-scan-progress--active .remote-scan-progress-track > span::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+    100deg,
+    transparent 28%,
+    rgb(255 255 255 / 0.34) 50%,
+    transparent 72%
+  );
+  animation: folders-scan-sheen 1.6s linear infinite;
+}
+
+@keyframes folders-scan-sheen {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.folders-workbench .folder-scan-card {
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+/* ---------- Floating menus ---------- */
+
+.folders-workbench .folder-context-menu,
+.folders-workbench .folder-bulk-action-menu {
+  animation: folders-menu-in 150ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: top;
+}
+
+@keyframes folders-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.folders-workbench .folder-context-menu button,
+.folders-workbench .folder-bulk-action-menu button {
+  transition: color 120ms ease, background-color 120ms ease;
+}
+
+/* ---------- Interaction feel ---------- */
+
+/* Source switch: the active pill slides between 本地/网盘 instead of jumping. */
+.folders-workbench .folder-source-switch {
+  position: relative;
+  isolation: isolate;
+}
+
+.folders-workbench .folder-source-switch::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  content: '';
+  background: var(--theme-accent-solid-bg);
+  opacity: 0;
+  transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 120ms ease;
+}
+
+.folders-workbench .folder-source-switch:has(button.active)::before {
+  opacity: 1;
+}
+
+.folders-workbench .folder-source-switch:has(button:last-child.active)::before {
+  transform: translateX(100%);
+}
+
+.folders-workbench .folder-source-switch button {
+  position: relative;
+  z-index: 1;
+}
+
+.folders-workbench .folder-source-switch button.active {
+  background: transparent;
+}
+
+/* Expanding a folder eases its children in instead of popping. */
+.folders-workbench .folder-tree-children {
+  animation: folders-collapse-in 170ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.folders-workbench .folder-management-more[open] .folder-management-more-actions {
+  animation: folders-collapse-in 170ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes folders-collapse-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* Keyboard navigation gets the same ring treatment as the rest of the app. */
+.folders-workbench .folder-root-button:focus-visible,
+.folders-workbench .folder-tree-node:focus-visible,
+.folders-workbench .pinned-folders button:focus-visible,
+.folders-workbench .folder-breadcrumbs button:focus-visible {
+  outline: 2px solid var(--theme-focus-ring);
+  outline-offset: -2px;
+}
+
+/* Drag reorder: the drop slot breathes gently so the target reads instantly. */
+.folders-workbench .folder-root-button[data-drop-target='true'] {
+  animation: folders-drop-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes folders-drop-pulse {
+  50% {
+    box-shadow: inset 0 0 0 1px var(--theme-accent-border), inset 0 0 18px color-mix(in srgb, var(--theme-accent-solid-bg) 14%, transparent);
+  }
+}
+
+/* One-shot sheen sweeps across 播放全部 when the pointer lands on it. */
+.folders-workbench .folder-detail-actions > .primary-action {
+  position: relative;
+  overflow: hidden;
+}
+
+.folders-workbench .folder-detail-actions > .primary-action::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 34%,
+    rgb(255 255 255 / 0.22) 48%,
+    rgb(255 255 255 / 0.07) 52%,
+    transparent 66%
+  );
+  opacity: 0;
+  transform: translateX(-130%);
+}
+
+.folders-workbench .folder-detail-actions > .primary-action:hover:not(:disabled)::after {
+  animation: folders-action-shine 640ms cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+@keyframes folders-action-shine {
+  0% {
+    opacity: 1;
+    transform: translateX(-130%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(130%);
+  }
+}
+
+/* Search icon warms up while typing. */
+.folders-workbench .folder-track-toolbar .search-box svg {
+  transition: color 150ms ease;
+}
+
+.folders-workbench .folder-track-toolbar .search-box:focus-within svg {
+  color: var(--theme-accent-text);
+}
+
+/* Sort direction chevron fades in rather than blinking into place. */
+.folders-workbench .folder-track-column-sort svg {
+  animation: folders-fade-in 150ms ease;
+}
+
+@keyframes folders-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Row covers zoom a touch on hover; the row itself stays put. */
+.folders-workbench .folders-main .track-cover {
+  overflow: hidden;
+}
+
+.folders-workbench .folders-main .track-cover img {
+  transition: transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.folders-workbench .folders-main .track-row:hover .track-cover img {
+  transform: scale(1.06);
+}
+
+/* First-import onboarding steps acknowledge the pointer. */
+.folders-workbench .folders-empty-state--onboarding li {
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.folders-workbench .folders-empty-state--onboarding li:hover {
+  border-color: color-mix(in srgb, var(--theme-accent-border) 55%, transparent);
+  transform: translateX(2px);
+}
+
+/* ---------- Wayfinding & detail refinements ---------- */
+
+.folders-workbench .panel-kicker {
+  letter-spacing: 0.07em;
+  opacity: 0.92;
+}
+
+/* Counts sit in quiet pills; zero-count rows leave the em empty and stay clean. */
+.folders-workbench .folder-root-button em:not(:empty) {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--theme-panel-border) 46%, transparent);
+  font-size: 10.5px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.folders-workbench .folder-root-button[data-active='true'] em:not(:empty) {
+  color: var(--theme-accent-text);
+  background: color-mix(in srgb, var(--theme-accent-bg) 78%, transparent);
+}
+
+/* Active rows tint their folder icon with the accent. */
+.folders-workbench .folder-root-button[data-active='true'] > svg:not(.folder-root-drag-handle),
+.folders-workbench .folder-tree-node[data-active='true'] > svg {
+  color: var(--theme-accent-text);
+}
+
+/* Empty cover slot reads as a placeholder, not a broken card. */
+.folders-workbench .folder-cover-stack[data-cover-count='0'] {
+  border-style: dashed;
+  color: color-mix(in srgb, var(--theme-accent-text) 52%, var(--theme-muted-text));
+  box-shadow: none;
+}
+
+/* Status line gets a breathing dot so loading states read as alive. */
+.folders-workbench .folders-status-line span::before {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 999px;
+  content: '';
+  vertical-align: 1px;
+  background: var(--theme-accent-solid-bg);
+  animation: folders-status-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes folders-status-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ---------- Scroll-linked header shadow ---------- */
+
+/* Once the list scrolls, the column header casts a soft shadow so rows visibly
+   slide underneath. Guarded: without scroll timelines the flat divider stays. */
+@supports (animation-timeline: scroll()) {
+  .folders-workbench .folders-main {
+    timeline-scope: --folders-track-scroll;
+  }
+
+  .folders-workbench .folders-main .track-list {
+    scroll-timeline: --folders-track-scroll block;
+  }
+
+  .folders-workbench .folder-track-columns {
+    animation: folders-columns-shadow linear both;
+    animation-timeline: --folders-track-scroll;
+    animation-range: 0 72px;
+  }
+
+  @keyframes folders-columns-shadow {
+    to {
+      border-bottom-color: transparent;
+      box-shadow: 0 10px 14px -12px color-mix(in srgb, var(--theme-heading-text) 30%, transparent);
+    }
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .folders-workbench .folder-root-button,
+  .folders-workbench .folder-tree-node,
+  .folders-workbench .pinned-folders button,
+  .folders-workbench .folders-header-actions .tool-button,
+  .folders-workbench .folder-detail-actions > button,
+  .folders-workbench .folder-import-box button,
+  .folders-workbench .folder-action-grid button,
+  .folders-workbench .folder-next-steps button,
+  .folders-workbench .folders-empty-action {
+    transform: none !important;
+    transition-duration: 0.01ms;
+  }
+
+  .folders-workbench .folder-context-menu,
+  .folders-workbench .folder-bulk-action-menu,
+  .folders-workbench .folder-scan-card[data-running='true'] .folder-scan-progress-track > span::after,
+  .folders-workbench .remote-scan-progress--active .remote-scan-progress-track > span::after,
+  .folders-workbench .folder-tree-children,
+  .folders-workbench .folder-management-more[open] .folder-management-more-actions,
+  .folders-workbench .folder-root-button[data-drop-target='true'],
+  .folders-workbench .folder-detail-actions > .primary-action:hover:not(:disabled)::after,
+  .folders-workbench .folder-track-column-sort svg,
+  .folders-workbench .folders-status-line span::before {
+    animation: none;
+  }
+
+  .folders-workbench .folder-source-switch::before {
+    transition: none;
+  }
+
+  .folders-workbench .folders-main .track-row:hover .track-cover img,
+  .folders-workbench .folders-empty-state--onboarding li:hover {
+    transform: none;
+  }
+}

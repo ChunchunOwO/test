@@ -1,0 +1,617 @@
+.workshop-plugin-runtimes {
+  position: fixed;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.workshop-plugin-runtimes iframe {
+  inline-size: 1px;
+  block-size: 1px;
+  border: 0;
+}
+
+.workshop-plugin-slots {
+  position: fixed;
+  inset-inline-start: 88px;
+  inset-block-start: 74px;
+  z-index: 2147483645;
+  display: flex;
+  max-inline-size: calc(100vw - 176px);
+  flex-wrap: wrap;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.workshop-plugin-slots button {
+  display: flex;
+  min-block-size: 32px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 26%, transparent);
+  border-radius: 10px;
+  color: var(--echo-text, #fff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 92%, transparent);
+  box-shadow: 0 8px 26px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+}
+
+.workshop-plugin-slots button[data-slot='sidebar'] {
+  border-inline-start-color: var(--echo-accent, #6678ff);
+}
+
+.workshop-plugin-slots button[data-slot='player'] {
+  position: fixed;
+  inset-inline-end: 112px;
+  inset-block-end: 106px;
+}
+
+.workshop-plugin-dock {
+  position: fixed;
+  inset-inline-end: 18px;
+  inset-block-end: 104px;
+  z-index: 2147483646;
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+.workshop-plugin-dock__toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-block-size: 38px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #7b8cff) 34%, transparent);
+  border-radius: 999px;
+  color: var(--echo-text, #f5f7ff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 92%, transparent);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 24%);
+  backdrop-filter: blur(18px);
+}
+
+.workshop-plugin-dock__toggle em {
+  min-inline-size: 19px;
+  padding: 1px 5px;
+  border-radius: 99px;
+  color: var(--echo-on-accent, #fff);
+  background: var(--echo-accent, #6678ff);
+  font-size: 11px;
+  font-style: normal;
+  text-align: center;
+}
+
+.workshop-plugin-dock__menu {
+  inline-size: min(330px, calc(100vw - 36px));
+  max-block-size: min(440px, calc(100vh - 180px));
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #ffffff) 18%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 96%, transparent);
+  box-shadow: 0 18px 55px rgb(0 0 0 / 32%);
+  backdrop-filter: blur(22px);
+}
+
+.workshop-plugin-dock__search {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 2px 8px;
+  padding: 8px 9px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #ffffff) 16%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 78%, transparent);
+}
+
+.workshop-plugin-dock__search input {
+  min-inline-size: 0;
+  border: 0;
+  outline: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+
+.workshop-plugin-dock__search kbd {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 10px;
+}
+
+.workshop-plugin-dock__menu button {
+  display: flex;
+  inline-size: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 11px;
+  border: 0;
+  border-radius: 10px;
+  color: inherit;
+  background: transparent;
+  text-align: start;
+}
+
+.workshop-plugin-dock__manage {
+  margin-block-end: 5px;
+  border-block-end: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent) !important;
+  border-radius: 8px 8px 2px 2px !important;
+}
+
+.workshop-plugin-dock__menu button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 13%, transparent);
+}
+
+.workshop-plugin-dock__menu button:disabled {
+  opacity: 0.54;
+}
+
+.workshop-plugin-dock__menu span {
+  display: grid;
+  gap: 2px;
+}
+
+.workshop-plugin-dock__menu small {
+  color: var(--echo-muted, #9ca3b8);
+}
+
+.workshop-plugin-panel {
+  position: fixed;
+  inset: 54px 34px 84px;
+  z-index: 2147483646;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #ffffff) 22%, transparent);
+  border-radius: 18px;
+  background: var(--echo-panel, #15182a);
+  box-shadow: 0 28px 90px rgb(0 0 0 / 46%);
+}
+
+.workshop-plugin-panel[data-placement='utility'] {
+  inset: 64px 24px 92px auto;
+  inline-size: min(520px, calc(100vw - 48px));
+}
+
+.workshop-plugin-panel > header {
+  display: flex;
+  min-block-size: 48px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px 7px 16px;
+  border-block-end: 1px solid color-mix(in srgb, var(--echo-border, #ffffff) 16%, transparent);
+}
+
+.workshop-plugin-panel > header div {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.workshop-plugin-panel > header span {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-plugin-panel > header button {
+  display: grid;
+  inline-size: 32px;
+  block-size: 32px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+}
+
+.workshop-plugin-panel > header button:hover {
+  background: color-mix(in srgb, var(--echo-text, #fff) 9%, transparent);
+}
+
+.workshop-plugin-panel > iframe {
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+  background: #fff;
+}
+
+.workshop-plugin-notice {
+  position: fixed;
+  inset-inline-start: 50%;
+  inset-block-end: 94px;
+  z-index: 2147483646;
+  max-inline-size: min(520px, calc(100vw - 40px));
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 28%, transparent);
+  border-radius: 12px;
+  color: var(--echo-text, #fff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 96%, transparent);
+  box-shadow: 0 16px 46px rgb(0 0 0 / 34%);
+  transform: translateX(-50%);
+}
+
+.workshop-plugin-agent {
+  position: fixed;
+  inset-inline-end: 24px;
+  inset-block-end: 154px;
+  z-index: 2147483646;
+  display: grid;
+  inline-size: min(440px, calc(100vw - 32px));
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 28%, transparent);
+  border-radius: 16px;
+  color: var(--echo-text, #fff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 97%, transparent);
+  box-shadow: 0 22px 68px rgb(0 0 0 / 42%);
+}
+
+.workshop-plugin-agent > header,
+.workshop-plugin-agent > header div,
+.workshop-plugin-agent__run {
+  display: flex;
+  align-items: center;
+}
+
+.workshop-plugin-agent > header {
+  justify-content: space-between;
+}
+
+.workshop-plugin-agent > header div {
+  gap: 8px;
+}
+
+.workshop-plugin-agent > header span,
+.workshop-plugin-agent > p {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-plugin-agent > header button {
+  display: grid;
+  inline-size: 30px;
+  block-size: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+}
+
+.workshop-plugin-agent > p {
+  margin: 0;
+}
+
+.workshop-plugin-agent > textarea,
+.workshop-plugin-agent > pre {
+  box-sizing: border-box;
+  inline-size: 100%;
+  margin: 0;
+  padding: 10px 11px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 18%, transparent);
+  border-radius: 10px;
+  color: inherit;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 92%, transparent);
+}
+
+.workshop-plugin-agent > textarea {
+  min-block-size: 92px;
+  resize: vertical;
+  font: inherit;
+}
+
+.workshop-plugin-agent > pre {
+  max-block-size: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.workshop-plugin-agent__run {
+  justify-self: end;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 9px;
+  color: var(--echo-on-accent, #fff);
+  background: var(--echo-accent, #6678ff);
+}
+
+.workshop-plugin-settings {
+  position: fixed;
+  inset: 72px 24px 92px auto;
+  z-index: 2147483646;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  inline-size: min(520px, calc(100vw - 48px));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 28%, transparent);
+  border-radius: 16px;
+  color: var(--echo-text, #fff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 97%, transparent);
+  box-shadow: 0 22px 68px rgb(0 0 0 / 42%);
+}
+
+.workshop-plugin-settings > header,
+.workshop-plugin-settings > header div,
+.workshop-plugin-settings__save {
+  display: flex;
+  align-items: center;
+}
+
+.workshop-contribution-manager {
+  position: fixed;
+  inset: 64px 34px 90px auto;
+  z-index: 2147483647;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  inline-size: min(680px, calc(100vw - 68px));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--echo-accent, #6678ff) 28%, transparent);
+  border-radius: 18px;
+  color: var(--echo-text, #fff);
+  background: color-mix(in srgb, var(--echo-panel, #15182a) 98%, transparent);
+  box-shadow: 0 28px 90px rgb(0 0 0 / 48%);
+}
+
+.workshop-contribution-manager > header,
+.workshop-contribution-manager > header div,
+.workshop-contribution-manager__toolbar,
+.workshop-contribution-manager__actions {
+  display: flex;
+  align-items: center;
+}
+
+.workshop-contribution-manager > header {
+  min-block-size: 52px;
+  justify-content: space-between;
+  padding: 0 12px 0 18px;
+  border-block-end: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+}
+
+.workshop-contribution-manager > header div {
+  gap: 9px;
+}
+
+.workshop-contribution-manager > header span,
+.workshop-contribution-manager article small {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-contribution-manager button {
+  color: inherit;
+}
+
+.workshop-contribution-manager > header button,
+.workshop-contribution-manager__actions button {
+  display: grid;
+  inline-size: 32px;
+  block-size: 32px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.workshop-contribution-manager button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--echo-accent, #6678ff) 14%, transparent);
+}
+
+.workshop-contribution-manager__toolbar {
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 52%, transparent);
+}
+
+.workshop-contribution-manager__toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.workshop-contribution-manager__toolbar select {
+  min-inline-size: 220px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 16%, transparent);
+  border-radius: 8px;
+  color: inherit;
+  background: var(--echo-field, #0f1322);
+}
+
+.workshop-contribution-manager__toolbar > button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+  border-radius: 8px;
+  background: transparent;
+}
+
+.workshop-contribution-manager__list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  overflow: auto;
+  padding: 14px 16px 18px;
+}
+
+.workshop-contribution-manager article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 62%, transparent);
+}
+
+.workshop-contribution-manager article[data-hidden='true'] {
+  opacity: 0.58;
+}
+
+.workshop-contribution-manager article > div:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.workshop-contribution-manager article > div:first-child > span {
+  color: var(--echo-accent, #8b9aff);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.workshop-contribution-manager__actions {
+  gap: 2px;
+}
+
+.workshop-contribution-manager__actions button:disabled {
+  opacity: 0.28;
+}
+
+.workshop-plugin-settings > header {
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-block-end: 1px solid color-mix(in srgb, var(--echo-border, #fff) 14%, transparent);
+}
+
+.workshop-plugin-settings > header div {
+  gap: 8px;
+}
+
+.workshop-plugin-settings > header span,
+.workshop-plugin-settings__field small {
+  color: var(--echo-muted, #9ca3b8);
+  font-size: 12px;
+}
+
+.workshop-plugin-settings > header button {
+  display: grid;
+  inline-size: 30px;
+  block-size: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+}
+
+.workshop-plugin-settings__fields {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  overflow: auto;
+  padding: 16px;
+}
+
+.workshop-plugin-settings__field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 220px);
+  gap: 16px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 12%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--echo-field, #0f1322) 72%, transparent);
+}
+
+.workshop-plugin-settings__field > span {
+  display: grid;
+  gap: 4px;
+}
+
+.workshop-plugin-settings__field input:not([type='checkbox']),
+.workshop-plugin-settings__field select {
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--echo-border, #fff) 18%, transparent);
+  border-radius: 9px;
+  color: inherit;
+  background: var(--echo-field, #0f1322);
+}
+
+.workshop-plugin-settings__field input[type='checkbox'] {
+  justify-self: end;
+  inline-size: 20px;
+  block-size: 20px;
+  accent-color: var(--echo-accent, #6678ff);
+}
+
+.workshop-plugin-settings > p {
+  margin: 0 16px;
+  color: var(--echo-danger, #ff7f91);
+  font-size: 12px;
+}
+
+.workshop-plugin-settings__save {
+  justify-self: end;
+  gap: 7px;
+  margin: 14px 16px 16px;
+  padding: 9px 13px;
+  border: 0;
+  border-radius: 9px;
+  color: var(--echo-on-accent, #fff);
+  background: var(--echo-accent, #6678ff);
+}
+
+@media (max-width: 720px) {
+  .workshop-plugin-panel {
+    inset: 42px 12px 74px;
+    border-radius: 14px;
+  }
+
+  .workshop-plugin-panel[data-placement='utility'] {
+    inset: 54px 12px 74px;
+    inline-size: auto;
+  }
+
+  .workshop-plugin-dock {
+    inset-inline-end: 12px;
+    inset-block-end: 86px;
+  }
+
+  .workshop-plugin-agent {
+    inset-inline: 12px;
+    inset-block-end: 132px;
+    inline-size: auto;
+  }
+
+  .workshop-plugin-settings {
+    inset: 54px 12px 74px;
+    inline-size: auto;
+  }
+
+  .workshop-plugin-slots {
+    inset-inline-start: 12px;
+    inset-block-start: 54px;
+    max-inline-size: calc(100vw - 24px);
+  }
+
+  .workshop-contribution-manager {
+    inset: 54px 12px 74px;
+    inline-size: auto;
+  }
+
+  .workshop-contribution-manager__toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .workshop-contribution-manager__toolbar label,
+  .workshop-contribution-manager__toolbar select {
+    inline-size: 100%;
+  }
+
+  .workshop-plugin-settings__field {
+    grid-template-columns: 1fr;
+  }
+}

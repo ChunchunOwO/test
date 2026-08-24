@@ -1,0 +1,1673 @@
+/*
+ * Audio settings drawer refinement layer.
+ * Loads after app.css and only restyles the device-first audio routing drawer
+ * (.audio-drawer-root > .audio-settings-drawer). Same @scope root as the base
+ * rules in app.css so later file order wins ties without specificity games.
+ *
+ * Like the base drawer in app.css, this surface keeps a fixed dark-glass
+ * shell across themes; neutral literals live in the local custom properties
+ * below. The accent family, however, follows the active theme via the
+ * html-level tokens right below, so the drawer picks up each preset's
+ * personality.
+ */
+
+/*
+ * Theme hook. Classic keeps the original violet pair; other presets map to
+ * the preset accent (main), preset accent-strong (deep gradient stop - same
+ * hue family, unlike the often-complementary secondary), and preset secondary
+ * (ambient glow only, mirroring the page background's two-hue wash).
+ */
+html {
+  --adp-theme-accent-rgb: 124 139 246; /* #7c8bf6 */
+  --adp-theme-accent-deep: #9a74ec;
+  --adp-theme-glow-rgb: 146 106 236;
+}
+
+html:is([data-theme-custom="true"], [data-theme-preset]:not([data-theme-preset="classic"])) {
+  --adp-theme-accent-rgb: var(--preset-accent-rgb);
+  --adp-theme-accent-deep: var(--preset-accent-strong);
+  --adp-theme-glow-rgb: var(--preset-secondary-rgb);
+}
+
+@scope (.audio-drawer-root:has(> .audio-settings-drawer)) {
+
+:scope {
+  /* Accent ramp derived from the theme hook; every accent token below builds
+     on these so any preset accent yields a coherent lightness ladder. */
+  --adp-acc: rgb(var(--adp-theme-accent-rgb));
+  --adp-acc-deep: var(--adp-theme-accent-deep);
+  --adp-acc-soft: color-mix(in oklab, var(--adp-acc) 82%, #f4f6ff);
+  --adp-acc-softer: color-mix(in oklab, var(--adp-acc) 66%, #f4f6ff);
+  --adp-acc-glow: color-mix(in oklab, var(--adp-acc) 76%, #05070f);
+  --adp-acc-dim: color-mix(in oklab, var(--adp-acc) 84%, #0a0e22);
+
+  --adp-scrim: rgba(7, 10, 20, 0.54);
+  --adp-shell-border: rgba(151, 167, 226, 0.2);
+  --adp-shell-bg:
+    radial-gradient(130% 56% at 100% 0%, rgb(var(--adp-theme-accent-rgb) / 0.13), transparent 60%),
+    radial-gradient(90% 40% at 0% 100%, rgb(var(--adp-theme-glow-rgb) / 0.08), transparent 62%),
+    linear-gradient(172deg, rgba(26, 32, 51, 0.985) 0%, rgba(23, 28, 45, 0.99) 44%, rgba(19, 23, 38, 0.995) 100%);
+  --adp-shell-shadow:
+    inset 1px 1px 0 rgba(224, 231, 255, 0.06),
+    -36px 0 110px rgba(6, 9, 20, 0.56);
+  --adp-fade-top: linear-gradient(to bottom, rgba(25, 31, 50, 0.97) 0%, rgba(25, 31, 50, 0.88) 30%, rgba(25, 31, 50, 0) 100%);
+  --adp-fade-bottom: linear-gradient(to top, rgba(19, 23, 38, 0.96) 0%, rgba(19, 23, 38, 0.76) 34%, rgba(19, 23, 38, 0) 100%);
+
+  --adp-title-gradient: linear-gradient(118deg, #f5f7ff 32%, color-mix(in oklab, var(--adp-acc) 38%, #f6f8ff) 88%);
+  --adp-title-rule: linear-gradient(90deg, rgba(148, 164, 222, 0.3), rgba(148, 164, 222, 0));
+
+  --adp-heading-text: rgba(230, 235, 254, 0.95);
+  --adp-bright-text: #f4f6ff;
+  --adp-soft-text: rgba(214, 222, 250, 0.85);
+  --adp-dim-text: rgba(210, 219, 246, 0.55);
+  --adp-label-text: rgba(178, 191, 232, 0.7);
+  --adp-caption-text: rgba(178, 191, 232, 0.55);
+  --adp-badge-text: rgba(204, 214, 246, 0.74);
+  --adp-count-text: rgba(208, 217, 248, 0.8);
+  --adp-hover-text: rgba(240, 243, 255, 0.94);
+
+  --adp-hairline: rgba(165, 179, 228, 0.13);
+  --adp-hairline-faint: rgba(163, 178, 226, 0.09);
+  --adp-hairline-soft: rgba(148, 164, 222, 0.1);
+  --adp-hairline-strong: rgba(148, 164, 222, 0.17);
+  --adp-ring: rgba(188, 202, 238, 0.1);
+  --adp-ring-faint: rgba(188, 202, 238, 0.09);
+  --adp-ring-soft: rgba(188, 202, 238, 0.12);
+  --adp-ring-hover: rgba(188, 202, 238, 0.24);
+
+  --adp-card-bg: rgba(255, 255, 255, 0.038);
+  --adp-card-bg-faint: rgba(255, 255, 255, 0.022);
+  --adp-card-bg-soft: rgba(255, 255, 255, 0.03);
+  --adp-card-bg-raised: rgba(255, 255, 255, 0.055);
+  --adp-glass-bg: rgba(255, 255, 255, 0.045);
+  --adp-glass-bg-hover: rgba(255, 255, 255, 0.09);
+  --adp-tile-bg: rgba(148, 164, 222, 0.11);
+  --adp-tint-bg: rgba(148, 164, 222, 0.09);
+  --adp-tint-bg-faint: rgba(148, 164, 222, 0.06);
+  --adp-tint-bg-hover: rgba(129, 146, 228, 0.13);
+  --adp-well-bg: rgba(9, 13, 26, 0.44);
+  --adp-well-bg-focus: rgba(9, 13, 26, 0.6);
+  --adp-well-bg-soft: rgba(9, 13, 26, 0.36);
+  --adp-well-bg-faint: rgba(10, 14, 27, 0.26);
+  --adp-well-bg-panel: rgba(10, 14, 27, 0.3);
+  --adp-inset-shadow: inset 0 1px 4px rgba(4, 7, 16, 0.36);
+
+  --adp-accent-bar: color-mix(in oklab, var(--adp-acc) 86%, #f4f6ff);
+  --adp-accent-icon: color-mix(in oklab, var(--adp-acc) 74%, #f4f6ff);
+  --adp-accent-icon-soft: color-mix(in oklab, var(--adp-acc) 68%, #f4f6ff);
+  --adp-accent-icon-bright: color-mix(in oklab, var(--adp-acc) 64%, #f4f6ff);
+  --adp-accent-text: color-mix(in oklab, var(--adp-acc) 22%, #f4f6ff);
+  --adp-accent-tile-text: color-mix(in oklab, var(--adp-acc) 26%, #f4f6ff);
+  --adp-accent-border: rgb(var(--adp-theme-accent-rgb) / 0.68);
+  --adp-accent-border-soft: color-mix(in srgb, var(--adp-acc-soft) 20%, transparent);
+  --adp-accent-border-mid: color-mix(in srgb, var(--adp-acc-soft) 38%, transparent);
+  --adp-accent-border-strong: color-mix(in srgb, var(--adp-acc-softer) 44%, transparent);
+  --adp-accent-bg-faint: rgb(var(--adp-theme-accent-rgb) / 0.1);
+  --adp-accent-bg-soft: rgb(var(--adp-theme-accent-rgb) / 0.13);
+  --adp-accent-bg-mid: rgb(var(--adp-theme-accent-rgb) / 0.15);
+  --adp-accent-bg-badge: rgb(var(--adp-theme-accent-rgb) / 0.2);
+  --adp-accent-tile-ring: color-mix(in srgb, var(--adp-acc-soft) 16%, transparent);
+  --adp-accent-tile-ring-strong: color-mix(in srgb, var(--adp-acc-softer) 42%, transparent);
+  --adp-accent-header-ring: color-mix(in srgb, var(--adp-acc-soft) 22%, transparent);
+  --adp-focus-ring: color-mix(in srgb, var(--adp-acc-soft) 72%, transparent);
+  --adp-focus-halo: 0 0 0 3px rgb(var(--adp-theme-accent-rgb) / 0.14);
+
+  --adp-header-icon-bg: linear-gradient(150deg, rgb(var(--adp-theme-accent-rgb) / 0.24), rgb(var(--adp-theme-glow-rgb) / 0.14));
+  --adp-icon-tile-active-bg: linear-gradient(150deg, rgb(var(--adp-theme-accent-rgb) / 0.38), color-mix(in srgb, var(--adp-acc-deep) 26%, transparent));
+  --adp-meter-icon-bg: linear-gradient(150deg, rgb(var(--adp-theme-accent-rgb) / 0.2), color-mix(in srgb, var(--adp-acc-deep) 12%, transparent));
+  --adp-active-pill-bg: linear-gradient(96deg, color-mix(in srgb, var(--adp-acc-dim) 40%, transparent) 0%, color-mix(in srgb, var(--adp-acc-deep) 28%, transparent) 58%, color-mix(in srgb, var(--adp-acc-dim) 20%, transparent) 100%);
+  --adp-active-pill-shadow:
+    inset 3px 0 0 var(--adp-accent-bar),
+    inset 0 1px 0 rgba(221, 228, 255, 0.16),
+    0 12px 36px color-mix(in srgb, var(--adp-acc-glow) 30%, transparent);
+  --adp-pill-hover-shadow: 0 8px 22px rgba(6, 10, 22, 0.32);
+  --adp-tab-active-bg: linear-gradient(135deg, color-mix(in srgb, var(--adp-acc) 96%, transparent), color-mix(in srgb, var(--adp-acc-deep) 88%, transparent));
+  --adp-tab-active-shadow:
+    inset 0 1px 0 rgba(228, 234, 255, 0.28),
+    0 5px 16px color-mix(in srgb, var(--adp-acc-glow) 40%, transparent);
+  --adp-check-chip-bg: linear-gradient(135deg, var(--adp-acc), var(--adp-acc-deep));
+  --adp-check-chip-shadow: 0 3px 10px color-mix(in srgb, var(--adp-acc-glow) 45%, transparent);
+  --adp-switch-off-bg: rgba(148, 164, 222, 0.22);
+  --adp-switch-off-shadow: inset 0 1px 3px rgba(6, 10, 20, 0.32);
+  --adp-switch-on-bg: linear-gradient(135deg, var(--adp-acc), var(--adp-acc-deep));
+  --adp-switch-on-shadow:
+    inset 0 1px 0 rgba(226, 233, 255, 0.24),
+    0 2px 10px color-mix(in srgb, var(--adp-acc-glow) 30%, transparent);
+  --adp-knob-shadow:
+    0 2px 6px rgba(8, 12, 24, 0.36),
+    0 0 0 0.5px rgba(8, 12, 24, 0.12);
+
+  --adp-bt-border: rgba(101, 196, 238, 0.62);
+  --adp-bt-bg: linear-gradient(96deg, rgba(41, 138, 184, 0.32), rgba(94, 108, 234, 0.3));
+  --adp-bt-shadow:
+    inset 3px 0 0 #72d8ff,
+    inset 0 1px 0 rgba(214, 240, 255, 0.14),
+    0 12px 36px rgba(38, 118, 164, 0.28);
+
+  --adp-danger-border: rgba(255, 143, 143, 0.3);
+  --adp-danger-border-hover: rgba(255, 143, 143, 0.46);
+  --adp-danger-bg: rgba(255, 94, 94, 0.1);
+  --adp-danger-bg-hover: rgba(255, 94, 94, 0.18);
+
+  --adp-match-border: color-mix(in srgb, var(--adp-acc-soft) 30%, transparent);
+  --adp-match-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--adp-acc-soft) 52%, transparent),
+    0 8px 24px rgba(20, 26, 50, 0.14);
+  --adp-match-active-border: color-mix(in srgb, var(--adp-acc-softer) 60%, transparent);
+  --adp-match-active-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--adp-acc-softer) 82%, transparent),
+    0 0 0 3px rgb(var(--adp-theme-accent-rgb) / 0.13),
+    0 10px 28px rgba(20, 26, 50, 0.18);
+
+  --adp-body-text: rgba(198, 208, 240, 0.68);
+  --adp-mint-text: rgba(186, 240, 205, 0.92);
+  --adp-danger-text: #ffd9d9;
+  --adp-on-accent-caption: rgba(232, 236, 255, 0.8);
+
+  --adp-amber-text: #f2d8a8;
+  --adp-amber-border: rgba(244, 200, 120, 0.28);
+  --adp-amber-border-strong: rgba(244, 200, 120, 0.5);
+  --adp-amber-bg: rgba(214, 158, 62, 0.13);
+  --adp-amber-bg-strong: rgba(214, 158, 62, 0.22);
+
+  --adp-tone-good: #7fe3a8;
+  --adp-tone-good-text: rgba(206, 243, 221, 0.92);
+  --adp-tone-warning: #f2c079;
+  --adp-tone-warning-text: rgba(249, 229, 192, 0.92);
+  --adp-tone-danger: #ff9a9a;
+  --adp-tone-danger-text: #ffdada;
+  --adp-tone-neutral: rgba(178, 191, 232, 0.55);
+  --adp-tone-gold: #ffd48c;
+  --adp-tone-gold-text: rgba(255, 232, 195, 0.94);
+  --adp-signal-connector: linear-gradient(to bottom, rgba(148, 164, 222, 0.32), rgba(148, 164, 222, 0.1));
+  --adp-issue-warning-bg: linear-gradient(90deg, rgba(245, 182, 84, 0.13), rgba(245, 182, 84, 0.02));
+  --adp-issue-danger-bg: linear-gradient(90deg, rgba(255, 143, 143, 0.15), rgba(255, 143, 143, 0.02));
+
+  --adp-menu-bg: linear-gradient(168deg, rgba(30, 36, 57, 0.98), rgba(23, 28, 45, 0.985));
+  --adp-menu-shadow:
+    inset 0 1px 0 rgba(224, 231, 255, 0.07),
+    0 24px 64px rgba(4, 7, 16, 0.52);
+  --adp-latency-border: color-mix(in srgb, var(--adp-acc-soft) 26%, transparent);
+  --adp-latency-bg: linear-gradient(120deg, rgb(var(--adp-theme-accent-rgb) / 0.16), rgb(var(--adp-theme-glow-rgb) / 0.1));
+  --adp-selection-bg: rgb(var(--adp-theme-accent-rgb) / 0.38);
+}
+
+.audio-drawer ::selection {
+  color: var(--adp-bright-text);
+  background: var(--adp-selection-bg);
+}
+
+/* ---------- Shell ---------- */
+
+.audio-drawer-scrim {
+  background: var(--adp-scrim);
+}
+
+.audio-settings-drawer,
+.audio-drawer[aria-label] {
+  border-left: 1px solid var(--adp-shell-border);
+  border-radius: 30px 0 0 30px;
+  background: var(--adp-shell-bg);
+  box-shadow: var(--adp-shell-shadow);
+}
+
+.audio-drawer::before {
+  border-radius: 30px 0 0 0;
+  background: var(--adp-fade-top);
+}
+
+.audio-drawer::after {
+  background: var(--adp-fade-bottom);
+}
+
+.audio-drawer.audio-settings-drawer {
+  transition:
+    opacity var(--echo-motion-drawer-ms) var(--echo-motion-ease-drawer),
+    transform var(--echo-motion-drawer-ms) var(--echo-motion-ease-drawer);
+}
+
+.audio-drawer-root[data-open="true"] .audio-drawer.audio-settings-drawer {
+  transition:
+    opacity var(--echo-motion-drawer-ms) var(--echo-motion-ease-drawer),
+    transform var(--echo-motion-drawer-ms) var(--echo-motion-ease-drawer);
+}
+
+.audio-drawer .audio-drawer-scroll {
+  gap: 18px;
+  padding: 26px 24px 24px;
+  overscroll-behavior: contain;
+  scrollbar-color: color-mix(in srgb, var(--adp-bright-text) 28%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.audio-drawer .audio-drawer-scroll::-webkit-scrollbar {
+  display: block;
+  width: 9px;
+  background: transparent;
+}
+
+.audio-drawer .audio-drawer-scroll::-webkit-scrollbar-track {
+  margin: 8px 0;
+  background: transparent;
+}
+
+.audio-drawer .audio-drawer-scroll::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--adp-bright-text) 18%, transparent);
+  background-clip: padding-box;
+}
+
+.audio-drawer .audio-drawer-scroll:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--adp-bright-text) 32%, transparent);
+  background-clip: padding-box;
+}
+
+.audio-drawer .audio-drawer-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--adp-bright-text) 50%, transparent);
+  background-clip: padding-box;
+}
+
+/* ---------- Header ---------- */
+
+.audio-drawer .audio-drawer-header h2 {
+  background: var(--adp-title-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-weight: 760;
+  letter-spacing: -0.012em;
+}
+
+.audio-drawer .audio-drawer-header > div > svg {
+  box-sizing: content-box;
+  flex: 0 0 auto;
+  padding: 9px;
+  color: var(--adp-accent-icon-bright);
+  border-radius: 13px;
+  background: var(--adp-header-icon-bg);
+  box-shadow: inset 0 0 0 1px var(--adp-accent-header-ring);
+}
+
+.audio-drawer .audio-drawer-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--adp-glass-bg);
+  box-shadow: inset 0 0 0 1px var(--adp-ring);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 140ms ease;
+}
+
+.audio-drawer .audio-drawer-close:active {
+  transform: scale(0.93);
+}
+
+.audio-drawer .audio-drawer-close:hover {
+  color: var(--adp-bright-text);
+  background: var(--adp-glass-bg-hover);
+  box-shadow: inset 0 0 0 1px var(--adp-ring-hover);
+}
+
+.audio-drawer .audio-drawer-close svg {
+  transition: transform var(--echo-motion-page-ms) var(--echo-motion-ease-standard);
+}
+
+.audio-drawer .audio-drawer-close:hover svg {
+  transform: rotate(90deg);
+}
+
+/* ---------- Smart search ---------- */
+
+.audio-drawer .drawer-smart-search__field {
+  min-height: 42px;
+  padding: 0 10px 0 15px;
+  border-color: var(--adp-hairline-strong);
+  border-radius: 999px;
+  background: var(--adp-well-bg);
+  box-shadow: var(--adp-inset-shadow);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.audio-drawer .drawer-smart-search__field:focus-within {
+  border-color: var(--adp-accent-border);
+  background: var(--adp-well-bg-focus);
+  box-shadow: var(--adp-focus-halo);
+}
+
+.audio-drawer .drawer-smart-search__field kbd {
+  padding: 3px 7px;
+  color: var(--adp-caption-text);
+  border: 0;
+  border-radius: 999px;
+  background: var(--adp-tint-bg);
+  font-weight: 640;
+  letter-spacing: 0.05em;
+}
+
+.audio-drawer .drawer-smart-search__clear,
+.audio-drawer .drawer-smart-search__steppers button {
+  border-radius: 999px;
+}
+
+.audio-drawer .drawer-smart-search__meta {
+  min-height: 0;
+  padding: 0 6px 0 2px;
+  background: transparent;
+}
+
+.audio-drawer .drawer-smart-search__results {
+  display: none;
+}
+
+/* ---------- Section titles ---------- */
+
+.audio-drawer .audio-drawer-section-title {
+  gap: 9px;
+}
+
+.audio-drawer .audio-drawer-section-title h3 {
+  color: var(--adp-heading-text);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.audio-drawer .audio-route-system-devices > .audio-drawer-section-title h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.audio-drawer .audio-route-system-devices > .audio-drawer-section-title h3::after {
+  flex: 1;
+  height: 1px;
+  background: var(--adp-title-rule);
+  content: "";
+}
+
+.audio-drawer .audio-drawer-section-title > svg {
+  color: var(--adp-accent-icon);
+}
+
+.audio-drawer .audio-device-section-meta > em {
+  color: var(--adp-count-text);
+  border-color: var(--adp-accent-border-soft);
+  background: var(--adp-accent-bg-faint);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.audio-drawer .audio-device-section-meta > button {
+  border-color: var(--adp-ring-soft);
+  border-radius: 999px;
+  background: var(--adp-glass-bg);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 200ms ease;
+}
+
+.audio-drawer .audio-device-section-meta > button:hover:not(:disabled) {
+  border-color: var(--adp-accent-border-strong);
+  background: var(--adp-accent-bg-mid);
+  transform: rotate(90deg);
+}
+
+.audio-drawer .audio-device-section-meta > button[aria-busy="true"] svg,
+.audio-drawer .audio-device-refresh-feedback[data-state="refreshing"] svg {
+  animation: adp-device-refresh-spin 800ms linear infinite;
+}
+
+.audio-drawer .audio-device-refresh-feedback {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 26px;
+  margin: 0 0 3px 26px;
+  padding: 5px 9px;
+  color: var(--adp-soft-text);
+  border: 1px solid var(--adp-hairline);
+  border-radius: 8px;
+  background: var(--adp-accent-bg-faint);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.audio-drawer .audio-device-refresh-feedback[data-state="success"] {
+  color: #bff1d5;
+  border-color: rgba(91, 214, 147, 0.22);
+  background: rgba(54, 184, 116, 0.08);
+}
+
+.audio-drawer .audio-device-refresh-feedback[data-state="error"] {
+  color: var(--adp-tone-danger-text);
+  border-color: var(--adp-danger-border);
+  background: var(--adp-danger-bg);
+}
+
+/* ---------- Device cards (detached, floating) ---------- */
+
+.audio-drawer .audio-route-system-devices,
+.audio-drawer .audio-route-asio-devices {
+  gap: 8px;
+}
+
+.audio-drawer .audio-route-asio-devices,
+.audio-drawer .audio-route-hqplayer {
+  margin-top: -10px;
+}
+
+.audio-drawer .audio-route-hqplayer > .audio-device-pill,
+.audio-drawer .audio-route-system-devices > .audio-device-pill,
+.audio-drawer .audio-route-asio-devices > .audio-device-pill {
+  grid-template-columns: 42px minmax(0, 1fr) auto 22px;
+  min-height: 70px;
+  padding: 12px 14px 12px 12px;
+  border: 1px solid var(--adp-hairline);
+  border-radius: 17px;
+  background: var(--adp-card-bg);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.audio-drawer .audio-route-system-devices > .audio-device-pill + .audio-device-pill,
+.audio-drawer .audio-route-asio-devices > .audio-device-pill + .audio-device-pill {
+  border-top: 1px solid var(--adp-hairline);
+}
+
+.audio-drawer .audio-route-hqplayer > .audio-device-pill,
+.audio-drawer .audio-route-system-devices > .audio-device-pill:first-of-type,
+.audio-drawer .audio-route-asio-devices > .audio-device-pill:last-of-type,
+.audio-drawer .audio-route-system-devices:not(:has(+ .audio-route-asio-devices)) > .audio-device-pill:last-of-type {
+  border-radius: 17px;
+}
+
+.audio-drawer .audio-route-hqplayer > .audio-device-pill:hover,
+.audio-drawer .audio-route-system-devices > .audio-device-pill:hover,
+.audio-drawer .audio-route-asio-devices > .audio-device-pill:hover {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-tint-bg-hover);
+  box-shadow: var(--adp-pill-hover-shadow);
+  transform: translateY(-1px);
+}
+
+.audio-drawer .audio-route-hqplayer > .audio-device-pill.active,
+.audio-drawer .audio-route-system-devices > .audio-device-pill.active,
+.audio-drawer .audio-route-asio-devices > .audio-device-pill.active {
+  border-color: var(--adp-accent-border);
+  background: var(--adp-active-pill-bg);
+  box-shadow: var(--adp-active-pill-shadow);
+}
+
+.audio-drawer .audio-route-hqplayer > .audio-device-pill:active:not(:disabled),
+.audio-drawer .audio-route-system-devices > .audio-device-pill:active:not(:disabled),
+.audio-drawer .audio-route-asio-devices > .audio-device-pill:active:not(:disabled) {
+  transform: translateY(0) scale(0.992);
+}
+
+.audio-drawer-root[data-open="true"] .audio-drawer :is(.audio-route-system-devices, .audio-route-asio-devices, .audio-route-hqplayer) > .audio-device-pill {
+  animation: adp-pill-in var(--echo-motion-page-ms) var(--echo-motion-ease-standard) both;
+}
+
+/* Icon tiles */
+.audio-drawer .audio-route-hqplayer .audio-device-pill > svg:first-child,
+.audio-drawer .audio-route-system-devices .audio-device-pill > svg:first-child,
+.audio-drawer .audio-route-asio-devices .audio-device-pill > svg:first-child {
+  width: 42px;
+  height: 42px;
+  padding: 11px;
+  color: var(--adp-soft-text);
+  border-radius: 13px;
+  background: var(--adp-tile-bg);
+  box-shadow: inset 0 0 0 1px var(--adp-ring-faint);
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.audio-drawer .audio-route-hqplayer .audio-device-pill.active > svg:first-child,
+.audio-drawer .audio-route-system-devices .audio-device-pill.active > svg:first-child,
+.audio-drawer .audio-route-asio-devices .audio-device-pill.active > svg:first-child {
+  color: var(--adp-accent-tile-text);
+  background: var(--adp-icon-tile-active-bg);
+  box-shadow: inset 0 0 0 1px var(--adp-accent-tile-ring-strong);
+}
+
+.audio-drawer .audio-route-hqplayer .audio-device-pill span > strong,
+.audio-drawer .audio-route-system-devices .audio-device-pill span > strong,
+.audio-drawer .audio-route-asio-devices .audio-device-pill span > strong {
+  font-weight: 670;
+  letter-spacing: -0.005em;
+}
+
+.audio-drawer .audio-route-hqplayer .audio-device-pill span > small,
+.audio-drawer .audio-route-system-devices .audio-device-pill span > small,
+.audio-drawer .audio-route-asio-devices .audio-device-pill span > small {
+  color: var(--adp-dim-text);
+  font-size: 11.5px;
+}
+
+/* Mode badges (SAFE / WASAPI / ASIO / KS ...) */
+.audio-drawer .audio-device-pill > em {
+  min-height: 22px;
+  padding: 0 8px;
+  color: var(--adp-badge-text);
+  border-color: var(--adp-ring-soft);
+  background: var(--adp-tint-bg);
+  font-size: 9.5px;
+  font-weight: 730;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.audio-drawer .audio-device-pill.active > em {
+  color: var(--adp-accent-text);
+  border-color: var(--adp-accent-border-strong);
+  background: var(--adp-accent-bg-badge);
+}
+
+/* Filled check chip on the active device */
+.audio-drawer .audio-device-pill.active > svg:last-child {
+  box-sizing: content-box;
+  padding: 3px;
+  color: var(--adp-bright-text);
+  border-radius: 999px;
+  background: var(--adp-check-chip-bg);
+  box-shadow: var(--adp-check-chip-shadow);
+}
+
+/* Bluetooth keeps its cyan identity, tuned to the new palette */
+.audio-drawer .audio-device-pill[data-connection-type="bluetooth"].active {
+  border-color: var(--adp-bt-border);
+  background: var(--adp-bt-bg);
+  box-shadow: var(--adp-bt-shadow);
+}
+
+/* ---------- Mode tabs (auto / shared / exclusive) ---------- */
+
+.audio-drawer .audio-route-mode-tabs {
+  gap: 4px;
+  margin-top: 8px;
+  padding: 4px;
+  border-color: var(--adp-hairline-strong);
+  border-radius: 999px;
+  background: var(--adp-well-bg-soft);
+  box-shadow: var(--adp-inset-shadow);
+}
+
+.audio-drawer .audio-route-mode-tabs button {
+  min-height: 38px;
+  border-radius: 999px;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 140ms ease;
+}
+
+.audio-drawer .audio-route-mode-tabs button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.audio-drawer .audio-route-mode-tabs button:hover:not(:disabled):not(.active) {
+  color: var(--adp-hover-text);
+  background: var(--adp-tile-bg);
+}
+
+.audio-drawer .audio-route-mode-tabs button.active {
+  color: var(--adp-bright-text);
+  background: var(--adp-tab-active-bg);
+  box-shadow: var(--adp-tab-active-shadow);
+}
+
+/* ---------- Signal chain / engine meter ---------- */
+
+.audio-drawer .audio-route-signal-chain {
+  padding: 13px 14px;
+  border-color: var(--adp-hairline-strong);
+  border-radius: 17px;
+  background: var(--adp-card-bg-soft);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.audio-drawer .audio-route-signal-chain:hover {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-card-bg-raised);
+}
+
+.audio-drawer .audio-route-signal-chain .audio-engine-meter__icon {
+  color: var(--adp-accent-icon-soft);
+  background: var(--adp-meter-icon-bg);
+  box-shadow: inset 0 0 0 1px var(--adp-accent-tile-ring);
+}
+
+.audio-drawer .audio-route-signal-chain .audio-engine-meter__refresh {
+  border-color: var(--adp-ring-soft);
+  border-radius: 999px;
+  background: var(--adp-glass-bg);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 200ms ease;
+}
+
+.audio-drawer .audio-route-signal-chain .audio-engine-meter__refresh:hover:not(:disabled) {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-accent-bg-soft);
+  transform: rotate(90deg);
+}
+
+.audio-drawer .audio-route-signal-chain .audio-engine-meter__top span:not(.audio-engine-meter__icon) {
+  font-weight: 660;
+  letter-spacing: -0.005em;
+}
+
+.audio-drawer .audio-route-signal-chain .audio-engine-meter__top strong {
+  color: var(--adp-body-text);
+  font-size: 11.5px;
+  font-weight: 480;
+}
+
+/* Expanded chain: three stats divided by hairlines instead of boxed cells */
+.audio-drawer .audio-engine-meter__grid {
+  gap: 0;
+  padding: 4px 0 2px;
+}
+
+.audio-drawer .audio-engine-meter__grid span {
+  gap: 5px;
+  padding: 2px 12px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.audio-drawer .audio-engine-meter__grid span:first-child {
+  padding-left: 2px;
+}
+
+.audio-drawer .audio-engine-meter__grid span + span {
+  border-left: 1px solid var(--adp-hairline-faint);
+}
+
+.audio-drawer .audio-engine-meter__grid em {
+  color: var(--adp-caption-text);
+  font-size: 9px;
+  font-weight: 560;
+  letter-spacing: 0.09em;
+}
+
+.audio-drawer .audio-engine-meter__grid strong {
+  color: var(--adp-soft-text);
+  font-size: 12px;
+  font-weight: 580;
+}
+
+/* Expanded chain details: boxed cells become key-value rows */
+.audio-drawer .audio-engine-meter__details {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.audio-drawer .audio-engine-meter__details span {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 32px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.audio-drawer .audio-engine-meter__details span:not(:last-child) {
+  border-bottom: 1px solid var(--adp-hairline-faint);
+}
+
+.audio-drawer .audio-engine-meter__details em {
+  color: var(--adp-caption-text);
+  font-size: 11px;
+  font-weight: 480;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.audio-drawer .audio-engine-meter__details strong {
+  color: var(--adp-soft-text);
+  font-size: 11.5px;
+  font-weight: 560;
+  text-align: right;
+}
+
+/* Chain badges: filled pills become dot chips */
+.audio-drawer .audio-engine-meter__badges {
+  gap: 5px 14px;
+  padding: 0 2px;
+}
+
+.audio-drawer .audio-engine-meter__badges em {
+  display: inline-flex;
+  max-width: none;
+  min-height: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 10.5px;
+  font-weight: 620;
+  letter-spacing: 0.02em;
+}
+
+.audio-drawer .audio-engine-meter__badges em::before {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--adp-tone-neutral);
+  content: "";
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="ready"] {
+  color: var(--adp-tone-good-text);
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="ready"]::before {
+  background: var(--adp-tone-good);
+  box-shadow: 0 0 6px var(--adp-tone-good);
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="warning"] {
+  color: var(--adp-tone-warning-text);
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="warning"]::before {
+  background: var(--adp-tone-warning);
+  box-shadow: 0 0 6px var(--adp-tone-warning);
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="gold"] {
+  color: var(--adp-tone-gold-text);
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="gold"]::before {
+  background: var(--adp-tone-gold);
+  box-shadow: 0 0 7px var(--adp-tone-gold);
+}
+
+.audio-drawer .audio-engine-meter__badges em[data-tone="neutral"] {
+  color: var(--adp-badge-text);
+}
+
+.audio-drawer .audio-engine-meter__hint {
+  margin-top: 2px;
+  padding: 10px 2px 0;
+  border-top: 1px solid var(--adp-hairline-faint);
+  color: var(--adp-caption-text);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ---------- Quick controls card ---------- */
+
+.audio-drawer .audio-route-quick-controls {
+  border-color: var(--adp-hairline);
+  border-radius: 17px;
+  background: var(--adp-card-bg-faint);
+}
+
+.audio-drawer .audio-route-quick-controls .audio-toggle-row {
+  min-height: 56px;
+  padding: 0 16px;
+  transition: background-color 160ms ease;
+}
+
+.audio-drawer .audio-route-quick-controls .audio-toggle-row:hover {
+  background: var(--adp-tint-bg-faint);
+}
+
+.audio-drawer .audio-route-quick-controls .audio-toggle-row + .audio-section-note + .audio-toggle-row {
+  border-top: 1px solid var(--adp-hairline-faint);
+}
+
+.audio-drawer .audio-toggle-row > span > svg {
+  flex: 0 0 auto;
+  color: var(--adp-label-text);
+}
+
+/* ---------- Toggle switches ---------- */
+
+.audio-drawer .audio-toggle-row input {
+  width: 46px;
+  height: 26px;
+  background: var(--adp-switch-off-bg);
+  box-shadow: var(--adp-switch-off-shadow);
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.audio-drawer .audio-toggle-row input::before {
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  box-shadow: var(--adp-knob-shadow);
+  transition:
+    transform 220ms cubic-bezier(0.3, 1.25, 0.4, 1),
+    width 180ms cubic-bezier(0.3, 1.25, 0.4, 1);
+}
+
+.audio-drawer .audio-toggle-row input:checked {
+  background: var(--adp-switch-on-bg);
+  box-shadow: var(--adp-switch-on-shadow);
+}
+
+.audio-drawer .audio-toggle-row input:checked::before {
+  transform: translateX(20px);
+}
+
+/* Knob stretches under the finger, iOS style */
+.audio-drawer .audio-toggle-row input:active:not(:disabled)::before {
+  width: 24px;
+}
+
+.audio-drawer .audio-toggle-row input:checked:active:not(:disabled)::before {
+  transform: translateX(16px);
+}
+
+/* ---------- Collapsible buttons & secondary actions ---------- */
+
+.audio-drawer .audio-drawer-options-toggle,
+.audio-drawer .audio-buffer-collapse-button {
+  border-color: var(--adp-hairline);
+  border-radius: 15px;
+  background: var(--adp-card-bg-soft);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.audio-drawer .audio-drawer-options-toggle:hover,
+.audio-drawer .audio-buffer-collapse-button:hover {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-tint-bg);
+}
+
+/* Advanced options: no wrapper box on open, so the toggle never jumps;
+   the open state is signalled on the toggle card itself. */
+.audio-drawer .audio-drawer-options--open {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.audio-drawer .audio-drawer-options--open .audio-drawer-options-toggle {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-tint-bg);
+}
+
+.audio-drawer .audio-drawer-options > p {
+  padding: 0 2px;
+  font-size: 11.5px;
+  color: var(--adp-caption-text);
+}
+
+/* Conditionally-mounted bodies ease in instead of popping */
+.audio-drawer .audio-drawer-options-body,
+.audio-drawer .audio-buffer-collapse-body {
+  animation: adp-collapse-in var(--echo-motion-panel-ms) var(--echo-motion-ease-standard) both;
+}
+
+.audio-drawer .audio-advanced-group {
+  border-top-color: var(--adp-hairline-soft);
+}
+
+/* Group headers: accent icons, quiet chevrons, gentle hover */
+.audio-drawer .audio-advanced-group__toggle {
+  border-radius: 12px;
+  transition: background-color 160ms ease;
+}
+
+.audio-drawer .audio-advanced-group__toggle:hover {
+  background: var(--adp-tint-bg-faint);
+}
+
+.audio-drawer .audio-advanced-group__toggle > span > svg {
+  color: var(--adp-accent-icon);
+}
+
+.audio-drawer .audio-advanced-group__toggle > svg:last-child {
+  color: var(--adp-caption-text);
+}
+
+.audio-drawer .audio-advanced-group__toggle small {
+  color: var(--adp-caption-text);
+}
+
+.audio-drawer .audio-advanced-group--open > .audio-advanced-group__toggle strong {
+  color: var(--adp-bright-text);
+}
+
+.audio-drawer .audio-drawer-options-toggle > svg:last-child,
+.audio-drawer .audio-buffer-collapse-button > svg:last-child {
+  color: var(--adp-caption-text);
+}
+
+/* Group fold: real height animation via grid rows (base used height 0 -> auto,
+   which cannot transition and snapped open/closed). */
+.audio-drawer .audio-advanced-group__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  height: auto;
+  overflow: hidden;
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.22, 0.68, 0.16, 1),
+    opacity 200ms ease,
+    transform 320ms cubic-bezier(0.22, 0.68, 0.16, 1),
+    visibility 0s linear 320ms;
+}
+
+.audio-drawer .audio-advanced-group--open .audio-advanced-group__content {
+  grid-template-rows: 1fr;
+  height: auto;
+  overflow: hidden;
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.22, 0.68, 0.16, 1),
+    opacity 220ms ease 60ms,
+    transform 320ms cubic-bezier(0.22, 0.68, 0.16, 1),
+    visibility 0s;
+}
+
+.audio-drawer .audio-advanced-group__body {
+  min-height: 0;
+}
+
+.audio-drawer .audio-advanced-group--open .audio-advanced-group__body {
+  animation: none;
+}
+
+.audio-drawer .audio-diagnostics-copy-button {
+  border-color: var(--adp-hairline);
+  border-radius: 11px;
+  background: var(--adp-card-bg-soft);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.audio-drawer .audio-diagnostics-copy-button:hover:not(:disabled) {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-tint-bg-hover);
+}
+
+.audio-drawer .audio-diagnostics-copy-button--danger {
+  border-color: var(--adp-danger-border);
+  background: var(--adp-danger-bg);
+}
+
+.audio-drawer .audio-diagnostics-copy-button--danger:hover:not(:disabled) {
+  border-color: var(--adp-danger-border-hover);
+  background: var(--adp-danger-bg-hover);
+}
+
+.audio-drawer .audio-hidden-devices {
+  border-color: var(--adp-hairline-soft);
+  border-radius: 17px;
+  background: var(--adp-card-bg);
+}
+
+/* ---------- Calmer typography for body copy ---------- */
+
+.audio-drawer .audio-drawer-troubleshooting > p,
+.audio-drawer .audio-drawer-reset-section > p {
+  color: var(--adp-body-text);
+  font-weight: 460;
+  line-height: 1.55;
+}
+
+.audio-drawer .audio-drawer-empty {
+  color: var(--adp-body-text);
+  font-weight: 480;
+}
+
+.audio-drawer .audio-drawer-troubleshooting__message,
+.audio-drawer .audio-drawer-reset-section__message {
+  color: var(--adp-mint-text) !important;
+  font-weight: 520;
+}
+
+.audio-drawer .audio-drawer-error {
+  padding: 11px 13px;
+  color: var(--adp-danger-text);
+  border-color: var(--adp-danger-border);
+  border-radius: 12px;
+  background: var(--adp-danger-bg);
+  font-weight: 540;
+  line-height: 1.5;
+}
+
+/* ---------- Shared-backend mini cards & section control rows ---------- */
+
+.audio-drawer .audio-drawer-mini-grid > .audio-device-pill {
+  min-height: 56px;
+  border-color: var(--adp-hairline);
+  border-radius: 14px;
+  background: var(--adp-card-bg-soft);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.audio-drawer .audio-drawer-mini-grid > .audio-device-pill > svg:first-child {
+  color: var(--adp-label-text);
+}
+
+.audio-drawer .audio-drawer-mini-grid > .audio-device-pill:hover {
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-tint-bg-hover);
+  transform: none;
+}
+
+.audio-drawer .audio-drawer-mini-grid > .audio-device-pill.active {
+  border-color: var(--adp-accent-border);
+  background: var(--adp-active-pill-bg);
+  box-shadow: inset 0 1px 0 var(--adp-accent-tile-ring);
+}
+
+.audio-drawer .audio-toggle-row--section-control {
+  border-color: var(--adp-hairline);
+  border-radius: 14px;
+  background: var(--adp-card-bg-faint);
+}
+
+/* ---------- Buffer profile buttons ---------- */
+
+.audio-drawer .audio-buffer-options button {
+  min-height: 56px;
+  color: var(--adp-badge-text);
+  border: 1px solid var(--adp-hairline);
+  border-radius: 14px;
+  background: var(--adp-card-bg-soft);
+  font-size: 12px;
+  font-weight: 660;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.audio-drawer .audio-buffer-options button span {
+  color: var(--adp-caption-text);
+  font-size: 10.5px;
+  font-weight: 560;
+}
+
+.audio-drawer .audio-buffer-options button:hover:not(.active) {
+  color: var(--adp-hover-text);
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-tint-bg-hover);
+}
+
+.audio-drawer .audio-buffer-options button.active {
+  color: var(--adp-bright-text);
+  border-color: var(--adp-accent-border);
+  background: var(--adp-tab-active-bg);
+  box-shadow: var(--adp-tab-active-shadow);
+}
+
+.audio-drawer .audio-buffer-options button.active span {
+  color: var(--adp-on-accent-caption);
+}
+
+.audio-drawer .audio-recommended-latency {
+  border-color: var(--adp-latency-border);
+  border-radius: 14px;
+  background: var(--adp-latency-bg);
+}
+
+.audio-drawer .audio-recommended-latency strong {
+  color: var(--adp-bright-text);
+}
+
+.audio-drawer .audio-recommended-latency span {
+  color: var(--adp-caption-text);
+}
+
+.audio-drawer .audio-recommended-latency p {
+  color: var(--adp-body-text);
+}
+
+/* ---------- Advanced TODO note (was a dashed box) ---------- */
+
+.audio-drawer .audio-advanced-todo {
+  padding: 11px 13px;
+  border: 1px solid var(--adp-hairline);
+  border-radius: 14px;
+  background: var(--adp-card-bg-faint);
+}
+
+.audio-drawer .audio-advanced-todo strong {
+  color: var(--adp-heading-text);
+  font-size: 12px;
+  font-weight: 660;
+}
+
+.audio-drawer .audio-advanced-todo span {
+  color: var(--adp-body-text);
+  font-weight: 440;
+}
+
+/* ---------- ASIO identity (subtle amber, matching the new language) ---------- */
+
+.audio-drawer .audio-device-pill--asio > em {
+  color: var(--adp-amber-text);
+  border-color: var(--adp-amber-border);
+  background: var(--adp-amber-bg);
+}
+
+.audio-drawer .audio-asio-device-actions button {
+  color: var(--adp-amber-text);
+  border-color: var(--adp-amber-border);
+  border-radius: 10px;
+  background: var(--adp-amber-bg);
+  font-weight: 620;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.audio-drawer .audio-asio-device-actions button:hover:not(:disabled) {
+  border-color: var(--adp-amber-border-strong);
+  background: var(--adp-amber-bg-strong);
+}
+
+.audio-drawer .audio-asio-route {
+  color: var(--adp-body-text);
+  border-color: var(--adp-hairline);
+  border-radius: 10px;
+  background: var(--adp-card-bg-soft);
+  font-weight: 540;
+}
+
+.audio-drawer .audio-asio-route.active {
+  color: var(--adp-bright-text);
+  border-color: var(--adp-amber-border-strong);
+  background: var(--adp-amber-bg-strong);
+}
+
+/* ---------- Hidden devices ---------- */
+
+.audio-drawer .audio-hidden-devices summary {
+  font-weight: 640;
+  transition: color 160ms ease;
+}
+
+.audio-drawer .audio-hidden-devices summary:hover {
+  color: var(--adp-hover-text);
+}
+
+.audio-drawer .audio-hidden-devices summary em {
+  color: var(--adp-count-text);
+  background: var(--adp-accent-bg-faint);
+  font-weight: 680;
+}
+
+.audio-drawer .audio-hidden-device strong {
+  color: var(--adp-soft-text);
+  font-weight: 620;
+}
+
+.audio-drawer .audio-hidden-device small {
+  color: var(--adp-dim-text);
+  font-weight: 460;
+}
+
+.audio-drawer .audio-hidden-device button {
+  color: var(--adp-badge-text);
+  border-color: var(--adp-ring-soft);
+  background: var(--adp-tint-bg);
+  font-weight: 640;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.audio-drawer .audio-hidden-device button:hover {
+  color: var(--adp-bright-text);
+  border-color: var(--adp-accent-border-mid);
+  background: var(--adp-accent-bg-soft);
+}
+
+/* ---------- Device context menu ---------- */
+
+.audio-drawer-root .audio-device-context-menu {
+  padding: 5px;
+  border: 1px solid var(--adp-hairline-strong);
+  border-radius: 14px;
+  background: var(--adp-menu-bg);
+  box-shadow: var(--adp-menu-shadow);
+  backdrop-filter: blur(12px);
+}
+
+.audio-drawer-root .audio-device-context-menu button {
+  min-height: 36px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background-color 140ms ease;
+}
+
+.audio-drawer-root .audio-device-context-menu button:hover {
+  background: var(--adp-accent-bg-soft);
+}
+
+/* ---------- Professional status panel (bottom) ----------
+   The outer card is the only box; badges become dot chips, the signal path
+   becomes a vertical timeline, details become key-value rows. */
+
+.audio-drawer .audio-professional-status--drawer {
+  gap: 12px;
+  padding: 15px 16px 14px;
+  border-color: var(--adp-hairline-strong);
+  border-radius: 17px;
+  background: var(--adp-card-bg-soft);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__icon {
+  color: var(--adp-accent-icon-soft);
+  border: 0;
+  border-radius: 12px;
+  background: var(--adp-meter-icon-bg);
+  box-shadow: inset 0 0 0 1px var(--adp-accent-tile-ring);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__header h3 {
+  font-weight: 680;
+  letter-spacing: -0.005em;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__header p {
+  color: var(--adp-body-text);
+  font-size: 11.5px;
+}
+
+/* Badges: filled pills become quiet dot chips */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges {
+  gap: 5px 14px;
+  padding: 0 2px;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 620;
+  letter-spacing: 0.02em;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+  content: "";
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="good"] {
+  color: var(--adp-tone-good-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="good"]::before {
+  background: var(--adp-tone-good);
+  box-shadow: 0 0 6px var(--adp-tone-good);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="warning"] {
+  color: var(--adp-tone-warning-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="warning"]::before {
+  background: var(--adp-tone-warning);
+  box-shadow: 0 0 6px var(--adp-tone-warning);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="danger"] {
+  color: var(--adp-tone-danger-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="danger"]::before {
+  background: var(--adp-tone-danger);
+  box-shadow: 0 0 6px var(--adp-tone-danger);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="neutral"] {
+  color: var(--adp-badge-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__badges em[data-tone="neutral"]::before {
+  background: var(--adp-tone-neutral);
+  box-shadow: none;
+}
+
+/* Signal path: boxed 4-column strip becomes a vertical timeline */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal {
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding: 2px 2px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px minmax(56px, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: 0 10px;
+  min-height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+/* Timeline dot (replaces the numbered circles and arrows) */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span::before {
+  position: static;
+  display: block;
+  width: 8px;
+  height: 8px;
+  justify-self: center;
+  border: 0;
+  border-radius: 999px;
+  background: var(--adp-tone-neutral);
+  content: "";
+  transform: none;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span[data-tone="good"]::before {
+  background: var(--adp-tone-good);
+  box-shadow: 0 0 7px var(--adp-tone-good);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span[data-tone="warning"]::before {
+  background: var(--adp-tone-warning);
+  box-shadow: 0 0 7px var(--adp-tone-warning);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span[data-tone="danger"]::before {
+  background: var(--adp-tone-danger);
+  box-shadow: 0 0 7px var(--adp-tone-danger);
+}
+
+/* Hairline connector between dots */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span::after {
+  display: none;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span:not(:last-child)::after {
+  position: absolute;
+  top: calc(50% + 8px);
+  right: auto;
+  left: 7.5px;
+  z-index: 0;
+  display: block;
+  width: 1px;
+  height: calc(100% - 16px);
+  border: 0;
+  background: var(--adp-signal-connector);
+  content: "";
+  transform: none;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal em {
+  color: var(--adp-caption-text);
+  font-size: 9px;
+  letter-spacing: 0.09em;
+}
+
+/* Kill the counter chip that base styles render inside the eyebrow */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal em::before {
+  content: none;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal strong {
+  color: var(--adp-soft-text);
+  font-size: 11.5px;
+  font-weight: 560;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__signal span[data-tone="danger"] strong {
+  color: var(--adp-tone-danger-text);
+}
+
+/* Issue note: full box becomes a left accent bar strip */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__issue {
+  gap: 3px;
+  padding: 8px 12px;
+  border: 0;
+  border-left: 2px solid var(--adp-tone-warning);
+  border-radius: 0 10px 10px 0;
+  color: var(--adp-tone-warning-text);
+  background: var(--adp-issue-warning-bg);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__issue[data-tone="danger"] {
+  border-left-color: var(--adp-tone-danger);
+  color: var(--adp-tone-danger-text);
+  background: var(--adp-issue-danger-bg);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__issue strong {
+  letter-spacing: 0.07em;
+  opacity: 0.82;
+}
+
+/* Detail sections: boxed grids become key-value rows */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__sections {
+  gap: 14px;
+  padding-top: 2px;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__section h4 {
+  color: var(--adp-caption-text);
+  font-size: 11px;
+  font-weight: 660;
+  letter-spacing: 0.06em;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__section h4 svg {
+  color: var(--adp-accent-icon);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid span {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 32px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid span:not(:last-child) {
+  border-bottom: 1px solid var(--adp-hairline-faint);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid em {
+  color: var(--adp-caption-text);
+  font-size: 11px;
+  font-weight: 480;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid strong {
+  color: var(--adp-soft-text);
+  font-size: 11.5px;
+  font-weight: 560;
+  text-align: right;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid span[data-tone="good"] strong {
+  color: var(--adp-tone-good-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid span[data-tone="warning"] strong {
+  color: var(--adp-tone-warning-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid span[data-tone="danger"] strong {
+  color: var(--adp-tone-danger-text);
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__grid span[data-tone="muted"] strong {
+  color: var(--adp-dim-text);
+}
+
+/* Details toggle: ghost accent button */
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__toggle {
+  min-height: 32px;
+  padding: 0 12px;
+  color: var(--adp-accent-text);
+  border: 0;
+  border-radius: 9px;
+  background: var(--adp-accent-bg-faint);
+  font-size: 11.5px;
+  font-weight: 620;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.audio-drawer .audio-professional-status--drawer .audio-professional-status__toggle:hover {
+  color: var(--adp-bright-text);
+  background: var(--adp-accent-bg-mid);
+}
+
+/* ---------- Numeric alignment ---------- */
+
+.audio-drawer .audio-engine-meter__grid strong,
+.audio-drawer .audio-engine-meter__details strong,
+.audio-drawer .audio-professional-status__grid strong,
+.audio-drawer .audio-professional-status__signal strong,
+.audio-drawer .audio-device-section-meta > em,
+.audio-drawer .audio-hidden-devices summary em,
+.audio-drawer .audio-recommended-latency strong {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Search highlight & focus ring ---------- */
+
+.audio-drawer [data-drawer-search-match="true"] {
+  border-color: var(--adp-match-border);
+  box-shadow: var(--adp-match-shadow);
+}
+
+.audio-drawer [data-drawer-search-active="true"] {
+  border-color: var(--adp-match-active-border);
+  box-shadow: var(--adp-match-active-shadow);
+  scroll-margin-top: 12px;
+}
+
+.audio-drawer :is(button, input, summary):focus-visible {
+  outline: 2px solid var(--adp-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-drawer.audio-settings-drawer,
+  .audio-drawer-root[data-open="true"] .audio-drawer.audio-settings-drawer,
+  .audio-drawer-scrim,
+  .audio-drawer .audio-drawer-close svg,
+  .audio-drawer .audio-device-section-meta > button,
+  .audio-drawer .audio-route-signal-chain .audio-engine-meter__refresh,
+  .audio-drawer .audio-toggle-row input,
+  .audio-drawer .audio-toggle-row input::before {
+    transition-duration: 1ms;
+  }
+
+  .audio-drawer-root[data-open="true"] .audio-drawer :is(.audio-route-system-devices, .audio-route-asio-devices, .audio-route-hqplayer) > .audio-device-pill {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .audio-drawer .audio-advanced-group__content,
+  .audio-drawer .audio-advanced-group--open .audio-advanced-group__content {
+    transition-duration: 1ms;
+    transition-delay: 0ms;
+  }
+
+  .audio-drawer .audio-drawer-options-body,
+  .audio-drawer .audio-buffer-collapse-body {
+    animation-duration: 1ms;
+  }
+
+  .audio-drawer .audio-drawer-close,
+  .audio-drawer .audio-route-mode-tabs button,
+  .audio-drawer .audio-advanced-group__toggle,
+  .audio-drawer .drawer-smart-search__result {
+    transition-duration: 1ms;
+  }
+}
+
+}
+
+@keyframes adp-pill-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes adp-collapse-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes adp-device-refresh-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

@@ -1,0 +1,46 @@
+/*
+ * Lyrics is already a standalone surface. Keep the leftover sidebar mounted
+ * for restore, but hide it immediately — do not slide the rail away.
+ */
+
+.app-shell.app-shell--lyrics .sidebar {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/*
+ * The sidebar remains mounted on Lyrics. When returning, reveal the existing
+ * tree in one frame so layout and child transitions do not resemble a reload.
+ */
+.app-shell[data-lyrics-sidebar-restoring="true"],
+.app-shell[data-lyrics-sidebar-restoring="true"] .app-titlebar,
+.app-shell[data-lyrics-sidebar-restoring="true"] .sidebar {
+  transition: none !important;
+}
+
+.app-shell[data-lyrics-sidebar-restoring="true"] .sidebar *,
+.app-shell[data-lyrics-sidebar-restoring="true"] .sidebar *::before,
+.app-shell[data-lyrics-sidebar-restoring="true"] .sidebar *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+.app-shell--lyrics .page-surface.page-surface--standalone:not([hidden]) {
+  animation: lyrics-route-surface-in var(--echo-motion-page-ms) var(--echo-motion-ease-standard) both;
+}
+
+@keyframes lyrics-route-surface-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell--lyrics .page-surface.page-surface--standalone:not([hidden]) {
+    animation: none;
+  }
+}

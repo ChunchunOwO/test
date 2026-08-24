@@ -1,0 +1,181 @@
+/*
+ * Home polish overlay — layered on top of home.css.
+ * Direction: lighter visual weight, restrained radius, cheap paint.
+ * - Radius: one step down; pills become rounded rects.
+ * - Shadows/glows: smaller, fewer, no live blur.
+ * - No page-wide entrance motion; no extra layers per cover.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Radius scale: 16 / 11 / 11 instead of 22 / 15 / pill
+ * ------------------------------------------------------------------------ */
+
+.home-page {
+  --home-radius-shell: 16px;
+  --home-radius-card: 11px;
+  --home-radius-control: 11px;
+}
+
+.home-segmented-control {
+  border-radius: 12px;
+}
+
+.home-segmented-control button {
+  border-radius: 9px;
+}
+
+.home-signal-label {
+  border-radius: 10px;
+}
+
+.home-shelf-arrow {
+  border-radius: 10px;
+}
+
+.home-metric-icon {
+  border-radius: 11px;
+}
+
+.home-artist-rank-chip {
+  border-radius: 8px;
+}
+
+.home-favorite-album-card .home-artwork {
+  border-radius: 9px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Lighter shadows: smaller offsets, lower alpha, no accent glow spread
+ * ------------------------------------------------------------------------ */
+
+.home-page {
+  --home-shadow-shell:
+    0 1px 1px rgb(var(--home-shadow-color) / 0.03),
+    0 8px 18px -14px rgb(var(--home-shadow-color) / 0.12);
+  --home-shadow-lift:
+    0 1px 2px rgb(var(--home-shadow-color) / 0.04),
+    0 10px 20px -14px rgb(var(--home-shadow-color) / 0.12);
+  --home-shadow-cover:
+    0 1px 2px rgb(var(--home-shadow-color) / 0.05),
+    0 8px 16px -10px rgb(var(--home-shadow-color) / 0.16);
+  --home-shadow-cover-hover:
+    0 2px 4px rgb(var(--home-shadow-color) / 0.06),
+    0 12px 20px -10px rgb(var(--home-shadow-color) / 0.2);
+  --home-primary-action-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 22%, transparent),
+    0 1px 2px color-mix(in srgb, var(--theme-accent-solid-bg) 22%, transparent);
+  --home-primary-action-shadow-hover:
+    inset 0 1px 0 color-mix(in srgb, var(--theme-on-accent) 26%, transparent),
+    0 2px 6px color-mix(in srgb, var(--theme-accent-solid-bg) 28%, transparent);
+}
+
+html[data-theme="dark"] .home-page {
+  --home-shadow-shell:
+    0 1px 2px rgb(0 0 0 / 0.24),
+    0 8px 18px -14px rgb(0 0 0 / 0.34);
+  --home-shadow-lift:
+    0 1px 3px rgb(0 0 0 / 0.26),
+    0 10px 20px -12px rgb(0 0 0 / 0.32);
+  --home-shadow-cover:
+    0 1px 3px rgb(0 0 0 / 0.28),
+    0 8px 16px -8px rgb(0 0 0 / 0.36);
+  --home-shadow-cover-hover:
+    0 2px 4px rgb(0 0 0 / 0.3),
+    0 12px 20px -9px rgb(0 0 0 / 0.4);
+}
+
+/* ---------------------------------------------------------------------------
+ * Drop expensive live paint: blur, backdrop-filter, glow, hover filters
+ * ------------------------------------------------------------------------ */
+
+.home-hero::before,
+.home-hero::after,
+.home-signal-visualizer::after {
+  content: none;
+  filter: none;
+}
+
+.home-signal-label,
+.home-secondary-action,
+.home-section-header button,
+.home-now-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.home-primary-action:not(:disabled):hover,
+.home-primary-action:not(:disabled):active {
+  filter: none;
+}
+
+.home-section-header h2::before,
+.home-signal-label,
+.home-signal-bars i,
+.home-artist-rank-meter i,
+.home-week-cell[data-level="4"],
+.home-week-legend i[data-level="4"] {
+  box-shadow: none;
+}
+
+.home-now-card .home-artwork,
+.home-cover-card .home-artwork,
+.home-favorite-album-card .home-artwork {
+  box-shadow:
+    var(--home-shadow-cover),
+    inset 0 0 0 1px color-mix(in srgb, var(--theme-heading-text) 9%, transparent);
+}
+
+.home-cover-card:hover .home-artwork,
+.home-cover-card:focus-visible .home-artwork {
+  box-shadow:
+    var(--home-shadow-cover-hover),
+    inset 0 0 0 1px color-mix(in srgb, var(--theme-heading-text) 9%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Isolation without clipping hover lift; skip paint below the fold
+ * ------------------------------------------------------------------------ */
+
+.home-hero,
+.home-panel,
+.home-metric-tile {
+  contain: layout style;
+}
+
+.home-recommend-panel,
+.home-stats-grid {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
+
+.home-artwork img {
+  contain: paint;
+}
+
+.home-status-line {
+  justify-self: center;
+  padding-bottom: 4px;
+  opacity: 0.85;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * Low-spec / reduced motion: keep remaining home.css loops off
+ * ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-now-copy > span::before,
+  .home-signal-visualizer .home-signal-bars i,
+  .home-rail-transition,
+  .home-skeleton-block::after {
+    animation: none;
+  }
+}
+
+.app-shell[data-low-spec-mode="true"] .home-now-card,
+.app-shell[data-low-spec-mode="true"] .home-signal-label,
+.app-shell[data-low-spec-mode="true"] .home-secondary-action,
+.app-shell[data-low-spec-mode="true"] .home-section-header button {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

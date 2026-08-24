@@ -1,0 +1,43 @@
+name: macOS foundation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  macos-arm64-foundation:
+    name: macOS arm64 compile and dev app foundation
+    runs-on: macos-15
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install macOS build dependencies
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: brew bundle --file=build-resources/macos/Brewfile.dev
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Verify macOS platform contracts
+        run: npx vitest run src/shared/utils/audioPlatformCapabilities.test.ts src/main/audio/FfmpegToolchain.platform.test.ts src/main/app/localFilePathIdentity.test.ts src/main/app/macosOpenFile.test.ts src/main/app/macosApplicationMenu.test.ts scripts/doctor-macos.test.mjs scripts/macos-development-tools.test.mjs scripts/macos-packaging-contract.test.mjs scripts/macos-signing-contract.test.mjs scripts/verify-macos-dev-app.test.mjs --pool=forks --maxWorkers=1
+
+      - name: Run native Audio Host tests
+        env:
+          ECHO_ENABLE_ASIO: "OFF"
+          ECHO_ENABLE_CUDA_DSP: "OFF"
+        run: npm run test:audio-engine
+
+      - name: Build and audit unsigned macOS development app
+        run: npm run build:mac:dev-app
+
+      - name: Smoke native macOS runtime without requiring CI audio hardware
+        run: npm run smoke:mac:native -- --allow-no-device

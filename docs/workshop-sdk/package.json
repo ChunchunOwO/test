@@ -1,0 +1,40 @@
+{
+  "name": "@echo/workshop-sdk",
+  "version": "1.1.0",
+  "description": "Types, schemas and zero-dependency tooling for ECHO Steam Workshop extensions.",
+  "type": "module",
+  "private": true,
+  "license": "SEE LICENSE IN README.md",
+  "types": "./echo-workshop-plugin.d.ts",
+  "bin": {
+    "echo-workshop-sdk": "./bin/echo-workshop-sdk.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./echo-workshop-plugin.d.ts",
+      "default": "./echo-workshop-sdk.json"
+    },
+    "./descriptor": "./echo-workshop-sdk.json",
+    "./schemas/manifest": "./schemas/echo.workshop.schema.json",
+    "./schemas/plugin-package": "./schemas/plugin-package.schema.json"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "schemas",
+    "templates",
+    "examples",
+    "CHANGELOG.md",
+    "MIGRATING.md",
+    "README.md",
+    "echo-workshop-plugin.d.ts",
+    "echo-workshop-sdk.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node ./bin/echo-workshop-sdk.mjs doctor",
+    "example": "node ./bin/echo-workshop-sdk.mjs init ./example-plugin --id echo.example-plugin --title \"Example Plugin\" --holder \"Workshop Author\""
+  }
+}

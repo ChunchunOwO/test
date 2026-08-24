@@ -1,0 +1,191 @@
+# Dependencies and tool caches
+node_modules/
+.cache/
+.npm/
+.vite/
+.vitest/
+.turbo/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+
+# JavaScript/Electron build and test outputs
+out/
+dist/
+result
+coverage/
+.nyc_output/
+.electron-cache/
+/test-results/
+/playwright-report/
+/blob-report/
+/junit.xml
+
+# Logs, process state, crash dumps, and OS/editor noise
+*.log
+*.pid
+*.pid.lock
+*.dmp
+*.stackdump
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.vs/
+*.swp
+*~
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+/run-logs/
+
+# Root scratch workspace. New disposable work belongs under /misc/. Keep only
+# narrowly named legacy diagnostics and one-file benchmarks trackable here.
+/tmp/**
+!/tmp/bench-*.mjs
+!/tmp/bench-*.ts
+!/tmp/compare-*.mjs
+!/tmp/dump-*.mjs
+!/tmp/list-*.mjs
+!/tmp/scan-*.mjs
+!/tmp/smoke-*.mjs
+!/tmp/verify-*.mjs
+
+# Generated visual QA and benchmark artifacts
+/.tmp/
+/.codex-qa/
+/artifacts/**
+!/artifacts/design-qa/
+!/artifacts/design-qa/echo-link-mobile-remote-comparison.jpg
+!/artifacts/design-qa/echo-link-mobile-remote-implementation.png
+!/artifacts/echo-link-handoff/
+!/artifacts/echo-link-handoff/echo-everything-connected-zh-en-ja.png
+!/artifacts/echo-link-handoff/mobile-remote-approved-reference.png
+/output/
+/design-qa*.md
+
+# Local Codex workspace state
+/.codex/
+/.codex-artifacts/
+/.codex-audit/
+/.codex-pet-runs/
+/.codex-run/
+/.codex-screenshots/
+/.codex-temp/
+/.codex-tmp/
+/.codex-backups/
+/.codex-*.png
+
+# Local miscellaneous workspace. Temporary screenshots, logs, notes, patches,
+# one-off scripts, downloads, and other non-product files belong here.
+/misc/
+
+# Legacy root-level visual QA drops. Curated evidence belongs under artifacts/.
+/design-qa*.png
+
+# Native/Electron build outputs
+electron-app/build/
+native/**/build/
+native/**/cmake-build-*/
+/build/native-host/
+/asio-test-native/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+build.ninja
+rules.ninja
+.ninja_deps
+.ninja_log
+
+# Local binary tools downloaded outside source control
+electron-app/tools/ffmpeg.exe
+electron-app/tools/ffprobe.exe
+electron-app/tools/*.exe
+electron-app/tools/*.dll
+electron-app/tools-linux/ffmpeg
+electron-app/tools-linux/ffprobe
+electron-app/tools-linux/yt-dlp
+
+# Electron Builder artifacts
+dist-packaged*/
+*.blockmap
+*.AppImage
+*.deb
+*.rpm
+*.dmg
+
+# Local media/lyrics scratch files
+*.lrc
+/tmp-*
+/*.patch
+
+# Local runtime state
+/room-correction-state.json
+/eq-state.json
+/eq-backups/
+/sessions/
+
+# Local agent/tool scratch state
+/.reasonix/
+/.omo/
+/.playwright-mcp/
+/.ssh/
+
+# Root-level duplicate image drops; canonical app artwork lives in build-resources/icons/.
+/logo.png
+/logo1.png
+/lmao.jpeg
+/software.ico
+/software.png
+/softwarelogo.png
+
+# Maintainer instructions, design notes, and reusable editor configuration are
+# intentionally trackable in this private single-maintainer repository.
+
+# Environment files may contain credentials; examples remain trackable.
+.env
+.env.*
+!.env.example
+!.env.*.example
+.envrc
+steam_appid.txt
+/steamworks-content-builder/
+
+# Local secrets and retired signing material must never enter Git history.
+/.echo-local/keys/
+
+# ECHODev is a private development repo, so source files for Pro/cloud can be
+# tracked for deploy builds. Keep secrets, generated bundles, databases, and
+# runtime artifacts ignored below.
+
+# Keep generated credentials, runtime databases, deploy bundles, and local machine artifacts out of git.
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+/echo-pro-cloud*.zip
+/echo-pro-cloud*.tar.gz
+/echo-pro-cloud.env
+/.echo-pro-cloud.env
+/private/**/*.env
+/private/**/*.db
+/private/**/*.db-*
+/private/**/*.sqlite
+/private/**/*.sqlite-*
+/private/**/data/
+/private/**/runtime/
+/private/**/*deploy*.zip
+/private/**/*deploy*.tar.gz
+*.echo-pro-secret
+*.echo-pro-token
+*.echo-pro-session
+*.machine-license
+*.license

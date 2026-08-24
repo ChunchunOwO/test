@@ -1,0 +1,386 @@
+.workshop-lyrics-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--theme-text);
+  background: var(--theme-app-bg);
+  container-type: size;
+}
+
+.workshop-lyrics-scene[data-background="transparent"] {
+  background: transparent;
+}
+
+.workshop-lyrics-scene__background {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  opacity: 0.76;
+  pointer-events: none;
+}
+
+.workshop-lyrics-scene[data-background="cover-blur"] .workshop-lyrics-scene__background,
+.workshop-lyrics-scene[data-background="cover-color"] .workshop-lyrics-scene__background {
+  filter: blur(34px) saturate(1.25);
+  transform: scale(1.08);
+}
+
+.workshop-lyrics-scene[data-background="cover-color"] .workshop-lyrics-scene__background {
+  opacity: 0.46;
+}
+
+.workshop-lyrics-scene[data-background="asset"] .workshop-lyrics-scene__background {
+  opacity: 0.88;
+  filter: none;
+  transform: none;
+}
+
+.workshop-lyrics-scene__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: inherit;
+  pointer-events: none;
+}
+
+.workshop-lyrics-scene__back {
+  position: absolute;
+  z-index: 101;
+  top: 18px;
+  left: 18px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 999px;
+  color: inherit;
+  background: color-mix(in srgb, var(--theme-panel-bg) 72%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.workshop-lyrics-scene__node {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.workshop-lyrics-scene > .workshop-lyrics-scene__node--group {
+  position: absolute;
+  inset: 0;
+}
+
+.workshop-lyrics-scene__cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: inherit;
+}
+
+.workshop-lyrics-scene__cover-empty {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+
+.workshop-lyrics-scene__slot--lyrics {
+  overflow: hidden;
+}
+
+.workshop-lyrics-scene__slot--lyrics .lyrics-scroll {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.workshop-lyrics-scene__slot--lyrics .lyrics-line,
+.workshop-lyrics-scene__slot--lyrics .lyrics-line-primary,
+.workshop-lyrics-scene__slot--lyrics .lyrics-line small,
+.workshop-lyrics-scene__slot--lyrics .lyrics-line em {
+  color: inherit;
+  font-family: inherit;
+}
+
+.workshop-lyrics-scene__slot--lyrics .lyrics-line-primary {
+  font-size: inherit;
+  line-height: inherit;
+  text-align: inherit;
+}
+
+.workshop-lyrics-scene__lyric-transition {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.workshop-lyrics-scene__lyric-transition-line {
+  display: block;
+  width: 100%;
+  transform-origin: 20% 50%;
+  will-change: opacity, transform;
+}
+
+.workshop-lyrics-scene__lyric-transition-line--incoming.workshop-lyrics-scene__lyric-transition-line--animate {
+  animation: workshop-lyrics-line-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.workshop-lyrics-scene__lyric-transition-line--outgoing {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: workshop-lyrics-line-exit 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.workshop-lyrics-scene__slot--previous-line .workshop-lyrics-scene__lyric-transition-line,
+.workshop-lyrics-scene__slot--next-line .workshop-lyrics-scene__lyric-transition-line {
+  --workshop-lyric-shift: 11px;
+}
+
+.workshop-lyrics-scene__slot--current-line .workshop-lyrics-scene__lyric-transition-line {
+  --workshop-lyric-shift: 18px;
+}
+
+.workshop-lyrics-scene__slot--translation .workshop-lyrics-scene__lyric-transition-line {
+  --workshop-lyric-shift: 13px;
+}
+
+.workshop-lyrics-scene__progress {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 4px;
+  overflow: hidden;
+  border-radius: inherit;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.workshop-lyrics-scene__progress > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+.workshop-lyrics-scene__control {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.workshop-lyrics-scene__control svg {
+  width: 1em;
+  height: 1em;
+  stroke-width: 1.5;
+}
+
+.workshop-lyrics-scene__control--play svg {
+  fill: currentColor;
+  stroke-width: 1;
+}
+
+.workshop-lyrics-scene__control:hover:not(:disabled) {
+  opacity: 0.62;
+}
+
+.workshop-lyrics-scene__control:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.workshop-lyrics-scene__control:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.workshop-lyrics-scene__seek-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 2px;
+  border-radius: inherit;
+  background: color-mix(in srgb, currentColor 20%, transparent);
+  touch-action: none;
+}
+
+/* Editorial scenes draw the timeline as a hairline, so widen the grab area. */
+.workshop-lyrics-scene__seek-bar[data-interactive="true"]::before {
+  content: '';
+  position: absolute;
+  inset: -9px 0;
+}
+
+.workshop-lyrics-scene__seek-bar[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.workshop-lyrics-scene__seek-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+.workshop-lyrics-scene__seek-bar-thumb {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateY(-50%) scale(0);
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.workshop-lyrics-scene__seek-bar[data-interactive="true"]:hover .workshop-lyrics-scene__seek-bar-thumb,
+.workshop-lyrics-scene__seek-bar:focus-visible .workshop-lyrics-scene__seek-bar-thumb,
+.workshop-lyrics-scene__seek-bar[data-scrubbing="true"] .workshop-lyrics-scene__seek-bar-thumb {
+  transform: translateY(-50%) scale(1);
+}
+
+.workshop-lyrics-scene__volume {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.workshop-lyrics-scene__volume-icon {
+  flex: none;
+  width: 1.2em;
+  height: 1.2em;
+  stroke-width: 1.6;
+}
+
+.workshop-lyrics-scene__seek-bar--volume {
+  flex: 1;
+  height: 2px;
+  align-self: center;
+}
+
+.workshop-lyrics-scene__tech {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.9em;
+  row-gap: 0.35em;
+}
+
+.workshop-lyrics-scene__tech-item {
+  position: relative;
+  white-space: nowrap;
+}
+
+.workshop-lyrics-scene__tech-item + .workshop-lyrics-scene__tech-item::before {
+  content: '/';
+  position: absolute;
+  left: -0.62em;
+  opacity: 0.45;
+}
+
+.workshop-lyrics-scene__spectrum {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0;
+  padding-inline: 0;
+  opacity: 0.63;
+}
+
+.workshop-lyrics-scene__spectrum > i {
+  flex: 0 0 clamp(3px, 0.26vw, 4px);
+  width: clamp(3px, 0.26vw, 4px);
+  min-width: 3px;
+  max-width: 4px;
+  height: 100%;
+  border-radius: 999px 999px 1px 1px;
+  background: color-mix(in srgb, currentColor 88%, transparent);
+  transform-origin: bottom;
+  transform: translateZ(0) scaleY(max(0.018, var(--workshop-spectrum-value, 0)));
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.workshop-lyrics-scene__node[data-motion]:not([data-motion="none"]) {
+  animation-delay: var(--workshop-motion-delay, 0ms);
+  animation-duration: var(--workshop-motion-duration, 600ms);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.workshop-lyrics-scene__node[data-motion-loop="true"] {
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.workshop-lyrics-scene[data-enter-settled="true"] .workshop-lyrics-scene__node[data-motion]:not([data-motion-loop="true"]) {
+  animation: none;
+}
+
+.workshop-lyrics-scene[data-motion-enabled="false"] .workshop-lyrics-scene__node[data-motion-loop="true"] {
+  animation-play-state: paused;
+}
+
+.workshop-lyrics-scene__node[data-motion="fade"] { animation-name: workshop-lyrics-fade; }
+.workshop-lyrics-scene__node[data-motion="slide-up"] { animation-name: workshop-lyrics-slide-up; }
+.workshop-lyrics-scene__node[data-motion="slide-left"] { animation-name: workshop-lyrics-slide-left; }
+.workshop-lyrics-scene__node[data-motion="scale"] { animation-name: workshop-lyrics-scale; }
+.workshop-lyrics-scene__node[data-motion="float"] { animation-name: workshop-lyrics-float; }
+.workshop-lyrics-scene__node[data-motion="pulse"] { animation-name: workshop-lyrics-pulse; }
+
+@keyframes workshop-lyrics-fade { from { opacity: 0; } }
+@keyframes workshop-lyrics-slide-up { from { opacity: 0; transform: translateY(var(--workshop-motion-offset, 22px)); } }
+@keyframes workshop-lyrics-slide-left { from { opacity: 0; transform: translateX(var(--workshop-motion-offset, 22px)); } }
+@keyframes workshop-lyrics-scale { from { opacity: 0; transform: scale(var(--workshop-motion-scale-in, 0.92)); } }
+@keyframes workshop-lyrics-float { to { transform: translateY(calc(var(--workshop-motion-offset, 22px) * -0.45)); } }
+@keyframes workshop-lyrics-pulse { to { opacity: 0.82; transform: scale(var(--workshop-motion-scale-out, 1.025)); } }
+@keyframes workshop-lyrics-line-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--workshop-lyric-shift, 14px)) scale(0.985);
+  }
+}
+@keyframes workshop-lyrics-line-exit {
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--workshop-lyric-shift, 14px) * -0.78)) scale(0.992);
+  }
+}
+
+.workshop-lyrics-scene[data-motion-enabled="false"] .workshop-lyrics-scene__lyric-transition-line--outgoing {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workshop-lyrics-scene__node[data-motion] {
+    animation: none !important;
+  }
+
+  .workshop-lyrics-scene__lyric-transition-line {
+    animation: none !important;
+  }
+
+  .workshop-lyrics-scene__lyric-transition-line--outgoing {
+    display: none;
+  }
+}

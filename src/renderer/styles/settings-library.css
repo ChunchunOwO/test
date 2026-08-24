@@ -1,0 +1,635 @@
+/* Media Library settings: keep dense tooling readable without stacking cards. */
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-header h1 {
+  font-size: 27px;
+  font-weight: 600;
+}
+
+.settings-page #settings-sec-library > .section-title .section-title-copy h2 {
+  font-weight: 720;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index {
+  top: 0;
+  z-index: 6;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  max-height: none;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 22px;
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 100%;
+  padding: 2px 2px 9px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  border-radius: 0;
+  /* Sticky bar needs its own surface so scrolled content cannot bleed through the labels. */
+  background: color-mix(in srgb, var(--theme-panel-bg) 84%, transparent);
+  backdrop-filter: blur(16px) saturate(1.12);
+  box-shadow: none;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-scroll-shell:has(> .settings-section-index) {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0;
+}
+
+/* Keep anchor and search-jump targets clear of the sticky index bar. */
+.settings-page #settings-sec-library :is(.settings-subsection-title, [id^='settings-row-']) {
+  scroll-margin-top: 58px;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-content {
+  grid-column: 1;
+  grid-row: 2;
+  padding-top: 12px;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index::before,
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item > span {
+  display: none;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item {
+  position: relative;
+  display: inline-flex;
+  width: auto;
+  flex: 0 0 auto;
+  min-width: max-content;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: none;
+  gap: 0;
+  padding: 7px 0;
+  color: var(--theme-subtle-text);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: color 130ms ease;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 999px;
+  content: '';
+  background: var(--color-accent);
+  opacity: 0;
+  transform: scaleX(0.45);
+  transition:
+    opacity 130ms ease,
+    transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item:hover {
+  color: var(--theme-body-text);
+  border: 0;
+  background: transparent;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-accent-border) 80%, transparent);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item[data-active='true'] {
+  color: var(--theme-heading-text);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-weight: 760;
+}
+
+.settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item[data-active='true']::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.settings-page #settings-sec-library .settings-library-overview {
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 0;
+  border-block: 1px solid color-mix(in srgb, var(--theme-panel-border) 72%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+.settings-page #settings-sec-library .settings-library-overview > span {
+  min-height: 56px;
+  padding: 9px 12px;
+  border-right-color: color-mix(in srgb, var(--theme-panel-border) 62%, transparent);
+}
+
+.settings-page #settings-sec-library .settings-library-overview em,
+.settings-page #settings-sec-library .settings-library-overview strong {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page #settings-sec-library .settings-library-overview strong {
+  font-weight: 700;
+}
+
+.settings-page #settings-sec-library .settings-library-overview__status[data-busy='true'] strong {
+  color: var(--theme-accent-text);
+}
+
+/* Scan feedback block directly below the overview; collapses entirely when idle. */
+.settings-page #settings-sec-library > .settings-library-scan-status {
+  display: none;
+}
+
+.settings-page #settings-sec-library > .settings-library-scan-status:has(> *) {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* Metric values keep a stable width while counters update during scans. */
+.settings-page #settings-sec-library :is(.settings-library-overview, .settings-status-grid, .settings-cache-result, .library-scan-result-grid, .library-scan-stage) strong,
+.settings-page #settings-sec-library .settings-update-progress-label span {
+  font-variant-numeric: tabular-nums;
+}
+
+.settings-page #settings-sec-library {
+  counter-reset: none;
+}
+
+.settings-page #settings-sec-library > .settings-subsection-title {
+  counter-increment: none;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3px;
+  margin: 20px 0 0;
+  min-height: 0;
+  padding: 12px 2px 9px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 76%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-library > .settings-subsection-title::before {
+  display: none;
+}
+
+/* Small accent tick keeps subsection headers scannable in the long flat list. */
+.settings-page #settings-sec-library > .settings-subsection-title > span::before {
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  margin-right: 9px;
+  border-radius: 999px;
+  content: '';
+  vertical-align: -2px;
+  background: linear-gradient(
+    180deg,
+    var(--theme-accent-text),
+    color-mix(in srgb, var(--theme-accent-text) 55%, transparent)
+  );
+}
+
+.settings-page #settings-sec-library > .settings-subsection-title > span {
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.settings-page #settings-sec-library > .settings-subsection-title > small {
+  grid-column: 1;
+  max-width: 62ch;
+  color: var(--theme-subtle-text);
+  overflow-wrap: anywhere;
+}
+
+.settings-page #settings-sec-library > .setting-row {
+  grid-template-columns: minmax(190px, 0.68fr) minmax(0, 1.32fr) !important;
+  gap: 26px;
+  min-width: 0;
+  min-height: 56px;
+  padding: 14px 2px;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-library:has(> .settings-subsection-title)
+  > :not(.section-title):not(.settings-subsection-title) {
+  margin-right: 0;
+  margin-left: 0;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-library > .setting-row:hover {
+  background: transparent !important;
+}
+
+.settings-page #settings-sec-library > .setting-row > .setting-info,
+.settings-page #settings-sec-library > .setting-row > :not(.setting-info) {
+  min-width: 0;
+}
+
+.settings-page #settings-sec-library .setting-info h3 {
+  max-width: 100%;
+  color: var(--theme-heading-text);
+  font-size: 13px;
+  font-weight: 740;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.settings-page #settings-sec-library .setting-info p {
+  max-width: 44ch;
+  color: var(--theme-muted-text);
+  font-size: 11px;
+  line-height: 1.48;
+  opacity: 0.9;
+  overflow-wrap: anywhere;
+}
+
+.settings-page #settings-row-library-folders {
+  margin-top: 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+}
+
+.settings-page #settings-row-library-folders .audio-dev-panel,
+.settings-page #settings-row-library-lab .settings-library-lab-panel,
+.settings-page #settings-sec-library > .network-metadata-panel {
+  width: 100%;
+  max-width: none;
+  padding: 12px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-row-library-folders .panel-kicker {
+  display: none;
+}
+
+.settings-page #settings-row-library-folders .audio-dev-header h2 {
+  font-size: 15px;
+  font-weight: 720;
+  line-height: 1.3;
+}
+
+.settings-page #settings-row-library-folders .library-folder-row {
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 45%, transparent);
+  border-radius: 0;
+  background: transparent;
+  transition: background-color 130ms ease;
+}
+
+.settings-page #settings-row-library-folders .library-folder-row:hover {
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover) 46%, transparent);
+}
+
+.settings-page #settings-row-library-folders .library-folder-row > div,
+.settings-page #settings-row-library-folders .library-folder-row strong,
+.settings-page #settings-row-library-folders .library-folder-row span,
+.settings-page #settings-row-library-folders .library-folder-row small {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.settings-page #settings-row-library-folders .library-folder-row strong,
+.settings-page #settings-row-library-folders .library-folder-row span,
+.settings-page #settings-row-library-folders .library-folder-row small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary,
+.settings-page #settings-sec-library .settings-library-health-summary {
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary,
+.settings-page #settings-sec-library .settings-library-health-summary {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  transition: background-color 130ms ease, color 130ms ease;
+}
+
+/* Explicit disclosure chevron: these summaries expand/collapse, the topic icon alone reads as static. */
+.settings-page #settings-sec-library .settings-library-quality-summary::after,
+.settings-page #settings-sec-library .settings-library-health-summary::after {
+  width: 7px;
+  height: 7px;
+  margin-right: 3px;
+  content: '';
+  border-right: 1.8px solid var(--theme-subtle-text);
+  border-bottom: 1.8px solid var(--theme-subtle-text);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary[aria-expanded='true']::after,
+.settings-page #settings-sec-library .settings-library-health-summary[aria-expanded='true']::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary[aria-expanded='true'] svg {
+  transform: none;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary:hover,
+.settings-page #settings-sec-library .settings-library-health-summary:hover {
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover) 32%, transparent);
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary:hover > svg,
+.settings-page #settings-sec-library .settings-library-health-summary:hover > svg {
+  color: var(--theme-accent-text);
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary:focus-visible,
+.settings-page #settings-sec-library .settings-library-health-summary:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-accent-border) 80%, transparent);
+  outline-offset: -2px;
+  border-radius: 7px;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary > span > strong,
+.settings-page #settings-sec-library .settings-library-health-summary > span > strong {
+  display: none;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-summary > span > em,
+.settings-page #settings-sec-library .settings-library-health-summary > span > em {
+  color: var(--theme-body-text);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-grid {
+  gap: 0;
+  overflow: hidden;
+  border-block: 1px solid color-mix(in srgb, var(--theme-panel-border) 58%, transparent);
+}
+
+.settings-page #settings-sec-library .settings-library-quality-card {
+  min-width: 0;
+  min-height: 66px;
+  padding: 9px 11px;
+  border: 0;
+  border-right: 1px solid color-mix(in srgb, var(--theme-panel-border) 52%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color 130ms ease;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-card:last-child {
+  border-right: 0;
+}
+
+/* Cards are clickable issue filters; give them the same hover feedback as list rows. */
+.settings-page #settings-sec-library .settings-library-quality-card:hover:not([data-active='true']) {
+  background: color-mix(in srgb, var(--theme-list-row-bg-hover) 46%, transparent);
+}
+
+.settings-page #settings-sec-library .settings-library-quality-card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-accent-border) 80%, transparent);
+  outline-offset: -2px;
+}
+
+.settings-page #settings-sec-library .settings-library-quality-card[data-active='true'] {
+  background: color-mix(in srgb, var(--theme-accent-bg) 48%, transparent);
+}
+
+.settings-page #settings-sec-library .settings-library-quality-card span,
+.settings-page #settings-sec-library .settings-library-quality-card em,
+.settings-page #settings-sec-library .settings-library-quality-card small,
+.settings-page #settings-sec-library .settings-library-quality-card strong {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.settings-page #settings-sec-library .settings-status-grid {
+  gap: 0;
+  overflow: hidden;
+  border-block: 1px solid color-mix(in srgb, var(--theme-panel-border) 55%, transparent);
+}
+
+/* Destructive and cancel actions sit apart from the routine buttons in a toolbar row. */
+.settings-page #settings-sec-library .settings-chip-row--actions > .settings-danger-button {
+  margin-left: auto;
+}
+
+/* Strategy panels: descriptions hug their chip group and read as supporting text. */
+.settings-page #settings-sec-library :is(.settings-cache-panel--album, .settings-cache-panel--embedded-tags) > .settings-status-grid {
+  margin-top: -4px;
+  margin-bottom: 4px;
+}
+
+.settings-page #settings-sec-library :is(.settings-cache-panel--album, .settings-cache-panel--embedded-tags) > .settings-status-grid strong {
+  color: var(--theme-body-text);
+  font-weight: 620;
+}
+
+/* Cache inventory keeps the same flat metric-strip look as the status grids. */
+.settings-page #settings-sec-library .settings-cache-result {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-block: 1px solid color-mix(in srgb, var(--theme-panel-border) 55%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+.settings-page #settings-sec-library .settings-cache-result > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 8px 11px 10px;
+}
+
+.settings-page #settings-sec-library .settings-status-grid > span,
+.settings-page #settings-sec-library .settings-cache-result > span {
+  min-width: 0;
+  padding: 9px 11px;
+  border: 0;
+  border-right: 1px solid color-mix(in srgb, var(--theme-panel-border) 48%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-library .settings-status-grid > span:last-child,
+.settings-page #settings-sec-library .settings-cache-result > span:last-child {
+  border-right: 0;
+}
+
+.settings-page #settings-sec-library .settings-status-grid em,
+.settings-page #settings-sec-library .settings-status-grid strong,
+.settings-page #settings-sec-library .settings-cache-result em,
+.settings-page #settings-sec-library .settings-cache-result strong,
+.settings-page #settings-sec-library .settings-cache-result p {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.settings-page #settings-sec-library .settings-cache-path {
+  min-width: 0;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-page #settings-sec-library .settings-cache-path strong {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page #settings-sec-library .setting-row--library-diagnostics .settings-status-grid--library-performance {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.settings-page #settings-sec-library .setting-row--library-diagnostics .settings-status-grid--library-performance strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page #settings-row-library-lab {
+  margin-top: 4px;
+}
+
+.settings-page #settings-row-library-lab .settings-cache-header {
+  align-items: center;
+}
+
+.settings-page #settings-row-library-lab .settings-cache-header h3 {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.settings-page #settings-row-library-lab .settings-inline-note {
+  max-width: 54ch;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1180px) {
+  .settings-page:has(#settings-sec-library[data-visible='true']) {
+    padding-inline: 16px;
+  }
+
+  .settings-page:has(#settings-sec-library[data-visible='true']) .settings-header {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .settings-page:has(#settings-sec-library[data-visible='true']) .settings-body {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .settings-page:has(#settings-sec-library[data-visible='true']) .settings-content,
+  .settings-page:has(#settings-sec-library[data-visible='true']) .settings-scroll-shell,
+  .settings-page #settings-sec-library {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .settings-page #settings-sec-library > .setting-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px;
+  }
+
+  .settings-page #settings-sec-library .setting-row--library-diagnostics .settings-status-grid--library-performance {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .settings-page #settings-sec-library > .setting-row,
+  .settings-page #settings-sec-library > .setting-row--compact-panel {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px;
+  }
+
+  .settings-page #settings-sec-library .settings-library-overview,
+  .settings-page #settings-sec-library .settings-library-quality-grid,
+  .settings-page #settings-sec-library .settings-status-grid,
+  .settings-page #settings-sec-library .settings-cache-result,
+  .settings-page #settings-sec-library .setting-row--library-diagnostics .settings-status-grid--library-performance {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .settings-page #settings-sec-library .settings-library-overview > span,
+  .settings-page #settings-sec-library .settings-library-quality-card,
+  .settings-page #settings-sec-library .settings-status-grid > span,
+  .settings-page #settings-sec-library .settings-cache-result > span {
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-panel-border) 45%, transparent);
+  }
+
+  .settings-page #settings-sec-library .settings-library-overview > span:last-child,
+  .settings-page #settings-sec-library .settings-library-quality-card:last-child,
+  .settings-page #settings-sec-library .settings-status-grid > span:last-child,
+  .settings-page #settings-sec-library .settings-cache-result > span:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item,
+  .settings-page:has(#settings-sec-library[data-visible='true']) .settings-section-index-item::after,
+  .settings-page #settings-row-library-folders .library-folder-row,
+  .settings-page #settings-sec-library .settings-library-quality-card,
+  .settings-page #settings-sec-library .settings-library-quality-summary,
+  .settings-page #settings-sec-library .settings-library-quality-summary::after,
+  .settings-page #settings-sec-library .settings-library-health-summary,
+  .settings-page #settings-sec-library .settings-library-health-summary::after {
+    transition: none;
+  }
+}

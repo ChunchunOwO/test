@@ -1,0 +1,491 @@
+.workshop-theme-skin-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.workshop-theme-skin-layer--mist {
+  opacity: calc(var(--workshop-theme-mist, 0) / 100);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.16), transparent 38%),
+    radial-gradient(ellipse at 18% 82%, rgb(255 255 255 / 0.12), transparent 46%);
+}
+
+.workshop-theme-skin-layer--bloom {
+  opacity: calc(var(--workshop-theme-bloom, 0) / 100);
+  background: radial-gradient(ellipse at 50% 12%, rgb(255 255 255 / 0.28), transparent 58%);
+  mix-blend-mode: screen;
+}
+
+.workshop-theme-skin-layer--spotlight {
+  opacity: calc(var(--workshop-theme-spotlight, 0) / 100);
+  background: radial-gradient(ellipse at 50% 36%, transparent 16%, rgb(0 0 0 / 0.58) 100%);
+}
+
+.workshop-theme-skin-layer--frost {
+  opacity: calc(var(--workshop-theme-frost, 0) / 100);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.02) 42%, rgb(255 255 255 / 0.08)),
+    repeating-linear-gradient(115deg, rgb(255 255 255 / 0.04) 0 1px, transparent 1px 7px);
+}
+
+.workshop-theme-watermark {
+  position: fixed;
+  right: 24px;
+  bottom: calc(var(--player-height, 112px) + 18px);
+  z-index: 2;
+  width: min(168px, 16vw);
+  max-height: 88px;
+  object-fit: contain;
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+html[data-workshop-brand="hidden"] .app-titlebar-brand {
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-workshop-brand="asset"] .app-titlebar-brand > * {
+  display: none;
+}
+
+html[data-workshop-brand="asset"] .app-titlebar-brand::before {
+  content: "";
+  width: min(180px, 18vw);
+  height: 30px;
+  background-image: var(--workshop-theme-brand-image);
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html[data-workshop-show-edition-badge="false"] .app-titlebar-steam-badge,
+html[data-workshop-show-version="false"] .app-titlebar-version {
+  display: none;
+}
+
+html[data-workshop-icon-atlas="true"] [data-workshop-icon] {
+  position: relative;
+}
+
+html[data-workshop-icon-atlas="true"] [data-workshop-icon]::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 1.25em;
+  height: 1.25em;
+  opacity: var(--workshop-icon-active, 0);
+  background-image: var(--workshop-theme-icon-atlas-image);
+  background-position: var(--workshop-icon-x, 0%) var(--workshop-icon-y, 0%);
+  background-repeat: no-repeat;
+  background-size:
+    calc(var(--workshop-theme-icon-atlas-columns, 1) * 100%)
+    calc(var(--workshop-theme-icon-atlas-rows, 1) * 100%);
+  pointer-events: none;
+}
+
+html[data-workshop-icon-atlas="true"] .nav-item[data-workshop-icon]::before {
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+html[data-workshop-icon-atlas="true"] :is(.titlebar-action, .transport [data-workshop-icon])::before {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+html[data-workshop-icon-atlas="true"] [data-workshop-icon] > svg,
+html[data-workshop-icon-atlas="true"] [data-workshop-icon] .nav-icon-shell {
+  opacity: calc(1 - var(--workshop-icon-active, 0));
+}
+
+html[data-workshop-icon-map~="nav-home"] [data-workshop-icon="nav-home"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_home-x); --workshop-icon-y: var(--workshop-theme-icon-nav_home-y); }
+html[data-workshop-icon-map~="nav-songs"] [data-workshop-icon="nav-songs"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_songs-x); --workshop-icon-y: var(--workshop-theme-icon-nav_songs-y); }
+html[data-workshop-icon-map~="nav-albums"] [data-workshop-icon="nav-albums"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_albums-x); --workshop-icon-y: var(--workshop-theme-icon-nav_albums-y); }
+html[data-workshop-icon-map~="nav-artists"] [data-workshop-icon="nav-artists"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_artists-x); --workshop-icon-y: var(--workshop-theme-icon-nav_artists-y); }
+html[data-workshop-icon-map~="nav-genres"] [data-workshop-icon="nav-genres"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_genres-x); --workshop-icon-y: var(--workshop-theme-icon-nav_genres-y); }
+html[data-workshop-icon-map~="nav-folders"] [data-workshop-icon="nav-folders"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_folders-x); --workshop-icon-y: var(--workshop-theme-icon-nav_folders-y); }
+html[data-workshop-icon-map~="nav-audio-cd"] [data-workshop-icon="nav-audio-cd"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_audio_cd-x); --workshop-icon-y: var(--workshop-theme-icon-nav_audio_cd-y); }
+html[data-workshop-icon-map~="nav-remote"] [data-workshop-icon="nav-remote"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_remote-x); --workshop-icon-y: var(--workshop-theme-icon-nav_remote-y); }
+html[data-workshop-icon-map~="nav-connect"] [data-workshop-icon="nav-connect"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_connect-x); --workshop-icon-y: var(--workshop-theme-icon-nav_connect-y); }
+html[data-workshop-icon-map~="nav-workshop"] [data-workshop-icon="nav-workshop"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_workshop-x); --workshop-icon-y: var(--workshop-theme-icon-nav_workshop-y); }
+html[data-workshop-icon-map~="nav-dsp"] [data-workshop-icon="nav-dsp"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_dsp-x); --workshop-icon-y: var(--workshop-theme-icon-nav_dsp-y); }
+html[data-workshop-icon-map~="nav-queue"] [data-workshop-icon="nav-queue"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_queue-x); --workshop-icon-y: var(--workshop-theme-icon-nav_queue-y); }
+html[data-workshop-icon-map~="nav-history"] [data-workshop-icon="nav-history"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_history-x); --workshop-icon-y: var(--workshop-theme-icon-nav_history-y); }
+html[data-workshop-icon-map~="nav-playlists"] [data-workshop-icon="nav-playlists"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_playlists-x); --workshop-icon-y: var(--workshop-theme-icon-nav_playlists-y); }
+html[data-workshop-icon-map~="nav-inbox"] [data-workshop-icon="nav-inbox"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_inbox-x); --workshop-icon-y: var(--workshop-theme-icon-nav_inbox-y); }
+html[data-workshop-icon-map~="nav-liked"] [data-workshop-icon="nav-liked"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_liked-x); --workshop-icon-y: var(--workshop-theme-icon-nav_liked-y); }
+html[data-workshop-icon-map~="nav-settings"] [data-workshop-icon="nav-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_settings-x); --workshop-icon-y: var(--workshop-theme-icon-nav_settings-y); }
+html[data-workshop-icon-map~="nav-audio-settings"] [data-workshop-icon="nav-audio-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_audio_settings-x); --workshop-icon-y: var(--workshop-theme-icon-nav_audio_settings-y); }
+html[data-workshop-icon-map~="nav-lyrics-settings"] [data-workshop-icon="nav-lyrics-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_lyrics_settings-x); --workshop-icon-y: var(--workshop-theme-icon-nav_lyrics_settings-y); }
+html[data-workshop-icon-map~="nav-import-folder"] [data-workshop-icon="nav-import-folder"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_import_folder-x); --workshop-icon-y: var(--workshop-theme-icon-nav_import_folder-y); }
+html[data-workshop-icon-map~="nav-import-file"] [data-workshop-icon="nav-import-file"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-nav_import_file-x); --workshop-icon-y: var(--workshop-theme-icon-nav_import_file-y); }
+html[data-workshop-icon-map~="titlebar-audio-settings"] [data-workshop-icon="titlebar-audio-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-titlebar_audio_settings-x); --workshop-icon-y: var(--workshop-theme-icon-titlebar_audio_settings-y); }
+html[data-workshop-icon-map~="titlebar-lyrics-settings"] [data-workshop-icon="titlebar-lyrics-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-titlebar_lyrics_settings-x); --workshop-icon-y: var(--workshop-theme-icon-titlebar_lyrics_settings-y); }
+html[data-workshop-icon-map~="titlebar-lyrics-visual-settings"] [data-workshop-icon="titlebar-lyrics-visual-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-titlebar_lyrics_visual_settings-x); --workshop-icon-y: var(--workshop-theme-icon-titlebar_lyrics_visual_settings-y); }
+html[data-workshop-icon-map~="titlebar-settings"] [data-workshop-icon="titlebar-settings"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-titlebar_settings-x); --workshop-icon-y: var(--workshop-theme-icon-titlebar_settings-y); }
+html[data-workshop-icon-map~="transport-like"] [data-workshop-icon="transport-like"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_like-x); --workshop-icon-y: var(--workshop-theme-icon-transport_like-y); }
+html[data-workshop-icon-map~="transport-queue"] [data-workshop-icon="transport-queue"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_queue-x); --workshop-icon-y: var(--workshop-theme-icon-transport_queue-y); }
+html[data-workshop-icon-map~="transport-shuffle"] [data-workshop-icon="transport-shuffle"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_shuffle-x); --workshop-icon-y: var(--workshop-theme-icon-transport_shuffle-y); }
+html[data-workshop-icon-map~="transport-previous"] [data-workshop-icon="transport-previous"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_previous-x); --workshop-icon-y: var(--workshop-theme-icon-transport_previous-y); }
+html[data-workshop-icon-map~="transport-play"] [data-workshop-icon="transport-play"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_play-x); --workshop-icon-y: var(--workshop-theme-icon-transport_play-y); }
+html[data-workshop-icon-map~="transport-pause"] [data-workshop-icon="transport-pause"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_pause-x); --workshop-icon-y: var(--workshop-theme-icon-transport_pause-y); }
+html[data-workshop-icon-map~="transport-next"] [data-workshop-icon="transport-next"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_next-x); --workshop-icon-y: var(--workshop-theme-icon-transport_next-y); }
+html[data-workshop-icon-map~="transport-repeat"] [data-workshop-icon="transport-repeat"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_repeat-x); --workshop-icon-y: var(--workshop-theme-icon-transport_repeat-y); }
+html[data-workshop-icon-map~="transport-repeat-one"] [data-workshop-icon="transport-repeat-one"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_repeat_one-x); --workshop-icon-y: var(--workshop-theme-icon-transport_repeat_one-y); }
+html[data-workshop-icon-map~="transport-lyrics"] [data-workshop-icon="transport-lyrics"] { --workshop-icon-active: 1; --workshop-icon-x: var(--workshop-theme-icon-transport_lyrics-x); --workshop-icon-y: var(--workshop-theme-icon-transport_lyrics-y); }
+
+html[data-workshop-dim-chrome="true"] .sidebar,
+html[data-workshop-dim-chrome="true"] .player-bar,
+html[data-workshop-dim-chrome="true"]:not([data-workshop-titlebar="immersive"]) .app-titlebar {
+  filter: brightness(calc(1 - (var(--workshop-theme-dim-chrome, 0) * 0.004)));
+}
+
+html[data-workshop-theme-home-image="true"] .home-page {
+  background-image: var(--workshop-theme-home-image);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-lyrics-image="true"] .lyrics-page {
+  background-image:
+    linear-gradient(180deg, rgb(0 0 0 / 0.18), transparent 28%),
+    var(--workshop-theme-lyrics-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-queue-image="true"] .queue-page {
+  background-image: var(--workshop-theme-queue-image);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-now-playing-image="true"] .home-now-card {
+  background-image:
+    var(--workshop-theme-now-playing-image),
+    var(--home-now-bg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-theme-now-playing-image="true"] .queue-now-card {
+  background-image: var(--workshop-theme-now-playing-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html[data-workshop-nav="pills"] .nav-item {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 72%, transparent);
+}
+
+html[data-workshop-nav="pills"] .nav-item[data-active="true"] {
+  background: color-mix(in srgb, var(--theme-accent-bg) 78%, transparent);
+}
+
+html[data-workshop-nav="ghost"] .nav-item {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+html[data-workshop-home="hero"] .home-page {
+  width: min(1440px, 100%);
+}
+
+html[data-workshop-home="hero"] .home-hero {
+  min-height: 380px;
+  padding: 40px 42px;
+}
+
+html[data-workshop-home="hero"] .home-hero h1 {
+  max-width: 720px;
+  font-size: clamp(40px, 4.6vw, 64px);
+  letter-spacing: -0.04em;
+}
+
+html[data-workshop-home="hero"] .home-now-card {
+  min-height: 240px;
+}
+
+html[data-workshop-home="cinema"] .home-page {
+  width: 100%;
+}
+
+html[data-workshop-home="cinema"] .home-hero {
+  min-height: min(72vh, 680px);
+  grid-template-columns: minmax(0, 1fr);
+  align-content: end;
+  padding: 48px 36px 36px;
+}
+
+html[data-workshop-home="cinema"] .home-hero h1 {
+  max-width: 920px;
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: -0.05em;
+}
+
+html[data-workshop-home="cinema"] .home-hero::before {
+  opacity: 0.28;
+}
+
+html[data-workshop-home="cinema"] .home-now-card {
+  max-width: 560px;
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+html[data-workshop-home="cinema"] .home-pulse {
+  opacity: 0.72;
+}
+
+html[data-workshop-home="magazine"] .home-page {
+  width: min(1520px, 100%);
+}
+
+html[data-workshop-home="magazine"] .home-hero {
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 42px;
+  padding: 36px 40px;
+}
+
+html[data-workshop-home="magazine"] .home-hero h1 {
+  max-width: 680px;
+  font-size: clamp(36px, 4vw, 54px);
+  line-height: 1.12;
+}
+
+html[data-workshop-home="magazine"] .home-content-grid {
+  gap: 28px;
+}
+
+html[data-workshop-lyrics="theater"] .lyrics-page {
+  --lyrics-font-size: 52px;
+  --lyrics-secondary-font-size: 20px;
+  --lyrics-line-max-width: 980px;
+  --lyrics-context-opacity: 0.22;
+}
+
+html[data-workshop-lyrics="theater"] .lyrics-scroll {
+  margin-inline: auto;
+}
+
+html[data-workshop-lyrics="theater"] .lyrics-left-panel,
+html[data-workshop-lyrics="theater"] .lyrics-mv-panel {
+  opacity: 0.72;
+}
+
+html[data-workshop-lyrics="poster"] .lyrics-cover-stage-artwork {
+  filter: saturate(1.12) contrast(1.06);
+}
+
+html[data-workshop-lyrics="poster"] .lyrics-scroll {
+  padding-inline: 28px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 46%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+html[data-workshop-lyrics="vinyl"] .lyrics-cover-stage-image,
+html[data-workshop-lyrics="vinyl"] .lyrics-cover-stage-artwork {
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 12px rgb(12 14 18 / 0.88),
+    0 0 0 14px rgb(255 255 255 / 0.22),
+    0 24px 48px rgb(0 0 0 / 0.28);
+}
+
+html[data-workshop-queue="tickets"] .queue-now-card,
+html[data-workshop-queue="tickets"] .queue-row {
+  margin: 8px 0;
+  border: 1px dashed color-mix(in srgb, var(--theme-panel-border-strong) 55%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--theme-panel-bg) 84%, transparent);
+}
+
+html[data-workshop-queue="tickets"] .queue-row {
+  padding: 12px 18px;
+}
+
+html[data-workshop-queue="compact"] .queue-row {
+  min-height: 48px;
+  padding-block: 4px;
+}
+
+html[data-workshop-queue="compact"] .queue-now-card {
+  padding-block: 12px;
+}
+
+html[data-workshop-songs="poster"] .songs-page .track-row {
+  min-height: 104px;
+  gap: 18px;
+}
+
+html[data-workshop-songs="poster"] .songs-page .track-cover {
+  width: 84px;
+  height: 84px;
+  border-radius: 14px;
+}
+
+html[data-workshop-songs="poster"] .songs-page .track-title {
+  font-size: 18px;
+}
+
+html[data-workshop-songs="dense"] .songs-page .track-row {
+  min-height: 52px;
+  margin-block: 0;
+  padding-block: 3px;
+}
+
+html[data-workshop-songs="dense"] .songs-page .track-cover {
+  width: 36px;
+  height: 36px;
+}
+
+html[data-workshop-motion="cinematic"] .home-hero,
+html[data-workshop-motion="cinematic"] .home-now-card,
+html[data-workshop-motion="cinematic"] .player-cover,
+html[data-workshop-motion="cinematic"] .queue-now-card {
+  transition:
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 720ms ease,
+    box-shadow 720ms ease;
+}
+
+html[data-workshop-motion="none"] .app-titlebar,
+html[data-workshop-motion="none"] .sidebar,
+html[data-workshop-motion="none"] .player-bar,
+html[data-workshop-motion="none"] .nav-item {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-workshop-motion="cinematic"] .home-hero,
+  html[data-workshop-motion="cinematic"] .home-now-card,
+  html[data-workshop-motion="cinematic"] .player-cover,
+  html[data-workshop-motion="cinematic"] .queue-now-card {
+    transition: none;
+  }
+}
+
+@media (min-width: 981px) {
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) {
+    --sidebar-width: var(--sidebar-icon-only-width);
+  }
+
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .app-titlebar {
+    grid-template-columns: var(--sidebar-icon-only-width) minmax(0, 1fr) auto;
+  }
+
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    padding-inline: 8px;
+  }
+
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .nav-item {
+    width: 100%;
+    gap: 0;
+    padding-inline: 13px;
+  }
+
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .nav-item-label,
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar-header-label,
+  html[data-workshop-sidebar-presentation="rail"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar-group-label {
+    max-width: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .app-titlebar,
+  html[data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .page-surface,
+  html[data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .player-bar {
+    grid-column: 1;
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .app-titlebar {
+    grid-template-columns: minmax(160px, 220px) minmax(0, 1fr) auto;
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    position: absolute;
+    z-index: 11;
+    top: var(--titlebar-height);
+    bottom: var(--player-height);
+    width: var(--sidebar-width);
+    box-shadow: 0 18px 48px rgb(0 0 0 / 0.18);
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"][data-workshop-sidebar="left"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    left: 0;
+    right: auto;
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"][data-workshop-sidebar="right"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    left: auto;
+    right: 0;
+    border-width: 0 0 0 1px;
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"][data-workshop-sidebar="left"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .page-surface {
+    padding-left: calc(var(--sidebar-width) + 28px);
+  }
+
+  html[data-workshop-sidebar-presentation="overlay"][data-workshop-sidebar="right"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .page-surface {
+    padding-right: calc(var(--sidebar-width) + 28px);
+  }
+
+  html[data-workshop-player="floating"][data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    bottom: 110px;
+  }
+
+  html[data-workshop-player="hero"] .app-shell:not(.app-shell--lyrics) {
+    --player-height: 168px;
+  }
+
+  html[data-workshop-player="hero"] .app-shell:not(.app-shell--lyrics) .player-bar {
+    padding-block: 14px 16px;
+    grid-template-columns: minmax(280px, 1.1fr) minmax(360px, 620px) minmax(0, 1fr);
+  }
+
+  html[data-workshop-player="hero"] .app-shell:not(.app-shell--lyrics) .player-cover {
+    width: 128px;
+    height: 128px;
+  }
+
+  html[data-workshop-player="hero"] .app-shell:not(.app-shell--lyrics) .player-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  html[data-workshop-player="hero"] .app-shell:not(.app-shell--lyrics) .player-track-copy strong {
+    font-size: 18px;
+  }
+
+  html[data-workshop-theme-skin="shell"][data-workshop-sidebar-presentation="overlay"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    top: calc(var(--titlebar-height) + 10px);
+    bottom: calc(var(--player-height) + 10px);
+    border-radius: 0 18px 18px 0;
+    backdrop-filter: blur(22px) saturate(1.1);
+  }
+
+  html[data-workshop-theme-skin="shell"][data-workshop-sidebar-presentation="overlay"][data-workshop-sidebar="right"] .app-shell:not(.app-shell--standalone):not(.app-shell--lyrics) .sidebar {
+    border-radius: 18px 0 0 18px;
+  }
+
+  html[data-workshop-theme-skin="shell"][data-workshop-player="hero"] .app-shell:not(.app-shell--lyrics) .player-bar,
+  html[data-workshop-theme-skin="shell"][data-workshop-player="floating"] .app-shell:not(.app-shell--lyrics) .player-bar {
+    backdrop-filter: blur(20px) saturate(1.08);
+  }
+}

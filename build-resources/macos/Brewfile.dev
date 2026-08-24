@@ -1,0 +1,5 @@
+# Local Apple Silicon development dependencies only.
+# This file is not a declaration that Homebrew binaries may be redistributed.
+brew "cmake"
+brew "pkg-config"
+brew "ffmpeg"
